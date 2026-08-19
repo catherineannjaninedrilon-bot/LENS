@@ -3,31 +3,39 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My First Supabase Site</title>
+  <title>LENS</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; background-color: #fafafa; }
-    h1 { color: #333; }
+    h1 { color: #333; margin-bottom: 5px; }
+    .tagline { color: #666; font-style: italic; margin-top: 0; margin-bottom: 30px; font-size: 1.1em; }
     .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
-    .todo-item { background: #f4f4f4; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 4px; font-weight: bold; font-size: 1.1em; color: #222; }
-    input[type="email"] { width: 70%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
-    button { padding: 10px 15px; background-color: #3ecf8e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1em; }
+    .todo-item { display: flex; justify-content: space-between; align-items: center; background: #f4f4f4; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 4px; font-weight: bold; font-size: 1.1em; color: #222; }
+    .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+    input[type="email"], input[type="text"] { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
+    button { padding: 10px 15px; background-color: #3ecf8e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1em; white-space: nowrap; }
     button:hover { background-color: #34b37a; }
-    .logout-btn { background-color: #ff4d4d; margin-top: 10px; }
-    .logout-btn:hover { background-color: #e04343; }
+    .delete-btn { background-color: #ff4d4d; padding: 5px 10px; font-size: 0.85em; }
+    .delete-btn:hover { background-color: #e04343; }
+    .logout-btn { background-color: #777; margin-top: 10px; }
+    .logout-btn:hover { background-color: #555; }
     .hidden { display: none; }
     .user-info { color: #666; font-style: italic; margin-bottom: 20px; }
   </style>
 </head>
 <body>
 
-  <h1>My Supabase Todo List</h1>
+  <!-- Your New App Name & Tagline -->
+  <h1>LENS: Learning Engagement, Navigation and Support</h1>
+  <p class="tagline">See the story, support the journey</p>
 
   <!-- LOGIN CONTAINER (Visible when logged out) -->
   <div id="login-container" class="card">
     <h3>Sign In to View Your List</h3>
     <p>Enter your email to receive a passwordless login link:</p>
-    <input type="email" id="email-input" placeholder="your-email@example.com" />
-    <button id="login-btn">Send Login Link</button>
+    <div class="input-group">
+      <input type="email" id="email-input" placeholder="your-email@example.com" />
+      <button id="login-btn">Send Login Link</button>
+    </div>
     <p id="auth-status" style="margin-top: 10px; font-weight: bold;"></p>
   </div>
 
@@ -36,6 +44,15 @@
     <div class="card">
       <p class="user-info">Logged in as: <span id="user-email"></span></p>
       <button id="logout-btn" class="logout-btn">Sign Out</button>
+    </div>
+
+    <!-- Interactive Input Form Box -->
+    <div class="card">
+      <h3>Add New Item</h3>
+      <div class="input-group">
+        <input type="text" id="todo-input" placeholder="Type a task here..." />
+        <button id="add-btn">Add Item</button>
+      </div>
     </div>
 
     <div class="card">
@@ -60,6 +77,8 @@
     const userEmailSpan = document.getElementById('user-email');
     const authStatus = document.getElementById('auth-status');
     const todoContainer = document.getElementById('todo-container');
+    const todoInput = document.getElementById('todo-input');
+    const addBtn = document.getElementById('add-btn');
 
     // 1. Handle Magic Link Authentication Sign In
     loginBtn.addEventListener('click', async () => {
@@ -75,7 +94,6 @@
       const { error } = await supabase.auth.signInWithOtp({
         email: email,
         options: {
-          // Redirects the user right back to your GitHub pages site after they click the email link
           emailRedirectTo: window.location.href, 
         },
       });
@@ -95,24 +113,22 @@
       window.location.reload();
     });
 
-    // 3. Monitor Authentication Status changes (Logged In vs Logged Out)
+    // 3. Monitor Authentication Status changes
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        // User is logged in
         loginContainer.classList.add('hidden');
         appContainer.classList.remove('hidden');
         userEmailSpan.innerText = session.user.email;
         fetchTodos();
       } else {
-        // User is logged out
         loginContainer.classList.remove('hidden');
         appContainer.classList.add('hidden');
       }
     });
 
-    // 4. Fetch Data from Database (Only runs when verified logged in)
+    // 4. Fetch Data from Database Table
     async function fetchTodos() {
-      const { data, error } = await supabase.from('Name').select('*');
+      const { data, error } = await supabase.from('Name').select('*').order('created_at', { ascending: true });
 
       if (error) {
         todoContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
@@ -120,7 +136,7 @@
       }
 
       if (!data || data.length === 0) {
-        todoContainer.innerHTML = '<p>No items found!</p>';
+        todoContainer.innerHTML = '<p>No items found! Add a task above.</p>';
         return;
       }
 
@@ -128,10 +144,44 @@
       data.forEach(item => {
         const div = document.createElement('div');
         div.className = 'todo-item';
-        div.innerText = item.title ?? JSON.stringify(item);
+        
+        // Text node for title column
+        const textSpan = document.createElement('span');
+        textSpan.innerText = item.title ?? 'Untitled Item';
+        div.appendChild(textSpan);
+
+        // Interactive Delete button element
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.innerText = 'Delete';
+        deleteBtn.addEventListener('click', async () => {
+          const { error: deleteError } = await supabase.from('Name').delete().eq('id', item.id);
+          if (deleteError) {
+            alert(`Error deleting item: ${deleteError.message}`);
+          } else {
+            fetchTodos(); // Refresh data panel list layout instantly
+          }
+        });
+
+        div.appendChild(deleteBtn);
         todoContainer.appendChild(div);
       });
     }
+
+    // 5. Add new item entry to Supabase table
+    addBtn.addEventListener('click', async () => {
+      const text = todoInput.value.trim();
+      if (!text) return;
+
+      const { error } = await supabase.from('Name').insert([{ title: text }]);
+
+      if (error) {
+        alert(`Error inserting data: ${error.message}`);
+      } else {
+        todoInput.value = ''; // Reset entry box layout
+        fetchTodos(); // Reload dashboard panel data layout
+      }
+    });
   </script>
 </body>
 </html>
