@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>LENS Secured School Dashboard</title>
+  <title>LENS - Learning Engagement, Navigation and Support</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    // Replace with your actual Supabase project details
-    const supabaseUrl = "https://YOUR-PROJECT-ID.supabase.co"; // must start with https://
-    const supabaseKey = "YOUR-ANON-KEY"; // from Supabase dashboard
+    // Correct Supabase project details
+    const supabaseUrl = "https://ovjzuzjvgpzzsugasubn.supabase.co"; 
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92anp1emp2Z3B6enN1Z2FzdWJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxMTk3MDksImV4cCI6MjEwMjY5NTcwOX0.Uft5TwnJ7S6V1S47GMfoWujXLN49E6bqsx9b_GTYqUk";
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
     async function fetchTodos() {
@@ -58,4 +58,3 @@
   </script>
 </body>
 </html>
-
