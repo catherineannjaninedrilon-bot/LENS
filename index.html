@@ -31,10 +31,14 @@
     .todo-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 6px; font-weight: bold; font-size: 1.1em; color: #222; }
     .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
     .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-    input[type="text"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 6px; font-size: 1em; background-color: #fffdf7; }
-    button { width: 100%; padding: 12px 20px; background-color: #3ecf8e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; }
-    button:hover { background-color: #34b37a; }
-    #add-btn { width: auto; white-space: nowrap; }
+    .btn-group { display: flex; gap: 10px; }
+    input[type="text"], input[type="password"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 6px; font-size: 1em; background-color: #fffdf7; }
+    button { width: 100%; padding: 12px 20px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; }
+    .login-btn { background-color: #3ecf8e; }
+    .login-btn:hover { background-color: #34b37a; }
+    .signup-btn { background-color: #2c3e50; }
+    .signup-btn:hover { background-color: #1a252f; }
+    #add-btn { width: auto; background-color: #3ecf8e; white-space: nowrap; }
     .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.85em; }
     .delete-btn:hover { background-color: #e04343; }
     .logout-btn { background-color: #7f8c8d; margin-top: 10px; }
@@ -48,9 +52,9 @@
     <h1>LENS: Learning Engagement, Navigation and Support</h1>
     <p class="tagline">See the story, support the journey</p>
 
-    <!-- SIGN IN CONTAINER (Completely unrestricted) -->
+    <!-- SIGN IN & SIGN UP CONTAINER -->
     <div id="login-container" class="card">
-      <h3>Sign In to Your Account</h3>
+      <h3>Sign In or Create an Account</h3>
       <div class="form-group">
         <div>
           <label style="font-weight: bold; display: block; margin-bottom: 5px;">Email Address:</label>
@@ -58,9 +62,12 @@
         </div>
         <div>
           <label style="font-weight: bold; display: block; margin-bottom: 5px;">Password:</label>
-          <input type="text" id="password-input" placeholder="Enter password" />
+          <input type="password" id="password-input" placeholder="Enter password" />
         </div>
-        <button id="login-btn">Sign In Instantly</button>
+        <div class="btn-group">
+          <button id="login-btn" class="login-btn">Sign In</button>
+          <button id="signup-btn" class="signup-btn">Create Account</button>
+        </div>
       </div>
       <p id="auth-status" style="margin-top: 10px; font-weight: bold;"></p>
     </div>
@@ -107,6 +114,7 @@
     const emailInput = document.getElementById('email-input');
     const passwordInput = document.getElementById('password-input');
     const loginBtn = document.getElementById('login-btn');
+    const signupBtn = document.getElementById('signup-btn');
     const logoutBtn = document.getElementById('logout-btn');
     const userEmailSpan = document.getElementById('user-email');
     const authStatus = document.getElementById('auth-status');
@@ -129,6 +137,35 @@
     }
     checkSession();
 
+    // NEW: Handle User Sign Up / Registration
+    signupBtn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        alert('Please enter both an email and password to register.');
+        return;
+      }
+
+      authStatus.style.color = '#333';
+      authStatus.innerText = 'Creating account...';
+
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        alert('Registration Error: ' + error.message);
+        authStatus.style.color = '#c0392b';
+        authStatus.innerText = `Registration Failed: ${error.message}`;
+      } else {
+        alert('Account successfully created! You are now logged in.');
+        showAppInterface(data.user.email);
+      }
+    });
+
+    // Handle User Login
     loginBtn.addEventListener('click', async () => {
       const email = emailInput.value.trim();
       const password = passwordInput.value;
@@ -141,7 +178,6 @@
       authStatus.style.color = '#333';
       authStatus.innerText = 'Verifying credentials...';
 
-      // RESTRICTION REMOVED: Bypasses domain checks entirely
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
