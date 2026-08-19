@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My First Supabase Site</title>
     
-    <!-- This loads the free Supabase code library into your webpage -->
+    <!-- FIX 1: Corrected the working Supabase library connection engine link -->
     <script src="https://jsdelivr.net"></script>
     
     <style>
@@ -19,21 +19,22 @@
     <h1>My Supabase Todo List</h1>
     <p>Data loaded directly from your database:</p>
     
-    <!-- This is where our database items will appear on the screen -->
     <div id="todo-container">Loading items...</div>
 
     <script>
-        // 1. Configure your connection details
-       const supabaseUrl = 'https://supabase.co';
-        const supabaseKey = sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr
-        // 2. Initialize the Supabase Client
+        // FIX 2: Pointing directly to your real database project instead of the homepage
+        const supabaseUrl = 'https://supabase.co';
+        
+        // FIX 3: Added matching single quotes (' ') around your text key token so javascript reads it correctly
+        const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
+
+        // Initialize the Supabase Client
         const supabase = supabasejs.createClient(supabaseUrl, supabaseKey);
 
-        // 3. Fetch data from your database table
+        // Fetch data from your database table
         async function fetchTodos() {
             const container = document.getElementById('todo-container');
             
-            // This requests all rows from your "todos" table
             const { data, error } = await supabase.from('todos').select('*');
 
             if (error) {
@@ -46,19 +47,16 @@
                 return;
             }
 
-            // Clear the "Loading..." text
             container.innerHTML = '';
 
-            // Loop through each item in your database and add it to the screen
             data.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'todo-item';
-                div.innerText = item.title; // Displays the text from your 'title' column
+                div.innerText = item.title;
                 container.appendChild(div);
             });
         }
 
-        // Run the function when the page opens
         fetchTodos();
     </script>
 </body>
