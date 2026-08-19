@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LENS</title>
+  <title>LENS School Dashboard</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       background: linear-gradient(135deg, #fef9e7 0%, #fbf3cd 100%);
       position: relative;
       overflow-x: hidden;
     }
 
+    /* Moving background journey map lines layer */
     .journey-background {
       position: fixed;
       top: 0;
@@ -24,59 +25,76 @@
       z-index: 0;
       pointer-events: none;
     }
-
     .journey-path {
-      stroke: rgba(183, 149, 11, 0.15);
+      stroke: rgba(183, 149, 11, 0.12);
       stroke-width: 6;
       stroke-dasharray: 12, 12;
       fill: none;
       animation: journeyFlow 30s linear infinite;
     }
-
-    @keyframes journeyFlow {
-      to { stroke-dashoffset: -240; }
-    }
-
-    .milestone {
-      fill: rgba(62, 207, 142, 0.2);
-      stroke: rgba(255, 255, 255, 0.6);
-      stroke-width: 2;
-    }
+    @keyframes journeyFlow { to { stroke-dashoffset: -240; } }
 
     .wrapper {
       position: relative;
       z-index: 1; 
-      max-width: 600px;
-      margin: 40px auto;
+      max-width: 1100px; /* Widened layout frame to organize dashboard blocks cleanly */
+      margin: 30px auto;
       padding: 20px;
-      line-height: 1.6;
     }
     
+    header { text-align: center; margin-bottom: 30px; }
     h1 { color: #2c3e50; margin-bottom: 5px; font-weight: 800; text-shadow: 1px 1px 0px white; }
-    .tagline { color: #555; font-style: italic; margin-top: 0; margin-bottom: 30px; font-size: 1.1em; }
-    
-    .card { 
-      background: rgba(255, 255, 255, 0.92); 
-      padding: 25px; 
-      border-radius: 12px; 
-      box-shadow: 0 8px 32px rgba(183, 149, 11, 0.08); 
-      margin-bottom: 20px; 
-      border: 1px solid rgba(242, 237, 213, 0.6); 
-      backdrop-filter: blur(8px); 
-    }
-
-    .todo-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 6px; font-weight: bold; font-size: 1.1em; color: #222; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .tagline { color: #555; font-style: italic; margin-top: 0; font-size: 1.1em; }
+    .card { background: rgba(255, 255, 255, 0.94); padding: 25px; border-radius: 14px; box-shadow: 0 10px 30px rgba(183, 149, 11, 0.08); margin-bottom: 20px; border: 1px solid rgba(242, 237, 213, 0.7); backdrop-filter: blur(10px); }
+    .login-card { max-width: 500px; margin: 60px auto; }
     .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
-    .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-    input[type="text"], input[type="password"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 6px; font-size: 1em; background-color: #fffdf7; }
-    button { width: 100%; padding: 12px 20px; background-color: #3ecf8e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(62, 207, 142, 0.2); }
+    input[type="text"], input[type="password"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 8px; font-size: 1em; background-color: #fffdf7; }
+    
+    /* 1. DYNAMIC TWO-COLUMN DASHBOARD GRID PANELS */
+    .dashboard-grid { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 20px; }
+    @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
+
+    /* 2. SCHOOL HERO HERO BANNER W/ BACK PANEL PHOTOGRAPHY */
+    .dashboard-banner {
+      grid-column: 1 / -1;
+      position: relative;
+      background-color: #2c3e50;
+      /* REPLACE the URL path text below inside the quotes with your actual school photo url link later */
+      background-image: linear-gradient(rgba(44, 62, 80, 0.75), rgba(44, 62, 80, 0.85)), url('https://unsplash.com');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 35px 30px;
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 25px rgba(44, 62, 80, 0.15);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .banner-text h2 { margin: 0; font-size: 1.8em; font-weight: 800; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .banner-text p { margin: 6px 0 0 0; opacity: 0.9; font-size: 1em; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+
+    /* 3. CORE ANALYTICS MONITOR MATRIX GRID */
+    .stats-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; }
+    .stat-box { text-align: center; padding: 15px 10px; background: #fffdf7; border-radius: 10px; border: 1px solid #f2edd5; box-shadow: 0 2px 5px rgba(0,0,0,0.01); transition: transform 0.2s; }
+    .stat-box:hover { transform: translateY(-2px); }
+    .stat-box.full-width { grid-column: 1 / -1; background: #fbf9f0; }
+    .stat-number { font-size: 1.8em; font-weight: 800; color: #2c3e50; margin-bottom: 2px; }
+    .stat-label { color: #555; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+
+    /* Recent activities log row indicators layout */
+    .activity-stream { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+    .activity-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 14px; border-left: 5px solid #3ecf8e; border-radius: 8px; font-weight: bold; font-size: 1em; color: #222; border: 1px solid #f2edd5; border-left-width: 5px; }
+    
+    .input-group { display: flex; flex-direction: column; gap: 12px; }
+    button { padding: 12px 20px; background-color: #3ecf8e; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(62, 207, 142, 0.2); }
     button:hover { background-color: #34b37a; transform: translateY(-1px); }
-    #add-btn { width: auto; white-space: nowrap; }
-    .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.85em; }
+    .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.8em; border-radius: 6px; box-shadow: 0 2px 4px rgba(255, 77, 77, 0.1); }
     .delete-btn:hover { background-color: #e04343; }
-    .logout-btn { background-color: #7f8c8d; margin-top: 10px; }
-    .hidden { display: none; }
-    .user-info { color: #666; font-style: italic; margin-bottom: 20px; }
+    .logout-btn { background-color: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; padding: 10px 18px; font-size: 0.9em; border-radius: 8px; }
+    .logout-btn:hover { background-color: rgba(255,255,255,0.25); }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
@@ -84,19 +102,17 @@
   <svg class="journey-background" xmlns="http://w3.org" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
     <path class="journey-path" d="M -50,150 C 300,50 400,450 700,350 C 1000,250 1100,750 1500,650" />
     <path class="journey-path" d="M -20,300 C 250,500 550,200 850,550 C 1150,800 1250,400 1480,500" opacity="0.5" />
-    <circle class="milestone" cx="150" cy="115" r="10" />
-    <circle class="milestone" cx="480" cy="380" r="14" />
-    <circle class="milestone" cx="810" cy="320" r="12" />
-    <circle class="milestone" cx="1180" cy="620" r="16" />
   </svg>
 
   <div class="wrapper">
-    <h1>LENS: Learning Engagement, Navigation and Support</h1>
-    <p class="tagline">See the story, support the journey</p>
+    <header id="landing-header">
+      <h1>LENS: Learning Engagement, Navigation and Support</h1>
+      <p class="tagline">See the story, support the journey</p>
+    </header>
 
-    <!-- SIGN IN CONTAINER -->
-    <div id="login-container" class="card">
-      <h3>Sign In to Your Account</h3>
+    <!-- SIGN IN GATE -->
+    <div id="login-container" class="card login-card">
+      <h3 style="margin-top:0;">Sign In to Your Account</h3>
       <div class="form-group">
         <div>
           <label style="font-weight: bold; display: block; margin-bottom: 5px;">Email Address:</label>
@@ -108,121 +124,78 @@
         </div>
         <button id="login-btn">Sign In or Create Account</button>
       </div>
-      <p id="auth-status" style="margin-top: 10px; font-weight: bold;"></p>
     </div>
 
-    <!-- MAIN APP CONTAINER -->
-    <div id="app-container" class="hidden">
-      <div class="card">
-        <p class="user-info">Logged in as: <span id="user-email"></span></p>
+    <!-- RESTRUCTURED WORKSPACE: ADVANCED SCHOOL DASHBOARD CONSOLE -->
+    <div id="app-container" class="dashboard-grid hidden">
+      
+      <!-- Top Row Section Banner Header Framework with School Image Backdrop -->
+      <div class="dashboard-banner">
+        <div class="banner-text">
+          <h2>LENS Administrative Dashboard</h2>
+          <p>Logged in as: <span id="user-email" style="font-weight: bold;"></span></p>
+        </div>
         <button id="logout-btn" class="logout-btn">Sign Out</button>
       </div>
 
-      <div class="card">
-        <h3>Add New Item</h3>
-        <div class="input-group">
-          <input type="text" id="todo-input" placeholder="Type a task here..." />
-          <button id="add-btn">Add Item</button>
+      <!-- LEFT SIDE CONSOLE BLOCK: Analytics Metrics Counters and Operations Input -->
+      <div class="left-panel">
+        <div class="card">
+          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Performance & Guidance Indicators</h3>
+          <div class="stats-matrix">
+            <div class="stat-box full-width">
+              <div class="stat-number">1,240</div>
+              <div class="stat-label">Total Learners</div>
+            </div>
+            <div class="stat-box" style="border-top: 4px solid #f39c12;">
+              <div class="stat-number">14</div>
+              <div class="stat-label">Attendance Concerns</div>
+            </div>
+            <div class="stat-box" style="border-top: 4px solid #e74c3c;">
+              <div class="stat-number">32</div>
+              <div class="stat-label">Needing Intervention</div>
+            </div>
+            <div class="stat-box" style="border-top: 4px solid #9b59b6;">
+              <div class="stat-number">8</div>
+              <div class="stat-label">Active Guidance Cases</div>
+            </div>
+            <div class="stat-box" style="border-top: 4px solid #34495e;">
+              <div class="stat-number">5</div>
+              <div class="stat-label">Pending Referrals</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0; color:#2c3e50;">Log Activity / Note</h3>
+          <div class="input-group">
+            <input type="text" id="todo-input" placeholder="Type a new activity event or log note..." />
+            <button id="add-btn">Add Activity Entry</button>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <p>Data loaded directly from your database:</p>
-        <div id="todo-container">Loading items...</div>
+      <!-- RIGHT SIDE CONSOLE BLOCK: Interactive Recent Activities Stream Ledger -->
+      <div class="right-panel">
+        <div class="card" style="min-height: 480px;">
+          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Recent Activities Log Stream</h3>
+          <div id="todo-container" class="activity-stream">Loading activities ledger logs...</div>
+        </div>
       </div>
+
     </div>
   </div>
 
   <script type="module">
-    // LOCAL SECURITY HANDLER: Bypasses browser tracking barriers completely
     const loginContainer = document.getElementById('login-container');
     const appContainer = document.getElementById('app-container');
+    const landingHeader = document.getElementById('landing-header');
     const emailInput = document.getElementById('email-input');
     const passwordInput = document.getElementById('password-input');
     const loginBtn = document.getElementById('login-btn');
     const logoutBtn = document.getElementById('logout-btn');
     const userEmailSpan = document.getElementById('user-email');
-    const authStatus = document.getElementById('auth-status');
     const todoContainer = document.getElementById('todo-container');
     const todoInput = document.getElementById('todo-input');
     const addBtn = document.getElementById('add-btn');
 
-    // Local data storage list fallback array strategy
-    let localItems = JSON.parse(localStorage.getItem('LENS_items')) || [
-      { id: 1, title: 'Build my first web app' }
-    ];
-
-    function showAppInterface(email) {
-      loginContainer.style.display = 'none';
-      appContainer.classList.remove('hidden');
-      userEmailSpan.innerText = email;
-      renderItems();
-    }
-
-    // Explicitly auto-login local storage session logs if they exist
-    const savedUser = localStorage.getItem('LENS_user');
-    if (savedUser) {
-      showAppInterface(savedUser);
-    }
-
-    // Direct, zero-block click processor interface
-    loginBtn.addEventListener('click', () => {
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-
-      if (!email || !password) {
-        alert('Please enter both your email and password.');
-        return;
-      }
-      
-      // Save login state locally to instantly break past network firewalls
-      localStorage.setItem('LENS_user', email);
-      showAppInterface(email);
-    });
-
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('LENS_user');
-      window.location.reload();
-    });
-
-    function renderItems() {
-      if (localItems.length === 0) {
-        todoContainer.innerHTML = '<p style="color: #7f8c8d;">No items found! Add a task above.</p>';
-        return;
-      }
-
-      todoContainer.innerHTML = '';
-      localItems.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'todo-item';
-        
-        const textSpan = document.createElement('span');
-        textSpan.innerText = item.title;
-        div.appendChild(textSpan);
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'delete-btn';
-        deleteBtn.innerText = 'Delete';
-        deleteBtn.addEventListener('click', () => {
-          localItems.splice(index, 1);
-          localStorage.setItem('LENS_items', JSON.stringify(localItems));
-          renderItems();
-        });
-
-        div.appendChild(deleteBtn);
-        todoContainer.appendChild(div);
-      });
-    }
-
-    addBtn.addEventListener('click', () => {
-      const text = todoInput.value.trim();
-      if (!text) return;
-
-      localItems.push({ id: Date.now(), title: text });
-      localStorage.setItem('LENS_items', JSON.stringify(localItems));
-      todoInput.value = '';
-      renderItems();
-    });
-  </script>
-</body>
-</html>
