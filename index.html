@@ -4,8 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LENS School Dashboard</title>
-  <!-- CORE SUPABASE FRAMEWORK ENGINE -->
-  <script src="https://jsdelivr.net"></script>
+  
+  <!-- UNBLOCKED CLOUDFLARE CDN LINK FOR THE SUPABASE CLIENT LIBRARY -->
+  <script src="https://cloudflare.com"></script>
+
   <style>
     html, body {
       margin: 0;
@@ -114,7 +116,7 @@
       <p class="tagline">See the story, support the journey</p>
     </header>
 
-    <!-- SIMPLIFIED TEACHER GATEWAY CARD -->
+    <!-- TEACHER GATEWAY CARD -->
     <div id="login-container" class="card login-card">
       <h3 style="margin-top:0; color: #2c3e50;">Teacher Portal Gateway</h3>
       <p style="color:#666; font-size:0.9em; margin-top:-5px; margin-bottom:25px;">Please verify your school email and portal access key to view active tracking indicators.</p>
@@ -140,10 +142,10 @@
         <div class="banner-text">
           <h2>LENS: Learning Engagement, Navigation and Support</h2>
           <p>Active Portal Operator: <span id="user-email" style="font-weight: bold; text-decoration: underline;"></span></p>
-        </disb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBrv>
+        </div>
         <button id="logout-btn" class="logout-btn">Secure Sign Out</button>
       </div>
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
       <!-- LEFT SIDE PANEL: Operational Stats Counter Blocks -->
       <div class="left-panel">
         <div class="card">
@@ -184,10 +186,12 @@ const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     // SUPABASE DATA PATH CONNECTOR CONFIGURATION
     // ==========================================
     const SUPABASE_URL = "https://supabase.co"; 
-    const SUPABASE_ANON_KEY = "PASTE_YOUR_ACTUAL_ANON_PUBLIC_KEY_HERE"; // <-- Put your real public API key string here!
+    
+    // ⚠️ PLUG YOUR KEY IN HERE BETWEEN THE QUOTES
+    const SUPABASE_ANON_KEY = "PASTE_YOUR_ACTUAL_ANON_PUBLIC_KEY_HERE"; 
 
-    // Initialize connection strings
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Initialize connection using correct capital namespace call
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Get document control elements
     const loginContainer = document.getElementById('login-container');
@@ -207,6 +211,3 @@ const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     function handleCustomLogin() {
       const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-
-      if (!email) {
