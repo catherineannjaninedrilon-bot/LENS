@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LENS School Dashboard</title>
   
-  <!-- EMBEDDED COMPRESSED SUPABASE CORE CLIENT ENGINE (BYPASSES CDNS & CORB) -->
-  <script>
-    !function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e="undefined"!=typeof globalThis?globalThis:e||self).supabase={})}(this,(function(e){"use strict";var t="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{};function r(e){return e&&e.__esModule?e:{default:e}}function n(e){var t=e.default;if("function"==typeof t){var r=function r(){return t.apply(this,arguments)};r.prototype=t.prototype}else r=t;return r}function o(e){return"function"==typeof e}var i=Array.isArray,s=Object.assign,a=Object.prototype.toString;function u(e){return"[object Object]"===a.call(e)}function c(e){return"[object RegExp]"===a.call(e)}function f(e){return e&&"object"==typeof e&&"number"==typeof e.length&&!i(e)}function l(e){return"string"==typeof e}function h(e){return"number"==typeof e}function d(e){return l(e)?e:h(e)?String(e):""}function p(e){return e&&o(e.then)}function m(e){return"function"==typeof e.cancel}function v(e,t){return Object.prototype.hasOwnProperty.call(e,t)}var y=function(){function e(e){this.string=e}return e.prototype.toString=function(){return this.string},e}(),g=function(){function e(e){this.string=e}return e.prototype.toString=function(){return this.string},e}();function _(e){return new y(e)}function b(e){return new g(e)}function w(e){return e instanceof y||e instanceof g?e.toString():e}function m(e){return e&&o(e.abort)}var x=function(){function e(e,t){this.status=e,this.message=t}return e.prototype.toString=function(){return"["+this.status+"] "+this.message},e}(),E=function(){function e(e){this.value=e}return e.prototype.toString=function(){return String(this.value)},e}(),O=function(){function e(e){this.value=e}return e.prototype.toString=function(){return String(this.value)},e}();function T(e){return new E(e)}function S(e){return new O(e)}var k=function(){function e(e){this.headers=e||{}}return e.prototype.get=function(e){return this.headers[e.toLowerCase()]},e.prototype.set=function(e,t){this.headers[e.toLowerCase()]=t},e.prototype.has=function(e){return v(this.headers,e.toLowerCase())},e.prototype.delete=function(e){delete this.headers[e.toLowerCase()]},e.prototype.forEach=function(e){for(var t in this.headers)e(this.headers[t],t,this)},e}(),j=function(){function e(e,t){this.url=e,this.options=t||{},this.headers=new k(this.options.headers)}return e.prototype.clone=function(){return new e(this.url,s({},this.options,{headers:s({},this.headers.headers)}))},e}(),A=function(){function e(e,t){this.status=e,this.headers=new k(t)}return e.prototype.json=function(){return p(this.body)?this.body:JSON.parse(this.body)},e.prototype.text=function(){return p(this.body)?this.body:this.body},e}();function R(e,t,r){var n=new j(e,t);return o(r)?r(n):P(n)}function P(e){return new Promise((function(t,r){var n=new XMLHttpRequest;n.open(e.options.method||"GET",e.url,!0),e.headers.forEach((function(e,t){n.setRequestHeader(t,e)}));var o=e.options.body;n.onreadystatechange=function(){if(4===n.readyState){var r=new A(n.status,function(e){for(var t={},r=e.trim().split(/[\r\n]+/),n=0;n<r.length;n++){var o=r[n].split(": "),i=o.shift(),s=o.join(": ");i&&(t[i.toLowerCase()]=s)}return t}(n.getAllResponseHeaders()));r.body=n.responseText,t(r)}},n.onerror=function(){r(new Error("Network request failed"))},n.send(o)}))}var I=function(){function e(e,t){this.url=e,this.headers=t||{},this.queryParams={}}return e.prototype.setHeaders=function(e){return this.headers=s({},this.headers,e),this},e.prototype.setQueryParam=function(e,t){return this.queryParams[e]=t,this},e.prototype.buildUrl=function(e){var t=this.url+(e||""),r=Object.keys(this.queryParams).map((function(e){return encodeURIComponent(e)+"="+encodeURIComponent(this.queryParams[e])}),this).join("&");return r&&(t+=(t.includes("?")?"&":"?")+r),t},e.prototype.request=function(e,t,r,n){var o=this.buildUrl(e),i=s({method:t,headers:this.headers},n);return r&&(i.body=l(r)?r:JSON.stringify(r),i.headers["content-type"]="application/json"),R(o,i)},e.prototype.get=function(e,t){return this.request(e,"GET",null,t)},e.prototype.post=function(e,t,r){return this.request(e,"POST",t,r)},e.prototype.put=function(e,t,r){return this.request(e,"PUT",t,r)},e.prototype.delete=function(e,t,r){return this.request(e,"DELETE",t,r)},e}(),C=function(){function e(e){this.client=e}return e.prototype.select=function(e){return this.client.setQueryParam("select",e||"*"),this},e.prototype.insert=function(e,t){return this.client.setQueryParam("columns",Object.keys(i(e)?e:e).join(",")),this.client.post("",e,t)},e.prototype.update=function(e,t){return this.client.patch("",e,t)},e.prototype.delete=function(e){return this.client.delete("",null,e)},e.prototype.eq=function(e,t){return this.client.setQueryParam(e,"eq."+t),this},e.prototype.match=function(e){for(var t in e)this.eq(t,e[t]);return this},e}(),U=function(){function e(e,t){this.url=e,this.options=t||{},this.headers=s({},t.headers),this.headers.Authorization||(this.headers.Authorization="Bearer "+t.apiKey),this.headers.apikey||(this.headers.apikey=t.apiKey)}return e.prototype.from=function(e){var t=new I(this.url+"/rest/v1/"+e,this.headers);return new C(t)},e.prototype.rpc=function(e,t){var r=new I(this.url+"/rest/v1/rpc/"+e,this.headers);return r.post("",t)},e}(),L=function(){function e(e){this.client=e}return e.prototype.signUp=function(e){return this.client.post("/signup",e)},e.prototype.signInWithPassword=function(e){return this.client.post("/token?grant_type=password",e)},e.prototype.signOut=function(){return this.client.post("/logout",null)},e.prototype.getSession=function(){return this.client.get("/session")},e}(),q=function(){function e(e,t){this.url=e,this.options=t||{},this.headers=s({},t.headers),this.headers.Authorization||(this.headers.Authorization="Bearer "+t.apiKey),this.headers.apikey||(this.headers.apikey=t.apiKey);var r=new I(this.url+"/auth/v1",this.headers);this.auth=new L(r)}return e.prototype.from=function(e){var t=new U(this.url,this.options);return t.from(e)},e.prototype.rpc=function(e,t){var r=new U(this.url,this.options);return r.rpc(e,t)},e}();e.createClient=function(e,t,r){return new q(e,s({apiKey:t},r))},Object.defineProperty(e,"__esModule",{value:!0})}));
-  </script>
+  <!-- HIGHLY RELIABLE UNBLOCKED UNPKG LINK FOR THE SUPABASE FRAMEWORK -->
+  <script src="https://unpkg.com"></script>
 
   <style>
     html, body {
@@ -20,8 +18,6 @@
       position: relative;
       overflow-x: hidden;
     }
-
-    /* Moving background journey map lines layer */
     .journey-background {
       position: fixed;
       top: 0;
@@ -39,7 +35,6 @@
       animation: journeyFlow 30s linear infinite;
     }
     @keyframes journeyFlow { to { stroke-dashoffset: -240; } }
-
     .wrapper {
       position: relative;
       z-index: 1; 
@@ -47,21 +42,14 @@
       margin: 30px auto;
       padding: 20px;
     }
-    
     header { text-align: center; margin-bottom: 30px; }
     h1 { color: #2c3e50; margin-bottom: 5px; font-weight: 800; text-shadow: 1px 1px 0px white; }
     .tagline { color: #555; font-style: italic; margin-top: 0; font-size: 1.1em; }
-    
-    /* Portal Gate Cards */
     .card { background: rgba(255, 255, 255, 0.94); padding: 25px; border-radius: 14px; box-shadow: 0 10px 30px rgba(183, 149, 11, 0.08); margin-bottom: 20px; border: 1px solid rgba(242, 237, 213, 0.7); backdrop-filter: blur(10px); }
     .login-card { max-width: 450px; margin: 60px auto; border-top: 5px solid #2c3e50; }
     .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
-    
-    /* Two-Column Dashboard Layout */
     .dashboard-grid { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 20px; }
     @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
-
-    /* School Banner Framework with backdrop image asset */
     .dashboard-banner {
       grid-column: 1 / -1;
       position: relative;
@@ -80,14 +68,144 @@
     }
     .banner-text h2 { margin: 0; font-size: 1.8em; font-weight: 800; letter-spacing: 0.5px; }
     .banner-text p { margin: 6px 0 0 0; opacity: 0.9; font-size: 1em; }
-
-    /* Performance Analytics Monitor Grid Matrix */
     .stats-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; }
     .stat-box { text-align: center; padding: 15px 10px; background: #fffdf7; border-radius: 10px; border: 1px solid #f2edd5; box-shadow: 0 2px 5px rgba(0,0,0,0.01); }
     .stat-box.full-width { grid-column: 1 / -1; background: #fbf9f0; }
     .stat-number { font-size: 1.8em; font-weight: 800; color: #2c3e50; margin-bottom: 2px; }
     .stat-label { color: #555; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
-
-    /* Recent activities ledger logs */
     .activity-stream { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
-.activity-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 14px; border-left: 5px solid #3ecf8e; border-radius: 8px; font-weight: bold; font-size: 1em; color: #222; border: 1px solid #f2edd5; border-left-width: 5px; }.input-group { display: flex; flex-direction: column; gap: 12px; }input[type="email"], input[type="password"], input[type="text"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 8px; font-size: 1em; background-color: #fffdf7; }input:focus { outline: none; border-color: #2c3e50; box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1); }button { padding: 12px 20px; background-color: #2c3e50; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; }button:hover { background-color: #1a252f; transform: translateY(-1px); }.logout-btn { background-color: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; padding: 10px 18px; font-size: 0.9em; border-radius: 8px; }.logout-btn:hover { background-color: rgba(255,255,255,0.25); }.hidden { display: none !important; }Teacher Portal GatewayPlease verify your school email and portal access key to view active tracking indicators.Teacher Email:Portal Access Key:Sign In to DashboardLENS: Learning Engagement, Navigation and SupportActive Portal Operator: Secure Sign OutPerformance & Guidance Indicators0Total Learners0Attendance Records0Logged OffensesActive Learners LedgerLoading database layers...// ==========================================// SUPABASE DATA PATH CONNECTOR CONFIGURATION// ==========================================const SUPABASE_URL = "supabase.co";// ⚠️ PLUG YOUR KEY IN HERE BETWEEN THE QUOTESconst SUPABASE_ANON_KEY = "PASTE_YOUR_ACTUAL_ANON_PUBLIC_KEY_HERE";// Initialize client connection using embedded namespaceconst supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);// Get document control elementsconst loginContainer = document.getElementById('login-container');const appContainer = document.getElementById('app-container');const landingHeader = document.getElementById('landing-header');const emailInput = document.getElementById('email-input');const passwordInput = document.getElementById('password-input');const loginBtn = document.getElementById('login-btn');const logoutBtn = document.getElementById('logout-btn');const authStatus = document.getElementById('auth-status');const userEmailSpan = document.getElementById('user-email');const learnersList = document.getElementById('learners-list');// Event hooksloginBtn.addEventListener('click', handleCustomLogin);logoutBtn.addEventListener('click', handleLogout);function handleCustomLogin() {const email = emailInput.value.trim();const password = passwordInput.value.trim();if (!email) {authStatus.innerText = "Please enter an official school email address.";return;}// PASSKEY GUARD DOORMAN CHECKif (password !== "LENS2026") {authStatus.innerText = "Invalid Portal Access Key. Please check credentials.";return;}authStatus.innerText = "";showDashboard(email);}function handleLogout() {appContainer.classList.add('hidden');loginContainer.classList.remove('hidden');landingHeader.classList.remove('hidden');emailInput.value = "";passwordInput.value = "";}function showDashboard(email) {loginContainer.classList.add('hidden');landingHeader.classList.add('hidden');appContainer.classList.remove('hidden');userEmailSpan.innerText = email;// Fetch table records metrics arraysloadDashboardMetrics();}async function loadDashboardMetrics() {try {// Query rows safely mapping table names from your visualizer schemaconst { data: learners, error: lErr } = await supabaseClient.from('learners').select('');const { data: attendance } = await supabaseClient.from('attendance').select('');const { data: offenses } = await supabaseClient.from('offenses').select('*');// Update indicators text nodesdocument.getElementById('total-learners-count').innerText = learners ? learners.length : 0;document.getElementById('attendance-issues-count').innerText = attendance ? attendance.length : 0;document.getElementById('offenses-count').innerText = offenses ? offenses.length : 0;// Render rows text entries list blocklearnersList.innerHTML = "";if (lErr || !learners || learners.length === 0) {learnersList.innerHTML = <p style="color:#666;">No profiles found inside your learners table, or Row Level Security (RLS) is active.</p>;return;}learners.forEach(student => {const item = document.createElement('div');item.className = "activity-item";// Strict schema mapping: using first_name + last_name from visual modelconst fName = student.first_name || '';const lName = student.last_name || '';const studentName = (fName + ' ' + lName).trim() || 'Registered Learner';item.innerHTML = <span>👤 ${studentName}</span> <span style="font-size:0.85em; opacity:0.6; font-weight:normal;">Grade: ${student.grade_level || 'N/A'}</span>;learnersList.appendChild(item);});} catch (err) {learnersList.innerHTML = <p style="color:red;">Error interacting with database stream layers.</p>;}}
+    .activity-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 14px; border-left: 5px solid #3ecf8e; border-radius: 8px; font-weight: bold; font-size: 1em; color: #222; border: 1px solid #f2edd5; border-left-width: 5px; }
+    input[type="email"], input[type="password"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 8px; font-size: 1em; background-color: #fffdf7; }
+    input:focus { outline: none; border-color: #2c3e50; box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1); }
+    button { padding: 12px 20px; background-color: #2c3e50; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; }
+    button:hover { background-color: #1a252f; transform: translateY(-1px); }
+    .logout-btn { background-color: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; padding: 10px 18px; font-size: 0.9em; border-radius: 8px; }
+    .logout-btn:hover { background-color: rgba(255,255,255,0.25); }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <svg class="journey-background" xmlns="http://w3.org" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <path class="journey-path" d="M -50,150 C 300,50 400,450 700,350 C 1000,250 1100,750 1500,650" />
+    <path class="journey-path" d="M -20,300 C 250,500 550,200 850,550 C 1150,800 1250,400 1480,500" opacity="0.5" />
+  </svg>
+
+  <div class="wrapper">
+    <header id="landing-header">
+      <h1>LENS: Learning Engagement, Navigation and Support</h1>
+      <p class="tagline">See the story, support the journey</p>
+    </header>
+
+    <div id="login-container" class="card login-card">
+      <h3 style="margin-top:0; color: #2c3e50;">Teacher Portal Gateway</h3>
+      <p style="color:#666; font-size:0.9em; margin-top:-5px; margin-bottom:25px;">Please verify your school email and portal access key to view active tracking indicators.</p>
+      <div class="form-group">
+        <div>
+          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Teacher Email:</label>
+          <input type="email" id="email-input" placeholder="username@deped.gov.ph" />
+        </div>
+        <div>
+          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Portal Access Key:</label>
+          <input type="password" id="password-input" placeholder="Enter portal access key" />
+        </div>
+        <button id="login-btn">Sign In to Dashboard</button>
+      </div>
+      <p id="auth-status" style="color:red; font-weight:bold; margin-top:10px;"></p>
+    </div>
+
+    <div id="app-container" class="dashboard-grid hidden">
+      <div class="dashboard-banner">
+        <div class="banner-text">
+          <h2>LENS: Learning Engagement, Navigation and Support</h2>
+          <p>Active Portal Operator: <span id="user-email" style="font-weight: bold; text-decoration: underline;"></span></p>
+        </div>
+        <button id="logout-btn" class="logout-btn">Secure Sign Out</button>
+      </div>
+
+      <div class="left-panel">
+        <div class="card">
+          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Performance & Guidance Indicators</h3>
+          <div class="stats-matrix">
+            <div class="stat-box full-width">
+              <div class="stat-number" id="total-learners-count">0</div>
+              <div class="stat-label">Total Learners</div>
+            </div>
+            <div class="stat-box" style="border-top: 4px solid #f39c12;">
+              <div class="stat-number" id="attendance-issues-count">0</div>
+              <div class="stat-label">Attendance Records</div>
+            </div>
+            <div class="stat-box" style="border-top: 4px solid #e74c3c;">
+              <div class="stat-number" id="offenses-count">0</div>
+              <div class="stat-label">Logged Offenses</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-panel">
+        <div class="card">
+          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Active Learners Ledger</h3>
+          <div id="learners-list" class="activity-stream">
+            <p style="color:#666;">Loading database layers...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://supabase.co"; 
+    const SUPABASE_ANON_KEY = "PASTE_YOUR_ACTUAL_ANON_PUBLIC_KEY_HERE"; 
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const loginContainer = document.getElementById('login-container');
+    const appContainer = document.getElementById('app-container');
+    const landingHeader = document.getElementById('landing-header');
+    const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const authStatus = document.getElementById('auth-status');
+    const userEmailSpan = document.getElementById('user-email');
+    const learnersList = document.getElementById('learners-list');
+
+    loginBtn.addEventListener('click', handleCustomLogin);
+    logoutBtn.addEventListener('click', handleLogout);
+
+    function handleCustomLogin() {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!email) {
+        authStatus.innerText = "Please enter an official school email address.";
+        return;
+      }
+      if (password !== "LENS2026") {
+        authStatus.innerText = "Invalid Portal Access Key. Please check credentials.";
+        return;
+      }
+      authStatus.innerText = "";
+      showDashboard(email);
+    }
+
+    function handleLogout() {
+      appContainer.classList.add('hidden');
+      loginContainer.classList.remove('hidden');
+      landingHeader.classList.remove('hidden');
+      emailInput.value = "";
+      passwordInput.value = "";
+    }
+
+    function showDashboard(email) {
+      loginContainer.classList.add('hidden');
+      landingHeader.classList.add('hidden');
+      appContainer.classList.remove('hidden');
+      userEmailSpan.innerText = email;
+      loadDashboardMetrics();
+    }
+
+    async function loadDashboardMetrics() {
+      try {
+        const { data: learners, error: lErr } = await supabaseClient.from('learners').select('*');
