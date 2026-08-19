@@ -98,7 +98,7 @@
     <h1>LENS: Learning Engagement, Navigation and Support</h1>
     <p class="tagline">See the story, support the journey</p>
 
-    <!-- FIXED: SECURE PASSWORD LOGIN CONTAINER -->
+    <!-- SIGN IN CONTAINER -->
     <div id="login-container" class="card">
       <h3>Sign In to Your Account</h3>
       <div class="form-group">
@@ -143,7 +143,16 @@
 
     const supabaseUrl = 'https://supabase.co';
     const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    // UPDATED: Forces the client engine to bypass strict third-party cookie restrictions entirely
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        storage: window.localStorage,
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true
+      }
+    });
 
     const loginContainer = document.getElementById('login-container');
     const appContainer = document.getElementById('app-container');
@@ -157,7 +166,7 @@
     const todoInput = document.getElementById('todo-input');
     const addBtn = document.getElementById('add-btn');
 
-    // FIXED: Handle Password Authentication Sign In with Domain Restrictions
+    // Handle Password Authentication Sign In
     loginBtn.addEventListener('click', async () => {
       const email = emailInput.value.trim().toLowerCase();
       const password = passwordInput.value;
@@ -176,7 +185,7 @@
       authStatus.style.color = '#333';
       authStatus.innerText = 'Verifying credentials...';
 
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
@@ -184,20 +193,29 @@
       if (error) {
         authStatus.style.color = '#c0392b';
         authStatus.innerText = `Sign In Failed: ${error.message}`;
+      } else if (data && data.session) {
+        // FIXED: Hard fallback handler that forces the view layout change even if session listening delays
+        showAppInterface(data.session.user.email);
       }
     });
 
     logoutBtn.addEventListener('click', async () => {
       await supabase.auth.signOut();
+      window.localStorage.clear();
       window.location.reload();
     });
 
+    function showAppInterface(email) {
+      loginContainer.classList.add('hidden');
+      appContainer.classList.remove('hidden');
+      userEmailSpan.innerText = email;
+      fetchTodos();
+    }
+
+    // Monitor Authentication Session State
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        loginContainer.classList.add('hidden');
-        appContainer.classList.remove('hidden');
-        userEmailSpan.innerText = session.user.email;
-        fetchTodos();
+        showAppInterface(session.user.email);
       } else {
         loginContainer.classList.remove('hidden');
         appContainer.classList.add('hidden');
@@ -239,23 +257,3 @@
         });
 
         div.appendChild(deleteBtn);
-        todoContainer.appendChild(div);
-      });
-    }
-
-    addBtn.addEventListener('click', async () => {
-      const text = todoInput.value.trim();
-      if (!text) return;
-
-      const { error } = await supabase.from('Name').insert([{ title: text }]);
-
-      if (error) {
-        alert(`Error inserting data: ${error.message}`);
-      } else {
-        todoInput.value = ''; 
-        fetchTodos(); 
-      }
-    });
-  </script>
-</body>
-</html>
