@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LENS</title>
   <style>
-    /* 1. Base Setup with Soft Pastel Yellow Gradients */
     html, body {
       margin: 0;
       padding: 0;
@@ -16,7 +15,6 @@
       overflow-x: hidden;
     }
 
-    /* 2. ADVANCED JOURNEY BACKGROUND ARTWORK */
     .journey-background {
       position: fixed;
       top: 0;
@@ -24,10 +22,9 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      pointer-events: none; /* Allows clicking through the background to buttons */
+      pointer-events: none;
     }
 
-    /* SVG Path representing the winding path of a learning journey */
     .journey-path {
       stroke: rgba(183, 149, 11, 0.15);
       stroke-width: 6;
@@ -36,22 +33,19 @@
       animation: journeyFlow 30s linear infinite;
     }
 
-    /* Subtle animation moving the dashes forward down the path */
     @keyframes journeyFlow {
       to { stroke-dashoffset: -240; }
     }
 
-    /* Decorative milestones (nodes) along the journey */
     .milestone {
       fill: rgba(62, 207, 142, 0.2);
       stroke: rgba(255, 255, 255, 0.6);
       stroke-width: 2;
     }
 
-    /* 3. APP INTERFACE LAYOUT CONTAINER */
     .wrapper {
       position: relative;
-      z-index: 1; /* Pushes content card layer above the background path layer */
+      z-index: 1;
       max-width: 600px;
       margin: 40px auto;
       padding: 20px;
@@ -61,7 +55,6 @@
     h1 { color: #2c3e50; margin-bottom: 5px; font-weight: 800; text-shadow: 1px 1px 0px white; }
     .tagline { color: #555; font-style: italic; margin-top: 0; margin-bottom: 30px; font-size: 1.1em; }
     
-    /* Transparent blur styling to let the background journey map show softly behind cards */
     .card { 
       background: rgba(255, 255, 255, 0.92); 
       padding: 25px; 
@@ -73,52 +66,53 @@
     }
 
     .todo-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 6px; font-weight: bold; font-size: 1.1em; color: #222; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
     .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-    input[type="email"], input[type="text"] { flex: 1; padding: 12px; border: 1px solid #dcd7be; border-radius: 6px; font-size: 1em; background-color: #fffdf7; }
-    input[type="email"]:focus, input[type="text"]:focus { outline: none; border-color: #3ecf8e; box-shadow: 0 0 0 3px rgba(62, 207, 142, 0.15); }
+    input[type="email"], input[type="password"], input[type="text"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 6px; font-size: 1em; background-color: #fffdf7; }
+    input:focus { outline: none; border-color: #3ecf8e; box-shadow: 0 0 0 3px rgba(62, 207, 142, 0.15); }
     
-    button { padding: 12px 20px; background-color: #3ecf8e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; white-space: nowrap; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(62, 207, 142, 0.2); }
+    button { width: 100%; padding: 12px 20px; background-color: #3ecf8e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(62, 207, 142, 0.2); }
     button:hover { background-color: #34b37a; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(62, 207, 142, 0.3); }
     
-    .delete-btn { background-color: #ff4d4d; padding: 6px 12px; font-size: 0.85em; box-shadow: 0 2px 4px rgba(255, 77, 77, 0.2); }
+    #add-btn { width: auto; white-space: nowrap; }
+    .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.85em; box-shadow: 0 2px 4px rgba(255, 77, 77, 0.2); }
     .delete-btn:hover { background-color: #e04343; box-shadow: 0 4px 6px rgba(255, 77, 77, 0.3); }
     .logout-btn { background-color: #7f8c8d; margin-top: 10px; box-shadow: 0 2px 4px rgba(127, 140, 141, 0.2); }
     .hidden { display: none; }
     .user-info { color: #666; font-style: italic; margin-bottom: 20px; }
-    .warning-text { color: #b7950b; font-size: 0.9em; font-weight: bold; margin-top: 5px; display: flex; align-items: center; gap: 5px; }
+    .warning-text { color: #b7950b; font-size: 0.9em; font-weight: bold; margin-top: 5px; }
   </style>
 </head>
 <body>
 
-  <!-- BACKGROUND DESIGN LAYER: Interactive winding pathway graphic vectors -->
   <svg class="journey-background" xmlns="http://w3.org" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-    <!-- Path line winding from left to right -->
     <path class="journey-path" d="M -50,150 C 300,50 400,450 700,350 C 1000,250 1100,750 1500,650" />
     <path class="journey-path" d="M -20,300 C 250,500 550,200 850,550 C 1150,800 1250,400 1480,500" opacity="0.5" />
-    
-    <!-- Milestone nodes/stars across the journey background view -->
     <circle class="milestone" cx="150" cy="115" r="10" />
     <circle class="milestone" cx="480" cy="380" r="14" />
     <circle class="milestone" cx="810" cy="320" r="12" />
     <circle class="milestone" cx="1180" cy="620" r="16" />
-    <circle class="milestone" cx="380" cy="440" r="8" />
-    <circle class="milestone" cx="950" cy="610" r="10" />
   </svg>
 
-  <!-- APP CONTENT CONTAINER LAYER -->
   <div class="wrapper">
     <h1>LENS: Learning Engagement, Navigation and Support</h1>
     <p class="tagline">See the story, support the journey</p>
 
-    <!-- LOGIN CONTAINER -->
+    <!-- FIXED: SECURE PASSWORD LOGIN CONTAINER -->
     <div id="login-container" class="card">
-      <h3>Sign In to View Your List</h3>
-      <p>Enter your official email to receive a passwordless login link:</p>
-      <div class="input-group">
-        <input type="email" id="email-input" placeholder="username@deped.gov.ph" />
-        <button id="login-btn">Send Login Link</button>
+      <h3>Sign In to Your Account</h3>
+      <div class="form-group">
+        <div>
+          <label style="font-weight: bold; display: block; margin-bottom: 5px;">DepEd Email Address:</label>
+          <input type="email" id="email-input" placeholder="username@deped.gov.ph" />
+        </div>
+        <div>
+          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Password:</label>
+          <input type="password" id="password-input" placeholder="••••••••" />
+        </div>
+        <button id="login-btn">Sign In Instantly</button>
       </div>
-      <p class="warning-text">⚠️ Note: Registration is strictly restricted to @deped.gov.ph accounts.</p>
+      <p class="warning-text">⚠️ Only authorized @deped.gov.ph accounts can sign in.</p>
       <p id="auth-status" style="margin-top: 10px; font-weight: bold;"></p>
     </div>
 
@@ -154,6 +148,7 @@
     const loginContainer = document.getElementById('login-container');
     const appContainer = document.getElementById('app-container');
     const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
     const loginBtn = document.getElementById('login-btn');
     const logoutBtn = document.getElementById('logout-btn');
     const userEmailSpan = document.getElementById('user-email');
@@ -162,46 +157,41 @@
     const todoInput = document.getElementById('todo-input');
     const addBtn = document.getElementById('add-btn');
 
-    // 1. Handle Magic Link Authentication Sign In with strict DepEd filter
+    // FIXED: Handle Password Authentication Sign In with Domain Restrictions
     loginBtn.addEventListener('click', async () => {
       const email = emailInput.value.trim().toLowerCase();
-      if (!email) {
-        alert('Please enter an email address.');
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        alert('Please enter both your email and password.');
         return;
       }
       
       if (!email.endsWith('@deped.gov.ph')) {
         authStatus.style.color = '#c0392b';
-        authStatus.innerText = 'Access Denied: Only @deped.gov.ph email addresses are allowed.';
+        authStatus.innerText = 'Access Denied: Only @deped.gov.ph emails are allowed.';
         return;
       }
       
       authStatus.style.color = '#333';
-      authStatus.innerText = 'Verifying domain and sending link...';
+      authStatus.innerText = 'Verifying credentials...';
 
-      const { error } = await supabase.auth.signInWithOtp({
+      const { error } = await supabase.auth.signInWithPassword({
         email: email,
-        options: {
-          emailRedirectTo: window.location.href, 
-        },
+        password: password,
       });
 
       if (error) {
         authStatus.style.color = '#c0392b';
-        authStatus.innerText = `Error: ${error.message}`;
-      } else {
-        authStatus.style.color = '#27ae60';
-        authStatus.innerText = 'Check your DepEd email inbox for your secure login link!';
+        authStatus.innerText = `Sign In Failed: ${error.message}`;
       }
     });
 
-    // 2. Handle Sign Out Button
     logoutBtn.addEventListener('click', async () => {
       await supabase.auth.signOut();
       window.location.reload();
     });
 
-    // 3. Monitor Authentication Status changes
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         loginContainer.classList.add('hidden');
@@ -214,7 +204,6 @@
       }
     });
 
-    // 4. Fetch Data from Database Table
     async function fetchTodos() {
       const { data, error } = await supabase.from('Name').select('*').order('created_at', { ascending: true });
 
@@ -242,3 +231,31 @@
         deleteBtn.innerText = 'Delete';
         deleteBtn.addEventListener('click', async () => {
           const { error: deleteError } = await supabase.from('Name').delete().eq('id', item.id);
+          if (deleteError) {
+            alert(`Error deleting item: ${deleteError.message}`);
+          } else {
+            fetchTodos(); 
+          }
+        });
+
+        div.appendChild(deleteBtn);
+        todoContainer.appendChild(div);
+      });
+    }
+
+    addBtn.addEventListener('click', async () => {
+      const text = todoInput.value.trim();
+      if (!text) return;
+
+      const { error } = await supabase.from('Name').insert([{ title: text }]);
+
+      if (error) {
+        alert(`Error inserting data: ${error.message}`);
+      } else {
+        todoInput.value = ''; 
+        fetchTodos(); 
+      }
+    });
+  </script>
+</body>
+</html>
