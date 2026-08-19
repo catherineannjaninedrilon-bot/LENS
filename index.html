@@ -16,55 +16,42 @@
   <div id="todo-container">Loading items...</div>
 
   <script type="module">
+    // Import the client from the CDN (ESM)
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    // IMPORTANT: replace these with your project's values from the Supabase dashboard
-    const supabaseUrl = 'https://your-project-ref.supabase.co';
-    const supabaseKey = 'your-anon-public-key';
+    // FIXED: Pointing directly to your active project URL
+    const supabaseUrl = 'https://ovjzuzjvgpzzsugasubn.supabase.co';
+    
+    // FIXED: Using your active publishable token key matching your account
+    const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
 
-    const container = document.getElementById('todo-container');
-
-    // Quick sanity check for placeholders
-    if (supabaseUrl.includes('your-project-ref') || supabaseKey.includes('your-anon-public-key')) {
-      container.innerHTML = '<p style="color: red;">Please set supabaseUrl and supabaseKey in index.html (get them from the Supabase dashboard).</p>';
-      console.error('Supabase URL/key are placeholders. Replace them with your project URL and anon key from the Supabase dashboard.');
-      throw new Error('Missing Supabase credentials in index.html');
-    }
-
+    // Create a client
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     async function fetchTodos() {
-      try {
-        // show a loading indicator
-        container.innerText = 'Loading items...';
+      const container = document.getElementById('todo-container');
 
-        // Make the query and log the raw response for debugging
-        const { data, error, status } = await supabase.from('todos').select('*');
-        console.log('Supabase response status:', status, 'error:', error, 'data:', data);
+      // FIXED: Swapped 'todos' with 'Name' to match your actual dashboard table structure
+      const { data, error } = await supabase.from('Name').select('*');
 
-        if (error) {
-          // Common reasons: RLS/policy denies access, wrong key, CORS/origin issues
-          container.innerHTML = `<p style="color: red;">Error: ${error.message} (status: ${status})</p>`;
-          console.error('Supabase error object:', error);
-          return;
-        }
-
-        if (!data || data.length === 0) {
-          container.innerHTML = '<p>No items found! Add some rows inside your Supabase dashboard.</p>';
-          return;
-        }
-
-        container.innerHTML = '';
-        data.forEach(item => {
-          const div = document.createElement('div');
-          div.className = 'todo-item';
-          div.innerText = item.title ?? JSON.stringify(item);
-          container.appendChild(div);
-        });
-      } catch (err) {
-        container.innerHTML = `<p style="color: red;">Unexpected error: ${err.message}</p>`;
-        console.error('Unexpected fetchTodos error:', err);
+      if (error) {
+        container.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        console.error(error);
+        return;
       }
+
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p>No items found! Add some rows inside your Supabase dashboard.</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'todo-item';
+        div.innerText = item.title ?? JSON.stringify(item);
+        container.appendChild(div);
+      });
     }
 
     fetchTodos();
