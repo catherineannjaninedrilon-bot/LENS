@@ -1,61 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Supabase Site</title>
-    
-    <!-- This is the fixed link that loads the Supabase library engine -->
-    <script src="https://jsdelivr.net"></script>
-    
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; }
-        h1 { color: #333; }
-        .todo-item { background: #f4f4f4; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 4px; font-weight: bold; font-size: 1.1em; color: #222; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My First Supabase Site</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+    h1 { color: #333; }
+    .todo-item { background: #f4f4f4; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 4px; font-weight: bold; font-size: 1.1em; color: #222; }
+  </style>
 </head>
 <body>
+  <h1>My Supabase Todo List</h1>
+  <p>Data loaded directly from your database:</p>
+  <div id="todo-container">Loading items...</div>
 
-    <h1>My Supabase Todo List</h1>
-    <p>Data loaded directly from your database:</p>
-    
-    <div id="todo-container">Loading items...</div>
+  <script type="module">
+    // Import the client from the CDN (ESM)
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    <script>
-        // Your clean connection variables
-        const supabaseUrl = 'https://supabase.co';
-        const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
+    // IMPORTANT: replace these with your project's values from the Supabase dashboard
+    const supabaseUrl = 'https://your-project-ref.supabase.co';
+    const supabaseKey = 'your-anon-public-key';
 
-        // Initialize the Supabase Client
-        const supabase = supabasejs.createClient(supabaseUrl, supabaseKey);
+    // Create a client
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-        // Fetch data from your database table
-        async function fetchTodos() {
-            const container = document.getElementById('todo-container');
-            
-            const { data, error } = await supabase.from('todos').select('*');
+    async function fetchTodos() {
+      const container = document.getElementById('todo-container');
 
-            if (error) {
-                container.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
-                return;
-            }
+      const { data, error } = await supabase.from('todos').select('*');
 
-            if (!data || data.length === 0) {
-                container.innerHTML = '<p>No items found! Add some rows inside your Supabase dashboard.</p>';
-                return;
-            }
+      if (error) {
+        container.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        console.error(error);
+        return;
+      }
 
-            container.innerHTML = '';
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p>No items found! Add some rows inside your Supabase dashboard.</p>';
+        return;
+      }
 
-            data.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'todo-item';
-                div.innerText = item.title;
-                container.appendChild(div);
-            });
-        }
+      container.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'todo-item';
+        div.innerText = item.title ?? JSON.stringify(item);
+        container.appendChild(div);
+      });
+    }
 
-        fetchTodos();
-    </script>
+    fetchTodos();
+  </script>
 </body>
 </html>
