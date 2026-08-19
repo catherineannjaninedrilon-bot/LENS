@@ -16,22 +16,18 @@
   <div id="todo-container">Loading items...</div>
 
   <script type="module">
-    // Import the client from the CDN (ESM)
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    import { createClient } from 'https://jsdelivr.net';
 
-    // FIXED: Pointing directly to your active project URL
-    const supabaseUrl = 'https://ovjzuzjvgpzzsugasubn.supabase.co';
-    
-    // FIXED: Using your active publishable token key matching your account
+    // Put your real details directly into the variables
+    const supabaseUrl = 'https://supabase.co';
     const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
 
-    // Create a client
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     async function fetchTodos() {
       const container = document.getElementById('todo-container');
 
-      // FIXED: Swapped 'todos' with 'Name' to match your actual dashboard table structure
+      // Targets your actual dashboard table named "Name"
       const { data, error } = await supabase.from('Name').select('*');
 
       if (error) {
