@@ -5,52 +5,133 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>My First Supabase Site</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; background-color: #fafafa; }
     h1 { color: #333; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
     .todo-item { background: #f4f4f4; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 4px; font-weight: bold; font-size: 1.1em; color: #222; }
+    input[type="email"] { width: 70%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
+    button { padding: 10px 15px; background-color: #3ecf8e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1em; }
+    button:hover { background-color: #34b37a; }
+    .logout-btn { background-color: #ff4d4d; margin-top: 10px; }
+    .logout-btn:hover { background-color: #e04343; }
+    .hidden { display: none; }
+    .user-info { color: #666; font-style: italic; margin-bottom: 20px; }
   </style>
 </head>
 <body>
+
   <h1>My Supabase Todo List</h1>
-  <p>Data loaded directly from your database:</p>
-  <div id="todo-container">Loading items...</div>
+
+  <!-- LOGIN CONTAINER (Visible when logged out) -->
+  <div id="login-container" class="card">
+    <h3>Sign In to View Your List</h3>
+    <p>Enter your email to receive a passwordless login link:</p>
+    <input type="email" id="email-input" placeholder="your-email@example.com" />
+    <button id="login-btn">Send Login Link</button>
+    <p id="auth-status" style="margin-top: 10px; font-weight: bold;"></p>
+  </div>
+
+  <!-- MAIN APP CONTAINER (Visible only when logged in) -->
+  <div id="app-container" class="hidden">
+    <div class="card">
+      <p class="user-info">Logged in as: <span id="user-email"></span></p>
+      <button id="logout-btn" class="logout-btn">Sign Out</button>
+    </div>
+
+    <div class="card">
+      <p>Data loaded directly from your database:</p>
+      <div id="todo-container">Loading items...</div>
+    </div>
+  </div>
 
   <script type="module">
     import { createClient } from 'https://jsdelivr.net';
 
-    // Put your real details directly into the variables
     const supabaseUrl = 'https://supabase.co';
     const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
-
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    async function fetchTodos() {
-      const container = document.getElementById('todo-container');
+    // DOM Elements
+    const loginContainer = document.getElementById('login-container');
+    const appContainer = document.getElementById('app-container');
+    const emailInput = document.getElementById('email-input');
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const userEmailSpan = document.getElementById('user-email');
+    const authStatus = document.getElementById('auth-status');
+    const todoContainer = document.getElementById('todo-container');
 
-      // Targets your actual dashboard table named "Name"
+    // 1. Handle Magic Link Authentication Sign In
+    loginBtn.addEventListener('click', async () => {
+      const email = emailInput.value;
+      if (!email) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      
+      authStatus.style.color = '#333';
+      authStatus.innerText = 'Sending link...';
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          // Redirects the user right back to your GitHub pages site after they click the email link
+          emailRedirectTo: window.location.href, 
+        },
+      });
+
+      if (error) {
+        authStatus.style.color = 'red';
+        authStatus.innerText = `Error: ${error.message}`;
+      } else {
+        authStatus.style.color = 'green';
+        authStatus.innerText = 'Check your email inbox for your secure login link!';
+      }
+    });
+
+    // 2. Handle Sign Out Button
+    logoutBtn.addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.reload();
+    });
+
+    // 3. Monitor Authentication Status changes (Logged In vs Logged Out)
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        // User is logged in
+        loginContainer.classList.add('hidden');
+        appContainer.classList.remove('hidden');
+        userEmailSpan.innerText = session.user.email;
+        fetchTodos();
+      } else {
+        // User is logged out
+        loginContainer.classList.remove('hidden');
+        appContainer.classList.add('hidden');
+      }
+    });
+
+    // 4. Fetch Data from Database (Only runs when verified logged in)
+    async function fetchTodos() {
       const { data, error } = await supabase.from('Name').select('*');
 
       if (error) {
-        container.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
-        console.error(error);
+        todoContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
         return;
       }
 
       if (!data || data.length === 0) {
-        container.innerHTML = '<p>No items found! Add some rows inside your Supabase dashboard.</p>';
+        todoContainer.innerHTML = '<p>No items found!</p>';
         return;
       }
 
-      container.innerHTML = '';
+      todoContainer.innerHTML = '';
       data.forEach(item => {
         const div = document.createElement('div');
         div.className = 'todo-item';
         div.innerText = item.title ?? JSON.stringify(item);
-        container.appendChild(div);
+        todoContainer.appendChild(div);
       });
     }
-
-    fetchTodos();
   </script>
 </body>
 </html>
