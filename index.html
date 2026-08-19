@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Supabase Site</title>
+    
+    <!-- This loads the free Supabase code library into your webpage -->
+    <script src="https://jsdelivr.net"></script>
+    
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+        h1 { color: #333; }
+        .todo-item { background: #f4f4f4; padding: 10px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <h1>My Supabase Todo List</h1>
+    <p>Data loaded directly from your database:</p>
+    
+    <!-- This is where our database items will appear on the screen -->
+    <div id="todo-container">Loading items...</div>
+
+    <script>
+        // 1. Configure your connection details
+        const supabaseUrl = 'https://supabase.co';
+        const supabaseKey = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92anp1emp2Z3B6enN1Z2FzdWJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxMTk3MDksImV4cCI6MjEwMjY5NTcwOX0.Uft5TwnJ7S6V1S47GMfoWujXLN49E6bqsx9b_GTYqUk // <--- REPLACE THIS VALUE
+
+        // 2. Initialize the Supabase Client
+        const supabase = supabasejs.createClient(supabaseUrl, supabaseKey);
+
+        // 3. Fetch data from your database table
+        async function fetchTodos() {
+            const container = document.getElementById('todo-container');
+            
+            // This requests all rows from your "todos" table
+            const { data, error } = await supabase.from('todos').select('*');
+
+            if (error) {
+                container.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p>No items found! Add some rows inside your Supabase dashboard.</p>';
+                return;
+            }
+
+            // Clear the "Loading..." text
+            container.innerHTML = '';
+
+            // Loop through each item in your database and add it to the screen
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'todo-item';
+                div.innerText = item.title; // Displays the text from your 'title' column
+                container.appendChild(div);
+            });
+        }
+
+        // Run the function when the page opens
+        fetchTodos();
+    </script>
+</body>
+</html>
