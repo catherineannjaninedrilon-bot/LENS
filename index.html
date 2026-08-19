@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LENS School Dashboard</title>
+  <title>LENS Secured School Dashboard</title>
   <style>
     html, body {
       margin: 0;
@@ -37,7 +37,7 @@
     .wrapper {
       position: relative;
       z-index: 1; 
-      max-width: 1100px; /* Widened layout frame to organize dashboard blocks cleanly */
+      max-width: 1100px; 
       margin: 30px auto;
       padding: 20px;
     }
@@ -45,21 +45,21 @@
     header { text-align: center; margin-bottom: 30px; }
     h1 { color: #2c3e50; margin-bottom: 5px; font-weight: 800; text-shadow: 1px 1px 0px white; }
     .tagline { color: #555; font-style: italic; margin-top: 0; font-size: 1.1em; }
-    .card { background: rgba(255, 255, 255, 0.94); padding: 25px; border-radius: 14px; box-shadow: 0 10px 30px rgba(183, 149, 11, 0.08); margin-bottom: 20px; border: 1px solid rgba(242, 237, 213, 0.7); backdrop-filter: blur(10px); }
-    .login-card { max-width: 500px; margin: 60px auto; }
-    .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
-    input[type="text"], input[type="password"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 8px; font-size: 1em; background-color: #fffdf7; }
     
-    /* 1. DYNAMIC TWO-COLUMN DASHBOARD GRID PANELS */
+    /* Strict Lock Gate Cards */
+    .card { background: rgba(255, 255, 255, 0.94); padding: 25px; border-radius: 14px; box-shadow: 0 10px 30px rgba(183, 149, 11, 0.08); margin-bottom: 20px; border: 1px solid rgba(242, 237, 213, 0.7); backdrop-filter: blur(10px); }
+    .login-card { max-width: 450px; margin: 60px auto; border-top: 5px solid #2c3e50; }
+    .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+    
+    /* Two-Column Dashboard Layout */
     .dashboard-grid { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 20px; }
     @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
 
-    /* 2. SCHOOL HERO HERO BANNER W/ BACK PANEL PHOTOGRAPHY */
+    /* School Banner Framework with backdrop image asset */
     .dashboard-banner {
       grid-column: 1 / -1;
       position: relative;
       background-color: #2c3e50;
-      /* REPLACE the URL path text below inside the quotes with your actual school photo url link later */
       background-image: linear-gradient(rgba(44, 62, 80, 0.75), rgba(44, 62, 80, 0.85)), url('https://unsplash.com');
       background-size: cover;
       background-position: center;
@@ -72,29 +72,36 @@
       box-shadow: 0 8px 25px rgba(44, 62, 80, 0.15);
       border: 1px solid rgba(255,255,255,0.1);
     }
-    .banner-text h2 { margin: 0; font-size: 1.8em; font-weight: 800; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-    .banner-text p { margin: 6px 0 0 0; opacity: 0.9; font-size: 1em; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+    .banner-text h2 { margin: 0; font-size: 1.8em; font-weight: 800; letter-spacing: 0.5px; }
+    .banner-text p { margin: 6px 0 0 0; opacity: 0.9; font-size: 1em; }
 
-    /* 3. CORE ANALYTICS MONITOR MATRIX GRID */
+    /* Performance Analytics Monitor Grid Matrix */
     .stats-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; }
-    .stat-box { text-align: center; padding: 15px 10px; background: #fffdf7; border-radius: 10px; border: 1px solid #f2edd5; box-shadow: 0 2px 5px rgba(0,0,0,0.01); transition: transform 0.2s; }
-    .stat-box:hover { transform: translateY(-2px); }
+    .stat-box { text-align: center; padding: 15px 10px; background: #fffdf7; border-radius: 10px; border: 1px solid #f2edd5; box-shadow: 0 2px 5px rgba(0,0,0,0.01); }
     .stat-box.full-width { grid-column: 1 / -1; background: #fbf9f0; }
     .stat-number { font-size: 1.8em; font-weight: 800; color: #2c3e50; margin-bottom: 2px; }
     .stat-label { color: #555; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
 
-    /* Recent activities log row indicators layout */
+    /* Recent activities ledger logs */
     .activity-stream { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
     .activity-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 14px; border-left: 5px solid #3ecf8e; border-radius: 8px; font-weight: bold; font-size: 1em; color: #222; border: 1px solid #f2edd5; border-left-width: 5px; }
     
     .input-group { display: flex; flex-direction: column; gap: 12px; }
-    button { padding: 12px 20px; background-color: #3ecf8e; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(62, 207, 142, 0.2); }
-    button:hover { background-color: #34b37a; transform: translateY(-1px); }
-    .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.8em; border-radius: 6px; box-shadow: 0 2px 4px rgba(255, 77, 77, 0.1); }
+    input[type="email"], input[type="password"], input[type="text"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 8px; font-size: 1em; background-color: #fffdf7; }
+    input:focus { outline: none; border-color: #2c3e50; box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1); }
+    
+    button { padding: 12px 20px; background-color: #2c3e50; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; }
+    button:hover { background-color: #1a252f; transform: translateY(-1px); }
+    
+    .add-btn { background-color: #3ecf8e; box-shadow: 0 2px 4px rgba(62, 207, 142, 0.2); }
+    .add-btn:hover { background-color: #34b37a; }
+    .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.8em; border-radius: 6px; }
     .delete-btn:hover { background-color: #e04343; }
     .logout-btn { background-color: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; padding: 10px 18px; font-size: 0.9em; border-radius: 8px; }
     .logout-btn:hover { background-color: rgba(255,255,255,0.25); }
+    
     .hidden { display: none !important; }
+    .security-badge { background: #fadbd8; color: #78281f; padding: 8px 12px; border-radius: 6px; font-size: 0.85em; font-weight: bold; margin-bottom: 15px; border: 1px solid #f5b7b1; display: inline-block; }
   </style>
 </head>
 <body>
@@ -110,35 +117,38 @@
       <p class="tagline">See the story, support the journey</p>
     </header>
 
-    <!-- SIGN IN GATE -->
+    <!-- SECURE LANDING WALL GATE CONTAINER -->
     <div id="login-container" class="card login-card">
-      <h3 style="margin-top:0;">Sign In to Your Account</h3>
+      <div class="security-badge">🔒 CONFIDENTIAL DATA PROTECTION WALL</div>
+      <h3 style="margin-top:0;">Teacher Portal Authentication</h3>
+      <p style="color:#666; font-size:0.9em; margin-top:-5px; margin-bottom:25px;">Please sign in with your official portal credentials to access verified tracking indicators.</p>
       <div class="form-group">
         <div>
-          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Email Address:</label>
-          <input type="text" id="email-input" placeholder="your-email@example.com" />
+          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Teacher Email:</label>
+          <input type="email" id="email-input" placeholder="username@deped.gov.ph" />
         </div>
         <div>
-          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Password:</label>
-          <input type="password" id="password-input" placeholder="Enter password" />
+          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Portal Access Key:</label>
+          <input type="password" id="password-input" placeholder="Enter security password" />
         </div>
-        <button id="login-btn">Sign In or Create Account</button>
+        <button id="login-btn">Sign In to Dashboard</button>
       </div>
+      <p id="auth-status" style="color:red; font-weight:bold; margin-top:10px;"></p>
     </div>
 
-    <!-- RESTRUCTURED WORKSPACE: ADVANCED SCHOOL DASHBOARD CONSOLE -->
+    <!-- DYNAMIC TWO-COLUMN TRACKING WORKSPACE CONTROLS -->
     <div id="app-container" class="dashboard-grid hidden">
       
-      <!-- Top Row Section Banner Header Framework with School Image Backdrop -->
+      <!-- Top banner layout with school artwork photography backdrop -->
       <div class="dashboard-banner">
         <div class="banner-text">
-          <h2>LENS Administrative Dashboard</h2>
-          <p>Logged in as: <span id="user-email" style="font-weight: bold;"></span></p>
+          <h2>LENS: Learning Engagement, Navigation and Support</h2>
+          <p>Confidential Ledger | Active Operator: <span id="user-email" style="font-weight: bold; text-decoration: underline;"></span></p>
         </div>
-        <button id="logout-btn" class="logout-btn">Sign Out</button>
+        <button id="logout-btn" class="logout-btn">Secure Sign Out</button>
       </div>
 
-      <!-- LEFT SIDE CONSOLE BLOCK: Analytics Metrics Counters and Operations Input -->
+      <!-- LEFT SIDE UTILITIES PANEL: Operational Stats Counter Blocks -->
       <div class="left-panel">
         <div class="card">
           <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Performance & Guidance Indicators</h3>
@@ -169,33 +179,23 @@
         <div class="card">
           <h3 style="margin-top:0; color:#2c3e50;">Log Activity / Note</h3>
           <div class="input-group">
-            <input type="text" id="todo-input" placeholder="Type a new activity event or log note..." />
-            <button id="add-btn">Add Activity Entry</button>
+            <input type="text" id="todo-input" placeholder="Type a confidential activity log entry..." />
+            <button id="add-btn" class="add-btn">Add Activity Entry</button>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT SIDE CONSOLE BLOCK: Interactive Recent Activities Stream Ledger -->
+      <!-- RIGHT SIDE CONSOLE BLOCK: Recent Activities Stream Ledger -->
       <div class="right-panel">
         <div class="card" style="min-height: 480px;">
-          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Recent Activities Log Stream</h3>
-          <div id="todo-container" class="activity-stream">Loading activities ledger logs...</div>
+          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Confidential Activity Log Stream</h3>
+          <div id="todo-container" class="activity-stream">Loading records ledger logs...</div>
         </div>
       </div>
 
     </div>
   </div>
 
-  <script type="module">
+  <script>
     const loginContainer = document.getElementById('login-container');
     const appContainer = document.getElementById('app-container');
-    const landingHeader = document.getElementById('landing-header');
-    const emailInput = document.getElementById('email-input');
-    const passwordInput = document.getElementById('password-input');
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const userEmailSpan = document.getElementById('user-email');
-    const todoContainer = document.getElementById('todo-container');
-    const todoInput = document.getElementById('todo-input');
-    const addBtn = document.getElementById('add-btn');
-
