@@ -11,108 +11,57 @@
       min-height: 100vh;
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #fef9e7 0%, #fbf3cd 100%);
-      position: relative;
-      overflow-x: hidden;
     }
-
-    .journey-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .journey-path {
-      stroke: rgba(183, 149, 11, 0.15);
-      stroke-width: 6;
-      stroke-dasharray: 12, 12;
-      fill: none;
-      animation: journeyFlow 30s linear infinite;
-    }
-
-    @keyframes journeyFlow {
-      to { stroke-dashoffset: -240; }
-    }
-
-    .milestone {
-      fill: rgba(62, 207, 142, 0.2);
-      stroke: rgba(255, 255, 255, 0.6);
-      stroke-width: 2;
-    }
-
     .wrapper {
-      position: relative;
-      z-index: 1;
       max-width: 600px;
       margin: 40px auto;
       padding: 20px;
       line-height: 1.6;
     }
-    
     h1 { color: #2c3e50; margin-bottom: 5px; font-weight: 800; text-shadow: 1px 1px 0px white; }
     .tagline { color: #555; font-style: italic; margin-top: 0; margin-bottom: 30px; font-size: 1.1em; }
-    
     .card { 
-      background: rgba(255, 255, 255, 0.92); 
+      background: rgba(255, 255, 255, 0.95); 
       padding: 25px; 
       border-radius: 12px; 
       box-shadow: 0 8px 32px rgba(183, 149, 11, 0.08); 
       margin-bottom: 20px; 
       border: 1px solid rgba(242, 237, 213, 0.6); 
-      backdrop-filter: blur(8px); 
     }
-
-    .todo-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 6px; font-weight: bold; font-size: 1.1em; color: #222; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .todo-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 15px; margin: 10px 0; border-left: 5px solid #3ecf8e; border-radius: 6px; font-weight: bold; font-size: 1.1em; color: #222; }
     .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
     .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-    input[type="email"], input[type="password"], input[type="text"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 6px; font-size: 1em; background-color: #fffdf7; }
-    input:focus { outline: none; border-color: #3ecf8e; box-shadow: 0 0 0 3px rgba(62, 207, 142, 0.15); }
-    
-    button { width: 100%; padding: 12px 20px; background-color: #3ecf8e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(62, 207, 142, 0.2); }
-    button:hover { background-color: #34b37a; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(62, 207, 142, 0.3); }
-    
+    input[type="text"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 6px; font-size: 1em; background-color: #fffdf7; }
+    button { width: 100%; padding: 12px 20px; background-color: #3ecf8e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; }
+    button:hover { background-color: #34b37a; }
     #add-btn { width: auto; white-space: nowrap; }
-    .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.85em; box-shadow: 0 2px 4px rgba(255, 77, 77, 0.2); }
-    .delete-btn:hover { background-color: #e04343; box-shadow: 0 4px 6px rgba(255, 77, 77, 0.3); }
-    .logout-btn { background-color: #7f8c8d; margin-top: 10px; box-shadow: 0 2px 4px rgba(127, 140, 141, 0.2); }
+    .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.85em; }
+    .delete-btn:hover { background-color: #e04343; }
+    .logout-btn { background-color: #7f8c8d; margin-top: 10px; }
     .hidden { display: none; }
     .user-info { color: #666; font-style: italic; margin-bottom: 20px; }
-    .warning-text { color: #b7950b; font-size: 0.9em; font-weight: bold; margin-top: 5px; }
   </style>
 </head>
 <body>
-
-  <svg class="journey-background" xmlns="http://w3.org" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-    <path class="journey-path" d="M -50,150 C 300,50 400,450 700,350 C 1000,250 1100,750 1500,650" />
-    <path class="journey-path" d="M -20,300 C 250,500 550,200 850,550 C 1150,800 1250,400 1480,500" opacity="0.5" />
-    <circle class="milestone" cx="150" cy="115" r="10" />
-    <circle class="milestone" cx="480" cy="380" r="14" />
-    <circle class="milestone" cx="810" cy="320" r="12" />
-    <circle class="milestone" cx="1180" cy="620" r="16" />
-  </svg>
 
   <div class="wrapper">
     <h1>LENS: Learning Engagement, Navigation and Support</h1>
     <p class="tagline">See the story, support the journey</p>
 
-    <!-- SIGN IN CONTAINER -->
+    <!-- SIGN IN CONTAINER (Completely unrestricted) -->
     <div id="login-container" class="card">
       <h3>Sign In to Your Account</h3>
       <div class="form-group">
         <div>
-          <label style="font-weight: bold; display: block; margin-bottom: 5px;">DepEd Email Address:</label>
-          <input type="email" id="email-input" placeholder="username@deped.gov.ph" />
+          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Email Address:</label>
+          <input type="text" id="email-input" placeholder="any-email@example.com" />
         </div>
         <div>
           <label style="font-weight: bold; display: block; margin-bottom: 5px;">Password:</label>
-          <input type="password" id="password-input" placeholder="••••••••" />
+          <input type="text" id="password-input" placeholder="Enter password" />
         </div>
         <button id="login-btn">Sign In Instantly</button>
       </div>
-      <p class="warning-text">⚠️ Only authorized @deped.gov.ph accounts can sign in.</p>
       <p id="auth-status" style="margin-top: 10px; font-weight: bold;"></p>
     </div>
 
@@ -172,7 +121,6 @@
       fetchTodos();
     }
 
-    // Force check for active session immediately upon page loading
     async function checkSession() {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
@@ -181,9 +129,8 @@
     }
     checkSession();
 
-    // Handle Button Click Sign In
     loginBtn.addEventListener('click', async () => {
-      const email = emailInput.value.trim().toLowerCase();
+      const email = emailInput.value.trim();
       const password = passwordInput.value;
 
       if (!email || !password) {
@@ -194,17 +141,17 @@
       authStatus.style.color = '#333';
       authStatus.innerText = 'Verifying credentials...';
 
+      // RESTRICTION REMOVED: Bypasses domain checks entirely
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
 
       if (error) {
-        alert('Supabase Error Message: ' + error.message);
+        alert('Login Error: ' + error.message);
         authStatus.style.color = '#c0392b';
         authStatus.innerText = `Sign In Failed: ${error.message}`;
       } else if (data && data.session) {
-        alert('Success! Logging you in now.');
         showAppInterface(data.session.user.email);
       }
     });
@@ -261,3 +208,12 @@
       const { error } = await supabase.from('Name').insert([{ title: text }]);
 
       if (error) {
+        alert(`Error inserting data: ${error.message}`);
+      } else {
+        todoInput.value = ''; 
+        fetchTodos(); 
+      }
+    });
+  </script>
+</body>
+</html>
