@@ -4,8 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LENS Dashboard</title>
-  <!-- CLEAN DIRECT SOURCE CDN FOR THE SUPABASE FRAMEWORK -->
-  <script src="https://cloudflare.com"></script>
+  
+  <!-- Load Supabase client library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     html,body{margin:0;padding:0;min-height:100vh;font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#fef9e7 0%,#fbf3cd 100%);position:relative;overflow-x:hidden;}
     .journey-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
@@ -68,10 +70,10 @@
     </div>
   </div>
   <script>
-    // FIXED: Upgraded connection destination node router string to modern .net format
-    const url = "https://supabase.net";
-    const key = "sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr...";
-    const sb = supabase.createClient(url, key);
+    const supabaseUrl = "https://supabase.net";
+    const supabaseKey = "PASTE_YOUR_ACTUAL_ANON_PUBLIC_KEY_HERE";
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
     const loginBox = document.getElementById('login-container');
     const appBox = document.getElementById('app-container');
     const hdr = document.getElementById('landing-header');
@@ -82,18 +84,21 @@
     const status = document.getElementById('auth-status');
     const userMail = document.getElementById('user-email');
     const lList = document.getElementById('learners-list');
+
     loginBtn.addEventListener('click', () => {
       const e = emailIn.value.trim(), p = passIn.value.trim();
       if (!e) { status.innerText = "Please enter email."; return; }
       if (p !== "LENS2026") { status.innerText = "Invalid Key."; return; }
       status.innerText = ""; loginBox.classList.add('hidden'); hdr.classList.add('hidden'); appBox.classList.remove('hidden'); userMail.innerText = e; load();
     });
+
     logoutBtn.addEventListener('click', () => { appBox.classList.add('hidden'); loginBox.classList.remove('hidden'); hdr.classList.remove('hidden'); emailIn.value = ""; passIn.value = ""; });
+
     async function load() {
       try {
-        const { data: ln, error: le } = await sb.from('learners').select('*');
-        const { data: at } = await sb.from('attendance').select('*');
-        const { data: of } = await sb.from('offenses').select('*');
+        const { data: ln, error: le } = await supabaseClient.from('learners').select('*');
+        const { data: at } = await supabaseClient.from('attendance').select('*');
+        const { data: of } = await supabaseClient.from('offenses').select('*');
         document.getElementById('total-learners-count').innerText = ln ? ln.length : 0;
         document.getElementById('attendance-issues-count').innerText = at ? at.length : 0;
         document.getElementById('offenses-count').innerText = of ? of.length : 0;
