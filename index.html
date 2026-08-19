@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LENS Secured School Dashboard</title>
-  <!-- 1. IMPORT CORE SUPABASE FRAMEWORK ENGINE -->
+  <title>LENS School Dashboard</title>
+  <!-- CORE SUPABASE FRAMEWORK ENGINE -->
   <script src="https://jsdelivr.net"></script>
   <style>
     html, body {
@@ -48,7 +48,7 @@
     h1 { color: #2c3e50; margin-bottom: 5px; font-weight: 800; text-shadow: 1px 1px 0px white; }
     .tagline { color: #555; font-style: italic; margin-top: 0; font-size: 1.1em; }
     
-    /* Strict Lock Gate Cards */
+    /* Portal Gate Cards */
     .card { background: rgba(255, 255, 255, 0.94); padding: 25px; border-radius: 14px; box-shadow: 0 10px 30px rgba(183, 149, 11, 0.08); margin-bottom: 20px; border: 1px solid rgba(242, 237, 213, 0.7); backdrop-filter: blur(10px); }
     .login-card { max-width: 450px; margin: 60px auto; border-top: 5px solid #2c3e50; }
     .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
@@ -95,15 +95,10 @@
     button { padding: 12px 20px; background-color: #2c3e50; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; }
     button:hover { background-color: #1a252f; transform: translateY(-1px); }
     
-    .add-btn { background-color: #3ecf8e; box-shadow: 0 2px 4px rgba(62, 207, 142, 0.2); }
-    .add-btn:hover { background-color: #34b37a; }
-    .delete-btn { width: auto; background-color: #ff4d4d; padding: 6px 12px; font-size: 0.8em; border-radius: 6px; }
-    .delete-btn:hover { background-color: #e04343; }
     .logout-btn { background-color: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; padding: 10px 18px; font-size: 0.9em; border-radius: 8px; }
     .logout-btn:hover { background-color: rgba(255,255,255,0.25); }
     
     .hidden { display: none !important; }
-    .security-badge { background: #fadbd8; color: #78281f; padding: 8px 12px; border-radius: 6px; font-size: 0.85em; font-weight: bold; margin-bottom: 15px; border: 1px solid #f5b7b1; display: inline-block; }
   </style>
 </head>
 <body>
@@ -119,11 +114,10 @@
       <p class="tagline">See the story, support the journey</p>
     </header>
 
-    <!-- SECURE LANDING WALL GATE CONTAINER -->
+    <!-- SIMPLIFIED TEACHER GATEWAY CARD -->
     <div id="login-container" class="card login-card">
-      <div class="security-badge">🔒 CONFIDENTIAL DATA PROTECTION WALL</div>
-      <h3 style="margin-top:0;">Teacher Portal Authentication</h3>
-      <p style="color:#666; font-size:0.9em; margin-top:-5px; margin-bottom:25px;">Please sign in with your official portal credentials to access verified tracking indicators.</p>
+      <h3 style="margin-top:0; color: #2c3e50;">Teacher Portal Gateway</h3>
+      <p style="color:#666; font-size:0.9em; margin-top:-5px; margin-bottom:25px;">Please verify your school email and portal access key to view active tracking indicators.</p>
       <div class="form-group">
         <div>
           <label style="font-weight: bold; display: block; margin-bottom: 5px;">Teacher Email:</label>
@@ -131,7 +125,7 @@
         </div>
         <div>
           <label style="font-weight: bold; display: block; margin-bottom: 5px;">Portal Access Key:</label>
-          <input type="password" id="password-input" placeholder="Enter security password" />
+          <input type="password" id="password-input" placeholder="Enter portal access key" />
         </div>
         <button id="login-btn">Sign In to Dashboard</button>
       </div>
@@ -145,12 +139,12 @@
       <div class="dashboard-banner">
         <div class="banner-text">
           <h2>LENS: Learning Engagement, Navigation and Support</h2>
-          <p>Confidential Ledger | Active Operator: <span id="user-email" style="font-weight: bold; text-decoration: underline;"></span></p>
+          <p>Active Portal Operator: <span id="user-email" style="font-weight: bold; text-decoration: underline;"></span></p>
         </div>
         <button id="logout-btn" class="logout-btn">Secure Sign Out</button>
       </div>
 
-      <!-- LEFT SIDE UTILITIES PANEL: Operational Stats Counter Blocks -->
+      <!-- LEFT SIDE PANEL: Operational Stats Counter Blocks -->
       <div class="left-panel">
         <div class="card">
           <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Performance & Guidance Indicators</h3>
@@ -171,7 +165,7 @@
         </div>
       </div>
 
-      <!-- RIGHT SIDE WORKSPACE PANEL: Data Stream Matrix -->
+      <!-- RIGHT SIDE PANEL: Data Stream Matrix -->
       <div class="right-panel">
         <div class="card">
           <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Active Learners Ledger</h3>
@@ -184,19 +178,35 @@
     </div>
   </div>
 
-  <!-- 2. CORE WORKSPACE FUNCTIONALITY SCRIPT -->
+  <!-- SCRIPT FRAMEWORK CONTEXT -->
   <script>
     // ==========================================
-    // CONFIGURATION: PLUG IN YOUR PROPER KEYS
+    // SUPABASE DATA PATH CONNECTOR CONFIGURATION
     // ==========================================
     const SUPABASE_URL = "https://supabase.co"; 
-    const SUPABASE_ANON_KEY = "PASTE_YOUR_ACTUAL_ANON_PUBLIC_KEY_HERE"; // <-- Put your real public key string here!
+    const SUPABASE_ANON_KEY = "PASTE_YOUR_ACTUAL_ANON_PUBLIC_KEY_HERE"; // <-- Put your real public API key string here!
 
-    // Initialize client connection
+    // Initialize connection strings
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // DOM Element selections
+    // Get document control elements
     const loginContainer = document.getElementById('login-container');
     const appContainer = document.getElementById('app-container');
     const landingHeader = document.getElementById('landing-header');
     const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const authStatus = document.getElementById('auth-status');
+    const userEmailSpan = document.getElementById('user-email');
+    const learnersList = document.getElementById('learners-list');
+
+    // Event hooks
+    loginBtn.addEventListener('click', handleCustomLogin);
+    logoutBtn.addEventListener('click', handleLogout);
+
+    function handleCustomLogin() {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!email) {
