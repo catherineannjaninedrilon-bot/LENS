@@ -3,89 +3,104 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LENS School Dashboard</title>
+  <title>LENS Secured School Dashboard</title>
+  <!-- CLEAN DIRECT SOURCE CDN FOR THE SUPABASE FRAMEWORK -->
   <script src="https://unpkg.com"></script>
   <style>
-    html,body{margin:0;padding:0;min-height:100vh;font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#fef9e7 0%,#fbf3cd 100%);position:relative;overflow-x:hidden;}
-    .journey-background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
-    .journey-path{stroke:rgba(183,149,11,0.12);stroke-width:6;stroke-dasharray:12,12;fill:none;animation:journeyFlow 30s linear infinite;}
-    @keyframes journeyFlow{to{stroke-dashoffset:-240;}}
-    .wrapper{position:relative;z-index:1;max-width:1100px;margin:30px auto;padding:20px;}
-    header{text-align:center;margin-bottom:30px;}
-    h1{color:#2c3e50;margin-bottom:5px;font-weight:800;text-shadow:1px 1px 0px white;}
-    .tagline{color:#555;font-style:italic;margin-top:0;font-size:1.1em;}
-    .card{background:rgba(255,255,255,0.94);padding:25px;border-radius:14px;box-shadow:0 10px 30px rgba(183,149,11,0.08);margin-bottom:20px;border:1px solid rgba(242,237,213,0.7);backdrop-filter:blur(10px);}
-    .login-card{max-width:450px;margin:60px auto;border-top:5px solid #2c3e50;}
-    .form-group{display:flex;flex-direction:column;gap:15px;margin-bottom:20px;}
-    .dashboard-grid{display:grid;grid-template-columns:1.2fr 1.8fr;gap:20px;}
-    @media(max-width:768px){.dashboard-grid{grid-template-columns:1fr;}}
-    .dashboard-banner{grid-column:1 / -1;position:relative;background-color:#2c3e50;background-image:linear-gradient(rgba(44,62,80,0.75),rgba(44,62,80,0.85)),url('https://unsplash.com');background-size:cover;background-position:center;color:white;padding:35px 30px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 8px 25px rgba(44,62,80,0.15);border:1px solid rgba(255,255,255,0.1);}
-    .banner-text h2{margin:0;font-size:1.8em;font-weight:800;letter-spacing:0.5px;}
-    .banner-text p{margin:6px 0 0 0;opacity:0.9;font-size:1em;}
-    .stats-matrix{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:15px;}
-    .stat-box{text-align:center;padding:15px 10px;background:#fffdf7;border-radius:10px;border:1px solid #f2edd5;box-shadow:0 2px 5px rgba(0,0,0,0.01);}
-    .stat-box.full-width{grid-column:1 / -1;background:#fbf9f0;}
-    .stat-number{font-size:1.8em;font-weight:800;color:#2c3e50;margin-bottom:2px;}
-    .stat-label{color:#555;font-size:0.85em;font-weight:bold;text-transform:uppercase;letter-spacing:0.3px;}
-    .activity-stream{margin-top:15px;display:flex;flex-direction:column;gap:10px;}
-    .activity-item{display:flex;justify-content:space-between;align-items:center;background:#faf8f0;padding:14px;border-left:5px solid #3ecf8e;border-radius:8px;font-weight:bold;font-size:1em;color:#222;border:1px solid #f2edd5;border-left-width:5px;}
-    input[type="email"],input[type="password"],input[type="text"]{width:100%;box-sizing:border-box;padding:10px;border:1px solid #dcd7be;border-radius:8px;font-size:1em;background-color:#fffdf7;}
-    input:focus{outline:none;border-color:#2c3e50;box-shadow:0 0 0 3px rgba(44,62,80,0.1);}
-    button{padding:12px 20px;background-color:#2c3e50;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer;font-size:1em;transition:all 0.2s ease;}
+    html, body { margin: 0; padding: 0; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #fef9e7 0%, #fbf3cd 100%); position: relative; overflow-x: hidden; }
+    .journey-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    .journey-path { stroke: rgba(183, 149, 11, 0.12); stroke-width: 6; stroke-dasharray: 12, 12; fill: none; animation: journeyFlow 30s linear infinite; }
+    @keyframes journeyFlow { to { stroke-dashoffset: -240; } }
+    .wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 30px auto; padding: 20px; }
+    header { text-align: center; margin-bottom: 30px; }
+    h1 { color: #2c3e50; margin-bottom: 5px; font-weight: 800; text-shadow: 1px 1px 0px white; }
+    .tagline { color: #555; font-style: italic; margin-top: 0; font-size: 1.1em; }
+    .card { background: rgba(255, 255, 255, 0.94); padding: 25px; border-radius: 14px; box-shadow: 0 10px 30px rgba(183, 149, 11, 0.08); margin-bottom: 20px; border: 1px solid rgba(242, 237, 213, 0.7); backdrop-filter: blur(10px); }
+    .login-card { max-width: 450px; margin: 60px auto; border-top: 5px solid #2c3e50; }
+    .form-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+    .dashboard-grid { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 20px; }
+    @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
+    .dashboard-banner { grid-column: 1 / -1; position: relative; background-color: #2c3e50; background-image: linear-gradient(rgba(44, 62, 80, 0.75), rgba(44, 62, 80, 0.85)), url('https://unsplash.com'); background-size: cover; background-position: center; color: white; padding: 35px 30px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 25px rgba(44, 62, 80, 0.15); border: 1px solid rgba(255,255,255,0.1); }
+    .banner-text h2 { margin: 0; font-size: 1.8em; font-weight: 800; letter-spacing: 0.5px; }
+    .banner-text p { margin: 6px 0 0 0; opacity: 0.9; font-size: 1em; }
+    .stats-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; }
+    .stat-box { text-align: center; padding: 15px 10px; background: #fffdf7; border-radius: 10px; border: 1px solid #f2edd5; box-shadow: 0 2px 5px rgba(0,0,0,0.01); }
+    .stat-box.full-width { grid-column: 1 / -1; background: #fbf9f0; }
+    .stat-number { font-size: 1.8em; font-weight: 800; color: #2c3e50; margin-bottom: 2px; }
+    .stat-label { color: #555; font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+    .activity-stream { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+    .activity-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 14px; border-left: 5px solid #3ecf8e; border-radius: 8px; font-weight: bold; font-size: 1em; color: #222; border: 1px solid #f2edd5; border-left-width: 5px; }
+    input[type="email"], input[type="password"], input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #dcd7be; border-radius: 8px; font-size: 1em; background-color: #fffdf7; }
+    input:focus { outline: none; border-color: #2c3e50; box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1); }
+    button { padding: 12px 20px; background-color: #2c3e50; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; }
     button:hover { background-color: #1a252f; transform: translateY(-1px); }
-    .logout-btn{background-color:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3);width:auto;padding:10px 18px;font-size:0.9em;border-radius:8px;}
-    .logout-btn:hover{background-color:rgba(255,255,255,0.25);}
-    .add-btn{background-color:#3ecf8e;margin-bottom:15px;width:100%;box-shadow:0 4px 6px rgba(62,207,142,0.15);}
-    .add-btn:hover{background-color:#2eaf76;}
-    .hidden{display:none !important;}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+    .logout-btn { background-color: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; padding: 10px 18px; font-size: 0.9em; border-radius: 8px; }
+    .logout-btn:hover { background-color: rgba(255,255,255,0.25); }
+    .add-btn { background-color: #3ecf8e; margin-bottom: 15px; width: 100%; box-shadow: 0 4px 6px rgba(62, 207, 142, 0.15); }
+    .add-btn:hover { background-color: #2eaf76; }
+    .hidden { display: none !important; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .security-badge { background: #fadbd8; color: #78281f; padding: 8px 12px; border-radius: 6px; font-size: 0.85em; font-weight: bold; margin-bottom: 15px; border: 1px solid #f5b7b1; display: inline-block; }
   </style>
 </head>
 <body>
-  <svg class="journey-background" xmlns="http://w3.org" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"><path class="journey-path" d="M -50,150 C 300,50 400,450 700,350 C 1000,250 1100,750 1500,650" /><path class="journey-path" d="M -20,300 C 250,500 550,200 850,550 C 1150,800 1250,400 1480,500" opacity="0.5" /></svg>
+  <svg class="journey-background" xmlns="http://w3.org" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <path class="journey-path" d="M -50,150 C 300,50 400,450 700,350 C 1000,250 1100,750 1500,650" />
+    <path class="journey-path" d="M -20,300 C 250,500 550,200 850,550 C 1150,800 1250,400 1480,500" opacity="0.5" />
+  </svg>
   <div class="wrapper">
-    <header id="landing-header"><h1>LENS Dashboard</h1><p class="tagline">Learning Engagement, Navigation and Support</p></header>
+    <header id="landing-header">
+      <h1>LENS: Learning Engagement, Navigation and Support</h1>
+      <p class="tagline">See the story, support the journey</p>
+    </header>
     <div id="login-container" class="card login-card">
-      <h3 style="margin-top:0;color:#2c3e50;">Teacher Portal Gateway</h3>
+      <h3 style="margin-top:0;">Teacher Portal Gateway</h3>
+      <p style="color:#666; font-size:0.9em; margin-top:-5px; margin-bottom:25px;">Please verify your school email and portal access key to view active tracking indicators.</p>
       <div class="form-group">
-        <div><label style="font-weight:bold;display:block;margin-bottom:5px;">Teacher Email:</label><input type="email" id="email-input" placeholder="username@deped.gov.ph" /></div>
-        <div><label style="font-weight:bold;display:block;margin-bottom:5px;">Portal Access Key:</label><input type="password" id="password-input" placeholder="Enter portal access key" /></div>
+        <div><label style="font-weight: bold; display: block; margin-bottom: 5px;">Teacher Email:</label><input type="email" id="email-input" placeholder="username@deped.gov.ph" /></div>
+        <div><label style="font-weight: bold; display: block; margin-bottom: 5px;">Portal Access Key:</label><input type="password" id="password-input" placeholder="Enter portal access key" /></div>
         <button id="login-btn">Sign In to Dashboard</button>
       </div>
-      <p id="auth-status" style="color:red;font-weight:bold;margin-top:10px;"></p>
+      <p id="auth-status" style="color:red; font-weight:bold; margin-top:10px;"></p>
     </div>
     <div id="app-container" class="dashboard-grid hidden">
-      <div class="dashboard-banner"><div class="banner-text"><h2>LENS Active Ledger</h2><p>Operator: <span id="user-email" style="font-weight:bold;text-decoration:underline;"></span></p></div><button id="logout-btn" class="logout-btn">Secure Sign Out</button></div>
+      <div class="dashboard-banner">
+        <div class="banner-text">
+          <h2>LENS: Learning Engagement, Navigation and Support</h2>
+          <p>Active Portal Operator: <span id="user-email" style="font-weight: bold; text-decoration: underline;"></span></p>
+        </div>
+        <button id="logout-btn" class="logout-btn">Secure Sign Out</button>
+      </div>
       <div class="left-panel">
         <div class="card">
-          <h3 style="margin-top:0;color:#2c3e50;border-bottom:2px solid #f2edd5;padding-bottom:8px;">Add New Learner Profile</h3>
+          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Add New Learner Profile</h3>
           <div class="form-group" style="gap:10px;">
             <div class="form-row">
-              <div><label style="font-size:0.85em;font-weight:bold;">First Name:</label><input type="text" id="add-fname" placeholder="Juan" /></div>
-              <div><label style="font-size:0.85em;font-weight:bold;">Last Name:</label><input type="text" id="add-lname" placeholder="Dela Cruz" /></div>
+              <div><label style="font-size:0.85em; font-weight:bold;">First Name:</label><input type="text" id="add-fname" placeholder="Juan" /></div>
+              <div><label style="font-size:0.85em; font-weight:bold;">Last Name:</label><input type="text" id="add-lname" placeholder="Dela Cruz" /></div>
             </div>
             <div class="form-row">
-              <div><label style="font-size:0.85em;font-weight:bold;">Middle Name:</label><input type="text" id="add-mname" placeholder="Santos" /></div>
-              <div><label style="font-size:0.85em;font-weight:bold;">Suffix:</label><input type="text" id="add-suffix" placeholder="Jr. / III" /></div>
+              <div><label style="font-size:0.85em; font-weight:bold;">Middle Name:</label><input type="text" id="add-mname" placeholder="Santos" /></div>
+              <div><label style="font-size:0.85em; font-weight:bold;">Suffix:</label><input type="text" id="add-suffix" placeholder="Jr." /></div>
             </div>
             <div class="form-row">
-              <div><label style="font-size:0.85em;font-weight:bold;">Grade Level:</label><input type="text" id="add-grade" placeholder="7 / 10" /></div>
-              <div><label style="font-size:0.85em;font-weight:bold;">Section:</label><input type="text" id="add-section" placeholder="Rizal" /></div>
+              <div><label style="font-size:0.85em; font-weight:bold;">Grade Level:</label><input type="text" id="add-grade" placeholder="7" /></div>
+              <div><label style="font-size:0.85em; font-weight:bold;">Section:</label><input type="text" id="add-section" placeholder="Rizal" /></div>
             </div>
             <button id="submit-learner-btn" class="add-btn">Add Student Record</button>
-            <p id="form-status" style="font-weight:bold;font-size:0.9em;margin:0;text-align:center;"></p>
+            <p id="form-status" style="font-weight:bold; font-size:0.9em; margin:0; text-align:center;"></p>
           </div>
         </div>
         <div class="card">
-          <h3 style="margin-top:0;color:#2c3e50;border-bottom:2px solid #f2edd5;padding-bottom:8px;">Performance Matrix</h3>
+          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Performance Matrix</h3>
           <div class="stats-matrix">
             <div class="stat-box full-width"><div class="stat-number" id="total-learners-count">0</div><div class="stat-label">Total Learners</div></div>
-            <div class="stat-box" style="border-top:4px solid #f39c12;"><div class="stat-number" id="attendance-issues-count">0</div><div class="stat-label">Attendance</div></div>
-            <div class="stat-box" style="border-top:4px solid #e74c3c;"><div class="stat-number" id="offenses-count">0</div><div class="stat-label">Offenses</div></div>
+            <div class="stat-box" style="border-top: 4px solid #f39c12;"><div class="stat-number" id="attendance-issues-count">0</div><div class="stat-label">Attendance</div></div>
+            <div class="stat-box" style="border-top: 4px solid #e74c3c;"><div class="stat-number" id="offenses-count">0</div><div class="stat-label">Offenses</div></div>
           </div>
         </div>
       </div>
-      <div class="right-panel"><div class="card"><h3 style="margin-top:0;color:#2c3e50;border-bottom:2px solid #f2edd5;padding-bottom:8px;">Active Learners Ledger</h3><div id="learners-list" class="activity-stream"><p style="color:#666;">Loading matrix data...</p></div></div></div>
+      <div class="right-panel"><div class="card"><h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Active Learners Ledger</h3><div id="learners-list" class="activity-stream"><p style="color:#666;">Loading matrix data...</p></div></div></div>
     </div>
   </div>
   <script>
