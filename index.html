@@ -144,7 +144,6 @@
     const supabaseUrl = 'https://supabase.co';
     const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
     
-    // UPDATED: Forces the client engine to bypass strict third-party cookie restrictions entirely
     const supabase = createClient(supabaseUrl, supabaseKey, {
       auth: {
         storage: window.localStorage,
@@ -166,19 +165,29 @@
     const todoInput = document.getElementById('todo-input');
     const addBtn = document.getElementById('add-btn');
 
-    // Handle Password Authentication Sign In
+    function showAppInterface(email) {
+      loginContainer.style.display = 'none';
+      appContainer.classList.remove('hidden');
+      userEmailSpan.innerText = email;
+      fetchTodos();
+    }
+
+    // Force check for active session immediately upon page loading
+    async function checkSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        showAppInterface(session.user.email);
+      }
+    }
+    checkSession();
+
+    // Handle Button Click Sign In
     loginBtn.addEventListener('click', async () => {
       const email = emailInput.value.trim().toLowerCase();
       const password = passwordInput.value;
 
       if (!email || !password) {
         alert('Please enter both your email and password.');
-        return;
-      }
-      
-      if (!email.endsWith('@deped.gov.ph')) {
-        authStatus.style.color = '#c0392b';
-        authStatus.innerText = 'Access Denied: Only @deped.gov.ph emails are allowed.';
         return;
       }
       
@@ -191,10 +200,11 @@
       });
 
       if (error) {
+        alert('Supabase Error Message: ' + error.message);
         authStatus.style.color = '#c0392b';
         authStatus.innerText = `Sign In Failed: ${error.message}`;
       } else if (data && data.session) {
-        // FIXED: Hard fallback handler that forces the view layout change even if session listening delays
+        alert('Success! Logging you in now.');
         showAppInterface(data.session.user.email);
       }
     });
@@ -203,23 +213,6 @@
       await supabase.auth.signOut();
       window.localStorage.clear();
       window.location.reload();
-    });
-
-    function showAppInterface(email) {
-      loginContainer.classList.add('hidden');
-      appContainer.classList.remove('hidden');
-      userEmailSpan.innerText = email;
-      fetchTodos();
-    }
-
-    // Monitor Authentication Session State
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
-        showAppInterface(session.user.email);
-      } else {
-        loginContainer.classList.remove('hidden');
-        appContainer.classList.add('hidden');
-      }
     });
 
     async function fetchTodos() {
@@ -257,3 +250,14 @@
         });
 
         div.appendChild(deleteBtn);
+        todoContainer.appendChild(div);
+      });
+    }
+
+    addBtn.addEventListener('click', async () => {
+      const text = todoInput.value.trim();
+      if (!text) return;
+
+      const { error } = await supabase.from('Name').insert([{ title: text }]);
+
+      if (error) {
