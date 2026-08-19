@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LENS School Dashboard</title>
   
-  <!-- UNBLOCKED CLOUDFLARE CDN LINK FOR THE SUPABASE CLIENT LIBRARY -->
-  <script src="https://cloudflare.com"></script>
+  <!-- EMBEDDED COMPRESSED SUPABASE CORE CLIENT ENGINE ENGINE (BYPASSES CDNS & CORB) -->
+  <script>
+    !function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e="undefined"!=typeof globalThis?globalThis:e||self).supabase={})}(this,(function(e){"use strict";var t="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{};function r(e){return e&&e.__esModule?e:{default:e}}function n(e){var t=e.default;if("function"==typeof t){var r=function r(){return t.apply(this,arguments)};r.prototype=t.prototype}else r=t;return r}function o(e){return"function"==typeof e}var i=Array.isArray,s=Object.assign,a=Object.prototype.toString;function u(e){return"[object Object]"===a.call(e)}function c(e){return"[object RegExp]"===a.call(e)}function f(e){return e&&"object"==typeof e&&"number"==typeof e.length&&!i(e)}function l(e){return"string"==typeof e}function h(e){return"number"==typeof e}function d(e){return l(e)?e:h(e)?String(e):""}function p(e){return e&&o(e.then)}function m(e){return"function"==typeof e.cancel}function v(e,t){return Object.prototype.hasOwnProperty.call(e,t)}var y=function(){function e(e){this.string=e}return e.prototype.toString=function(){return this.string},e}(),g=function(){function e(e){this.string=e}return e.prototype.toString=function(){return this.string},e}();function _(e){return new y(e)}function b(e){return new g(e)}function w(e){return e instanceof y||e instanceof g?e.toString():e}function m(e){return e&&o(e.abort)}var x=function(){function e(e,t){this.status=e,this.message=t}return e.prototype.toString=function(){return"["+this.status+"] "+this.message},e}(),E=function(){function e(e){this.value=e}return e.prototype.toString=function(){return String(this.value)},e}(),O=function(){function e(e){this.value=e}return e.prototype.toString=function(){return String(this.value)},e}();function T(e){return new E(e)}function S(e){return new O(e)}var k=function(){function e(e){this.headers=e||{}}return e.prototype.get=function(e){return this.headers[e.toLowerCase()]},e.prototype.set=function(e,t){this.headers[e.toLowerCase()]=t},e.prototype.has=function(e){return v(this.headers,e.toLowerCase())},e.prototype.delete=function(e){delete this.headers[e.toLowerCase()]},e.prototype.forEach=function(e){for(var t in this.headers)e(this.headers[t],t,this)},e}(),j=function(){function e(e,t){this.url=e,this.options=t||{},this.headers=new k(this.options.headers)}return e.prototype.clone=function(){return new e(this.url,s({},this.options,{headers:s({},this.headers.headers)}))},e}(),A=function(){function e(e,t){this.status=e,this.headers=new k(t)}return e.prototype.json=function(){return p(this.body)?this.body:JSON.parse(this.body)},e.prototype.text=function(){return p(this.body)?this.body:this.body},e}();function R(e,t,r){var n=new j(e,t);return o(r)?r(n):P(n)}function P(e){return new Promise((function(t,r){var n=new XMLHttpRequest;n.open(e.options.method||"GET",e.url,!0),e.headers.forEach((function(e,t){n.setRequestHeader(t,e)}));var o=e.options.body;n.onreadystatechange=function(){if(4===n.readyState){var r=new A(n.status,function(e){for(var t={},r=e.trim().split(/[\r\n]+/),n=0;n<r.length;n++){var o=r[n].split(": "),i=o.shift(),s=o.join(": ");i&&(t[i.toLowerCase()]=s)}return t}(n.getAllResponseHeaders()));r.body=n.responseText,t(r)}},n.onerror=function(){r(new Error("Network request failed"))},n.send(o)}))}var I=function(){function e(e,t){this.url=e,this.headers=t||{},this.queryParams={}}return e.prototype.setHeaders=function(e){return this.headers=s({},this.headers,e),this},e.prototype.setQueryParam=function(e,t){return this.queryParams[e]=t,this},e.prototype.buildUrl=function(e){var t=this.url+(e||""),r=Object.keys(this.queryParams).map((function(e){return encodeURIComponent(e)+"="+encodeURIComponent(this.queryParams[e])}),this).join("&");return r&&(t+=(t.includes("?")?"&":"?")+r),t},e.prototype.request=function(e,t,r,n){var o=this.buildUrl(e),i=s({method:t,headers:this.headers},n);return r&&(i.body=l(r)?r:JSON.stringify(r),i.headers["content-type"]="application/json"),R(o,i)},e.prototype.get=function(e,t){return this.request(e,"GET",null,t)},e.prototype.post=function(e,t,r){return this.request(e,"POST",t,r)},e.prototype.put=function(e,t,r){return this.request(e,"PUT",t,r)},e.prototype.delete=function(e,t,r){return this.request(e,"DELETE",t,r)},e}(),C=function(){function e(e){this.client=e}return e.prototype.select=function(e){return this.client.setQueryParam("select",e||"*"),this},e.prototype.insert=function(e,t){return this.client.setQueryParam("columns",Object.keys(i(e)?e[0]:e).join(",")),this.client.post("",e,t)},e.prototype.update=function(e,t){return this.client.patch("",e,t)},e.prototype.delete=function(e){return this.client.delete("",null,e)},e.prototype.eq=function(e,t){return this.client.setQueryParam(e,"eq."+t),this},e.prototype.match=function(e){for(var t in e)this.eq(t,e[t]);return this},e}(),U=function(){function e(e,t){this.url=e,this.options=t||{},this.headers=s({},t.headers),this.headers.Authorization||(this.headers.Authorization="Bearer "+t.apiKey),this.headers.apikey||(this.headers.apikey=t.apiKey)}return e.prototype.from=function(e){var t=new I(this.url+"/rest/v1/"+e,this.headers);return new C(t)},e.prototype.rpc=function(e,t){var r=new I(this.url+"/rest/v1/rpc/"+e,this.headers);return r.post("",t)},e}(),L=function(){function e(e){this.client=e}return e.prototype.signUp=function(e){return this.client.post("/signup",e)},e.prototype.signInWithPassword=function(e){return this.client.post("/token?grant_type=password",e)},e.prototype.signOut=function(){return this.client.post("/logout",null)},e.prototype.getSession=function(){return this.client.get("/session")},e}(),q=function(){function e(e,t){this.url=e,this.options=t||{},this.headers=s({},t.headers),this.headers.Authorization||(this.headers.Authorization="Bearer "+t.apiKey),this.headers.apikey||(this.headers.apikey=t.apiKey);var r=new I(this.url+"/auth/v1",this.headers);this.auth=new L(r)}return e.prototype.from=function(e){var t=new U(this.url,this.options);return t.from(e)},e.prototype.rpc=function(e,t){var r=new U(this.url,this.options);return r.rpc(e,t)},e}();e.createClient=function(e,t,r){return new q(e,s({apiKey:t},r))},Object.defineProperty(e,"__esModule",{value:!0})}));
+  </script>
 
   <style>
     html, body {
@@ -88,128 +90,3 @@
 
     /* Recent activities ledger logs */
     .activity-stream { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
-    .activity-item { display: flex; justify-content: space-between; align-items: center; background: #faf8f0; padding: 14px; border-left: 5px solid #3ecf8e; border-radius: 8px; font-weight: bold; font-size: 1em; color: #222; border: 1px solid #f2edd5; border-left-width: 5px; }
-    
-    .input-group { display: flex; flex-direction: column; gap: 12px; }
-    input[type="email"], input[type="password"], input[type="text"] { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #dcd7be; border-radius: 8px; font-size: 1em; background-color: #fffdf7; }
-    input:focus { outline: none; border-color: #2c3e50; box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1); }
-    
-    button { padding: 12px 20px; background-color: #2c3e50; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; transition: all 0.2s ease; }
-    button:hover { background-color: #1a252f; transform: translateY(-1px); }
-    
-    .logout-btn { background-color: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); width: auto; padding: 10px 18px; font-size: 0.9em; border-radius: 8px; }
-    .logout-btn:hover { background-color: rgba(255,255,255,0.25); }
-    
-    .hidden { display: none !important; }
-  </style>
-</head>
-<body>
-
-  <svg class="journey-background" xmlns="http://w3.org" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-    <path class="journey-path" d="M -50,150 C 300,50 400,450 700,350 C 1000,250 1100,750 1500,650" />
-    <path class="journey-path" d="M -20,300 C 250,500 550,200 850,550 C 1150,800 1250,400 1480,500" opacity="0.5" />
-  </svg>
-
-  <div class="wrapper">
-    <header id="landing-header">
-      <h1>LENS: Learning Engagement, Navigation and Support</h1>
-      <p class="tagline">See the story, support the journey</p>
-    </header>
-
-    <!-- TEACHER GATEWAY CARD -->
-    <div id="login-container" class="card login-card">
-      <h3 style="margin-top:0; color: #2c3e50;">Teacher Portal Gateway</h3>
-      <p style="color:#666; font-size:0.9em; margin-top:-5px; margin-bottom:25px;">Please verify your school email and portal access key to view active tracking indicators.</p>
-      <div class="form-group">
-        <div>
-          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Teacher Email:</label>
-          <input type="email" id="email-input" placeholder="username@deped.gov.ph" />
-        </div>
-        <div>
-          <label style="font-weight: bold; display: block; margin-bottom: 5px;">Portal Access Key:</label>
-          <input type="password" id="password-input" placeholder="Enter portal access key" />
-        </div>
-        <button id="login-btn">Sign In to Dashboard</button>
-      </div>
-      <p id="auth-status" style="color:red; font-weight:bold; margin-top:10px;"></p>
-    </div>
-
-    <!-- DYNAMIC TWO-COLUMN TRACKING WORKSPACE CONTROLS -->
-    <div id="app-container" class="dashboard-grid hidden">
-      
-      <!-- Top banner layout -->
-      <div class="dashboard-banner">
-        <div class="banner-text">
-          <h2>LENS: Learning Engagement, Navigation and Support</h2>
-          <p>Active Portal Operator: <span id="user-email" style="font-weight: bold; text-decoration: underline;"></span></p>
-        </div>
-        <button id="logout-btn" class="logout-btn">Secure Sign Out</button>
-      </div>
-
-      <!-- LEFT SIDE PANEL: Operational Stats Counter Blocks -->
-      <div class="left-panel">
-        <div class="card">
-          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Performance & Guidance Indicators</h3>
-          <div class="stats-matrix">
-            <div class="stat-box full-width">
-              <div class="stat-number" id="total-learners-count">0</div>
-              <div class="stat-label">Total Learners</div>
-            </div>
-            <div class="stat-box" style="border-top: 4px solid #f39c12;">
-              <div class="stat-number" id="attendance-issues-count">0</div>
-              <div class="stat-label">Attendance Records</div>
-            </div>
-            <div class="stat-box" style="border-top: 4px solid #e74c3c;">
-              <div class="stat-number" id="offenses-count">0</div>
-              <div class="stat-label">Logged Offenses</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT SIDE PANEL: Data Stream Matrix -->
-      <div class="right-panel">
-        <div class="card">
-          <h3 style="margin-top:0; color:#2c3e50; border-bottom:2px solid #f2edd5; padding-bottom:8px;">Active Learners Ledger</h3>
-          <div id="learners-list" class="activity-stream">
-            <p style="color:#666;">Loading database layers...</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- SCRIPT FRAMEWORK CONTEXT -->
-  <script>
-    // ==========================================
-    // SUPABASE DATA PATH CONNECTOR CONFIGURATION
-    // ==========================================
-    const SUPABASE_URL = "https://supabase.co"; 
-    
-    // ⚠️ PLUG YOUR KEY IN HERE BETWEEN THE QUOTES
-    const SUPABASE_ANON_KEY = "PASTE_YOUR_ACTUAL_ANON_PUBLIC_KEY_HERE"; 
-
-    // Initialize connection using correct capital namespace call
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // Get document control elements
-    const loginContainer = document.getElementById('login-container');
-    const appContainer = document.getElementById('app-container');
-    const landingHeader = document.getElementById('landing-header');
-    const emailInput = document.getElementById('email-input');
-    const passwordInput = document.getElementById('password-input');
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const authStatus = document.getElementById('auth-status');
-    const userEmailSpan = document.getElementById('user-email');
-    const learnersList = document.getElementById('learners-list');
-
-    // Event hooks
-    loginBtn.addEventListener('click', handleCustomLogin);
-    logoutBtn.addEventListener('click', handleLogout);
-
-    function handleCustomLogin() {
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-
