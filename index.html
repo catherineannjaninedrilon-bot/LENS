@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My First Supabase Site</title>
     
-    <!-- Loads the working Supabase client engine library -->
+    <!-- This is the fixed link that loads the Supabase library engine -->
     <script src="https://jsdelivr.net"></script>
     
     <style>
@@ -22,11 +22,11 @@
     <div id="todo-container">Loading items...</div>
 
     <script>
-        // Your clean connection variables (No duplicates, properly quoted)
+        // Your clean connection variables
         const supabaseUrl = 'https://supabase.co';
         const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
 
-        // Initialize the Supabase Client securely
+        // Initialize the Supabase Client
         const supabase = supabasejs.createClient(supabaseUrl, supabaseKey);
 
         // Fetch data from your database table
