@@ -1,128 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>LENS Secured School Dashboard</title>
+  <title>LENS - Learning Engagement, Navigation and Support</title>
 
   <style>
 
-    /* ============================================================
-       GENERAL PAGE
-    ============================================================ */
-
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      text-align: center;
-      background: linear-gradient(
-        135deg,
-        #fef9e7 0%,
-        #fbf3cd 100%
-      );
-      min-height: 100vh;
-      padding: 20px;
+    * {
       box-sizing: border-box;
     }
 
-    h1 {
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fef9e7, #fbf3cd);
       color: #2c3e50;
-      font-weight: 800;
-      text-shadow: 1px 1px 0px white;
-      margin-bottom: 5px;
     }
 
-    .tagline {
-      color: #555;
-      font-style: italic;
-      margin-top: 0;
-      font-size: 1.1em;
+    .page {
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* HEADER */
+
+    .header {
+      text-align: center;
       margin-bottom: 30px;
     }
 
-
-    /* ============================================================
-       CARDS
-    ============================================================ */
-
-    .card {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow:
-        0 10px 30px rgba(183, 149, 11, 0.08);
-      margin-bottom: 20px;
-      border: 1px solid rgba(242, 237, 213, 0.7);
-      text-align: left;
+    .header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 800;
     }
 
+    .tagline {
+      margin-top: 6px;
+      color: #666;
+      font-style: italic;
+    }
 
-    /* ============================================================
-       FORMS
-    ============================================================ */
+    /* CARD */
+
+    .card {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid #eee5c8;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    }
+
+    /* LOGIN */
+
+    .login-card {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .login-card h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .login-description {
+      color: #666;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    /* FORM */
 
     .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
       margin-bottom: 15px;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 6px;
     }
 
-    input[type="email"],
-    input[type="password"],
-    input[type="text"] {
+    input {
       width: 100%;
-      box-sizing: border-box;
       padding: 12px;
       border: 1px solid #dcd7be;
       border-radius: 8px;
-      font-size: 1em;
-      background-color: #fffdf7;
+      background: #fffdf7;
+      font-size: 15px;
     }
 
     input:focus {
       outline: none;
       border-color: #2c3e50;
-      box-shadow:
-        0 0 0 3px rgba(44, 62, 80, 0.1);
+      box-shadow: 0 0 0 3px rgba(44,62,80,0.1);
     }
 
-    label {
-      font-size: 0.85em;
-      font-weight: bold;
-      color: #2c3e50;
-      display: block;
-      margin-bottom: 4px;
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-
-    /* ============================================================
-       BUTTONS
-    ============================================================ */
+    /* BUTTON */
 
     button {
-      padding: 12px 20px;
-      background-color: #2c3e50;
-      color: white;
+      width: 100%;
+      padding: 12px 18px;
       border: none;
       border-radius: 8px;
+      background: #2c3e50;
+      color: white;
       font-weight: bold;
+      font-size: 15px;
       cursor: pointer;
-      font-size: 1em;
-      width: 100%;
-      transition: all 0.2s ease;
+      transition: 0.2s;
     }
 
     button:hover {
-      background-color: #1a252f;
+      background: #1a252f;
       transform: translateY(-1px);
     }
 
@@ -132,81 +136,158 @@
       transform: none;
     }
 
-
-    /* ============================================================
-       STUDENT LEDGER
-    ============================================================ */
-
-    .student-item {
-      background: #ffffff;
-      border-left: 4px solid #3ecf8e;
-      padding: 12px;
-      margin: 8px 0;
-      text-align: left;
-      font-weight: bold;
-      box-shadow:
-        0 2px 4px rgba(0,0,0,0.02);
-      display: flex;
-      justify-content: space-between;
-      border-radius: 0 8px 8px 0;
-      border: 1px solid #f2edd5;
-      border-left-width: 4px;
+    .green-button {
+      background: #3ecf8e;
     }
 
+    .green-button:hover {
+      background: #2eaf76;
+    }
 
-    /* ============================================================
-       STATISTICS
-    ============================================================ */
+    .logout-button {
+      background: #7f8c8d;
+      width: auto;
+    }
+
+    /* DASHBOARD */
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .dashboard-header h2 {
+      margin: 0;
+    }
+
+    /* STATS */
 
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 20px;
-      font-weight: bold;
-      text-align: center;
     }
 
     .stat-box {
       background: #2c3e50;
       color: white;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 0.9em;
+      padding: 18px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
     }
 
-    .stat-box span {
+    .stat-box.attendance {
+      background: #f39c12;
+    }
+
+    .stat-box.offenses {
+      background: #e74c3c;
+    }
+
+    .stat-number {
       display: block;
-      font-size: 1.5em;
-      font-weight: 800;
-      margin-top: 4px;
+      font-size: 28px;
+      margin-top: 5px;
     }
 
+    /* STUDENT */
 
-    /* ============================================================
-       TODO ITEMS
-    ============================================================ */
+    .student-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #eee5c8;
+      border-left: 4px solid #3ecf8e;
+      border-radius: 0 8px 8px 0;
+      padding: 13px;
+      margin-bottom: 8px;
+    }
+
+    .student-name {
+      font-weight: bold;
+    }
+
+    .student-details {
+      font-size: 13px;
+      color: #777;
+      margin-top: 3px;
+    }
+
+    .active-label {
+      color: #3ecf8e;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* TODO */
 
     .todo-item {
       background: #f8f9fa;
       border-left: 4px solid #3ecf8e;
       padding: 12px;
-      margin: 8px 0;
-      text-align: left;
-      font-weight: bold;
+      margin-bottom: 8px;
       border-radius: 0 8px 8px 0;
-      border-top: 1px solid #f2edd5;
-      border-right: 1px solid #f2edd5;
-      border-bottom: 1px solid #f2edd5;
+      font-weight: bold;
     }
 
+    /* STATUS */
 
-    /* ============================================================
-       UTILITIES
-    ============================================================ */
+    .message {
+      margin-top: 12px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .error {
+      color: #e74c3c;
+    }
+
+    .success {
+      color: #27ae60;
+    }
+
+    .info {
+      color: #777;
+    }
+
+    /* HIDDEN */
 
     .hidden {
       display: none !important;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .logout-button {
+        width: 100%;
+      }
+
+      .student-item {
+        align-items: flex-start;
+        gap: 10px;
+      }
+
     }
 
   </style>
@@ -215,540 +296,1105 @@
 
 <body>
 
-  <!-- ============================================================
-       LENS HEADER
-  ============================================================ -->
+<div class="page">
 
-  <h1>
-    LENS: Learning Engagement, Navigation and Support
-  </h1>
+  <!-- ==========================================================
+       HEADER
+  =========================================================== -->
 
-  <p class="tagline">
-    See the story, support the journey
-  </p>
+  <div class="header">
+
+    <h1>
+      LENS
+    </h1>
+
+    <div style="font-weight:bold; font-size:15px;">
+      Learning Engagement, Navigation and Support
+    </div>
+
+    <p class="tagline">
+      See the story, support the journey
+    </p>
+
+  </div>
 
 
-  <!-- ============================================================
-       STEP 1 — TEACHER LOGIN
-  ============================================================ -->
+  <!-- ==========================================================
+       LOGIN
+  =========================================================== -->
 
-  <div id="login-gate" class="card">
+  <div id="login-gate" class="card login-card">
 
-    <h3 style="
-      margin-top:0;
-      color:#2c3e50;
-    ">
-      Teacher Access Authentication
-    </h3>
+    <h2>
+      Teacher Access
+    </h2>
 
-    <p style="
-      color:#666;
-      font-size:0.9em;
-      margin-top:-5px;
-      margin-bottom:25px;
-    ">
-      Please verify your school email and portal access key
-      to view active tracking indicators.
+    <p class="login-description">
+      Sign in using your registered school email
+      and password.
     </p>
 
 
     <div class="form-group">
 
-      <div>
-        <label>
-          Teacher Email:
-        </label>
+      <label for="email-field">
+        Teacher Email
+      </label>
 
-        <input
-          type="email"
-          id="email-field"
-          placeholder="username@deped.gov.ph"
-        />
-      </div>
+      <input
+        type="email"
+        id="email-field"
+        placeholder="username@deped.gov.ph"
+      >
 
-
-      <div>
-        <label>
-          Portal Access Key:
-        </label>
-
-        <input
-          type="password"
-          id="pass-field"
-          placeholder="Enter portal access key"
-        />
-      </div>
+    </div>
 
 
-      <button id="auth-btn">
-        Sign In to Dashboard
+    <div class="form-group">
+
+      <label for="pass-field">
+        Password
+      </label>
+
+      <input
+        type="password"
+        id="pass-field"
+        placeholder="Enter your password"
+      >
+
+    </div>
+
+
+    <button id="auth-btn">
+      Sign In to Dashboard
+    </button>
+
+
+    <div
+      id="error-msg"
+      class="message error"
+    ></div>
+
+  </div>
+
+
+  <!-- ==========================================================
+       DASHBOARD
+  =========================================================== -->
+
+  <div id="portal-dashboard" class="hidden">
+
+
+    <!-- DASHBOARD HEADER -->
+
+    <div class="dashboard-header">
+
+      <h2>
+        LENS Dashboard
+      </h2>
+
+      <button
+        id="logout-btn"
+        class="logout-button"
+      >
+        Secure Sign Out
       </button>
 
     </div>
 
 
-    <p
-      id="error-msg"
-      style="
-        color:red;
-        font-weight:bold;
-        margin:0;
-        text-align:center;
-      "
-    ></p>
-
-  </div>
-
-
-
-  <!-- ============================================================
-       STEP 2 — LENS DASHBOARD
-  ============================================================ -->
-
-  <div id="portal-dashboard" class="hidden">
-
-
-    <!-- ==========================================================
-         DASHBOARD STATISTICS
-    =========================================================== -->
+    <!-- ========================================================
+         STATISTICS
+    ========================================================= -->
 
     <div class="stats-grid">
 
       <div class="stat-box">
+
         Learners
-        <span id="count-learners">0</span>
+
+        <span
+          id="count-learners"
+          class="stat-number"
+        >
+          0
+        </span>
+
       </div>
 
 
-      <div
-        class="stat-box"
-        style="background:#f39c12;"
-      >
+      <div class="stat-box attendance">
+
         Attendance
-        <span id="count-attendance">0</span>
+
+        <span
+          id="count-attendance"
+          class="stat-number"
+        >
+          0
+        </span>
+
       </div>
 
 
-      <div
-        class="stat-box"
-        style="background:#e74c3c;"
-      >
+      <div class="stat-box offenses">
+
         Offenses
-        <span id="count-offenses">0</span>
+
+        <span
+          id="count-offenses"
+          class="stat-number"
+        >
+          0
+        </span>
+
       </div>
 
     </div>
 
 
-
-    <!-- ==========================================================
+    <!-- ========================================================
          ADD LEARNER
-    =========================================================== -->
+    ========================================================= -->
 
-    <div
-      class="card"
-      style="margin-bottom:25px;"
-    >
+    <div class="card">
 
-      <h3 style="
-        margin-top:0;
-        color:#2c3e50;
-        border-bottom:2px solid #f2edd5;
-        padding-bottom:8px;
-      ">
+      <h3>
         Add New Learner Profile
       </h3>
 
-
-      <div class="form-group">
-
-
-        <div class="form-row">
-
-          <div>
-            <label>
-              First Name:
-            </label>
-
-            <input
-              type="text"
-              id="add-fname"
-              placeholder="Juan"
-            />
-          </div>
+      <p class="info">
+        Enter the learner's basic information below.
+      </p>
 
 
-          <div>
-            <label>
-              Last Name:
-            </label>
+      <div class="form-row">
 
-            <input
-              type="text"
-              id="add-lname"
-              placeholder="Dela Cruz"
-            />
-          </div>
+        <div class="form-group">
+
+          <label>
+            First Name *
+          </label>
+
+          <input
+            type="text"
+            id="add-fname"
+            placeholder="Juan"
+          >
 
         </div>
 
 
+        <div class="form-group">
 
-        <div class="form-row">
+          <label>
+            Last Name *
+          </label>
 
-          <div>
-            <label>
-              Middle Name:
-            </label>
-
-            <input
-              type="text"
-              id="add-mname"
-              placeholder="Santos"
-            />
-          </div>
-
-
-          <div>
-            <label>
-              Suffix:
-            </label>
-
-            <input
-              type="text"
-              id="add-suffix"
-              placeholder="Jr. / III"
-            />
-          </div>
+          <input
+            type="text"
+            id="add-lname"
+            placeholder="Dela Cruz"
+          >
 
         </div>
-
-
-
-        <div class="form-row">
-
-          <div>
-            <label>
-              Grade Level:
-            </label>
-
-            <input
-              type="text"
-              id="add-grade"
-              placeholder="7"
-            />
-          </div>
-
-
-          <div>
-            <label>
-              Section:
-            </label>
-
-            <input
-              type="text"
-              id="add-section"
-              placeholder="Rizal"
-            />
-          </div>
-
-        </div>
-
-
-
-        <button
-          id="submit-learner-btn"
-          style="background-color:#3ecf8e;"
-        >
-          Add Student Record
-        </button>
 
       </div>
 
 
-      <p
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label>
+            Middle Name
+          </label>
+
+          <input
+            type="text"
+            id="add-mname"
+            placeholder="Santos"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Suffix
+          </label>
+
+          <input
+            type="text"
+            id="add-suffix"
+            placeholder="Jr. / III"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label>
+            Grade Level *
+          </label>
+
+          <input
+            type="text"
+            id="add-grade"
+            placeholder="7"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Section *
+          </label>
+
+          <input
+            type="text"
+            id="add-section"
+            placeholder="Rizal"
+          >
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="submit-learner-btn"
+        class="green-button"
+      >
+        Add Student Record
+      </button>
+
+
+      <div
         id="form-status"
-        style="
-          font-weight:bold;
-          font-size:0.9em;
-          margin:0;
-          text-align:center;
-        "
-      ></p>
+        class="message"
+      ></div>
 
     </div>
 
 
-
-    <!-- ==========================================================
-         ACTIVE LEARNERS LEDGER
-    =========================================================== -->
+    <!-- ========================================================
+         LEARNERS
+    ========================================================= -->
 
     <div class="card">
 
-      <h3 style="
-        margin-top:0;
-        color:#2c3e50;
-        border-bottom:2px solid #f2edd5;
-        padding-bottom:8px;
-      ">
+      <h3>
         Active Learners Ledger
       </h3>
 
-
       <div id="data-container">
-        Loading student records...
+
+        <p class="info">
+          Loading learner records...
+        </p>
+
       </div>
 
     </div>
 
 
-
-    <!-- ==========================================================
-         LENS TASKS / TODO
-    =========================================================== -->
+    <!-- ========================================================
+         TODOS
+    ========================================================= -->
 
     <div class="card">
 
-      <h3 style="
-        margin-top:0;
-        color:#2c3e50;
-        border-bottom:2px solid #f2edd5;
-        padding-bottom:8px;
-      ">
+      <h3>
         LENS Tasks / Notes
       </h3>
 
-
       <div id="todo-container">
-        Loading tasks...
+
+        <p class="info">
+          Loading tasks...
+        </p>
+
       </div>
 
     </div>
 
 
-
-    <!-- ==========================================================
-         LOGOUT
-    =========================================================== -->
-
-    <button
-      id="logout-btn"
-      style="
-        background-color:#7f8c8d;
-        margin-top:10px;
-        width:auto;
-        padding:10px 20px;
-      "
-    >
-      Secure Sign Out
-    </button>
-
   </div>
 
+</div>
 
 
-  <!-- ============================================================
-       SUPABASE CLIENT LIBRARY
-  ============================================================ -->
+<!-- ============================================================
+     SUPABASE LIBRARY
+============================================================= -->
 
-  <script src="
-    https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
-  "></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
+<script>
 
-  <script>
+  /* ============================================================
+     IMPORTANT:
+     PUT YOUR REAL SUPABASE DETAILS HERE
+  ============================================================ */
 
-    // ============================================================
-    // SUPABASE CONFIGURATION
-    // ============================================================
-    //
-    // IMPORTANT:
-    // Replace the two values below with your actual
-    // Supabase Project URL and Publishable/Anon Key.
-    //
-    // DO NOT put your service_role key here.
-    // ============================================================
+  const SUPABASE_URL =
+    "YOUR_SUPABASE_PROJECT_URL";
 
-    const SUPABASE_URL =
-      "YOUR_SUPABASE_PROJECT_URL";
-
-    const SUPABASE_ANON_KEY =
-      "YOUR_SUPABASE_ANON_KEY";
+  const SUPABASE_ANON_KEY =
+    "YOUR_SUPABASE_ANON_KEY";
 
 
-    // Create Supabase client
+  /* ============================================================
+     CREATE SUPABASE CLIENT
+  ============================================================ */
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
-
-
-
-    // ============================================================
-    // ELEMENTS
-    // ============================================================
-
-    const loginGate =
-      document.getElementById("login-gate");
-
-    const portalDashboard =
-      document.getElementById("portal-dashboard");
-
-    const emailField =
-      document.getElementById("email-field");
-
-    const passField =
-      document.getElementById("pass-field");
-
-    const authBtn =
-      document.getElementById("auth-btn");
-
-    const errorMsg =
-      document.getElementById("error-msg");
-
-    const logoutBtn =
-      document.getElementById("logout-btn");
-
-    const submitLearnerBtn =
-      document.getElementById(
-        "submit-learner-btn"
-      );
-
-    const formStatus =
-      document.getElementById(
-        "form-status"
-      );
-
-    const dataContainer =
-      document.getElementById(
-        "data-container"
-      );
-
-    const countLearners =
-      document.getElementById(
-        "count-learners"
-      );
-
-    const countAttendance =
-      document.getElementById(
-        "count-attendance"
-      );
-
-    const countOffenses =
-      document.getElementById(
-        "count-offenses"
-      );
-
-
-
-    // ============================================================
-    // LOGIN
-    // ============================================================
-
-    authBtn.addEventListener(
-      "click",
-      async () => {
-
-        const email =
-          emailField.value.trim();
-
-        const password =
-          passField.value;
-
-        errorMsg.textContent = "";
-
-
-        if (!email || !password) {
-
-          errorMsg.textContent =
-            "Please enter your school email and access key.";
-
-          return;
-        }
-
-
-        authBtn.disabled = true;
-
-        authBtn.textContent =
-          "Signing In...";
-
-
-        try {
-
-          const { data, error } =
-            await supabaseClient.auth
-              .signInWithPassword({
-                email: email,
-                password: password
-              });
-
-
-          if (error) {
-            throw error;
-          }
-
-
-          if (data.user) {
-
-            showDashboard();
-
-            await loadLearners();
-
-            await fetchTodos();
-
-          }
-
-
-        } catch (error) {
-
-          console.error(error);
-
-          errorMsg.textContent =
-            "Login failed. Please check your school email and access key.";
-
-        } finally {
-
-          authBtn.disabled = false;
-
-          authBtn.textContent =
-            "Sign In to Dashboard";
-
-        }
-
-      }
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
     );
 
 
+  /* ============================================================
+     GET PAGE ELEMENTS
+  ============================================================ */
 
-    // ============================================================
-    // SHOW DASHBOARD
-    // ============================================================
+  const loginGate =
+    document.getElementById("login-gate");
 
-    function showDashboard() {
+  const dashboard =
+    document.getElementById("portal-dashboard");
 
-      loginGate.classList.add(
-        "hidden"
+  const emailField =
+    document.getElementById("email-field");
+
+  const passwordField =
+    document.getElementById("pass-field");
+
+  const loginButton =
+    document.getElementById("auth-btn");
+
+  const errorMessage =
+    document.getElementById("error-msg");
+
+  const logoutButton =
+    document.getElementById("logout-btn");
+
+  const learnerButton =
+    document.getElementById(
+      "submit-learner-btn"
+    );
+
+  const formStatus =
+    document.getElementById(
+      "form-status"
+    );
+
+  const learnerContainer =
+    document.getElementById(
+      "data-container"
+    );
+
+  const todoContainer =
+    document.getElementById(
+      "todo-container"
+    );
+
+  const learnerCount =
+    document.getElementById(
+      "count-learners"
+    );
+
+  const attendanceCount =
+    document.getElementById(
+      "count-attendance"
+    );
+
+  const offenseCount =
+    document.getElementById(
+      "count-offenses"
+    );
+
+
+  /* ============================================================
+     SHOW DASHBOARD
+  ============================================================ */
+
+  function showDashboard() {
+
+    loginGate.classList.add("hidden");
+
+    dashboard.classList.remove("hidden");
+
+  }
+
+
+  /* ============================================================
+     SHOW LOGIN
+  ============================================================ */
+
+  function showLogin() {
+
+    dashboard.classList.add("hidden");
+
+    loginGate.classList.remove("hidden");
+
+  }
+
+
+  /* ============================================================
+     LOGIN
+  ============================================================ */
+
+  loginButton.addEventListener(
+    "click",
+    async function () {
+
+      const email =
+        emailField.value.trim();
+
+      const password =
+        passwordField.value;
+
+
+      errorMessage.textContent = "";
+
+
+      if (!email || !password) {
+
+        errorMessage.textContent =
+          "Please enter your email and password.";
+
+        return;
+
+      }
+
+
+      loginButton.disabled = true;
+
+      loginButton.textContent =
+        "Signing in...";
+
+
+      try {
+
+        const result =
+          await supabaseClient.auth
+            .signInWithPassword({
+              email: email,
+              password: password
+            });
+
+
+        if (result.error) {
+
+          throw result.error;
+
+        }
+
+
+        showDashboard();
+
+
+        await loadLearners();
+
+        await loadTodos();
+
+        await loadStatistics();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        errorMessage.textContent =
+          error.message ||
+          "Unable to sign in.";
+
+      }
+
+
+      loginButton.disabled = false;
+
+      loginButton.textContent =
+        "Sign In to Dashboard";
+
+    }
+  );
+
+
+  /* ============================================================
+     LOGOUT
+  ============================================================ */
+
+  logoutButton.addEventListener(
+    "click",
+    async function () {
+
+      await supabaseClient.auth.signOut();
+
+      emailField.value = "";
+
+      passwordField.value = "";
+
+      showLogin();
+
+    }
+  );
+
+
+  /* ============================================================
+     ADD LEARNER
+  ============================================================ */
+
+  learnerButton.addEventListener(
+    "click",
+    async function () {
+
+      const firstName =
+        document
+          .getElementById("add-fname")
+          .value.trim();
+
+      const lastName =
+        document
+          .getElementById("add-lname")
+          .value.trim();
+
+      const middleName =
+        document
+          .getElementById("add-mname")
+          .value.trim();
+
+      const suffix =
+        document
+          .getElementById("add-suffix")
+          .value.trim();
+
+      const grade =
+        document
+          .getElementById("add-grade")
+          .value.trim();
+
+      const section =
+        document
+          .getElementById("add-section")
+          .value.trim();
+
+
+      formStatus.textContent = "";
+
+      formStatus.className =
+        "message";
+
+
+      if (
+        !firstName ||
+        !lastName ||
+        !grade ||
+        !section
+      ) {
+
+        formStatus.textContent =
+          "Please complete all required fields.";
+
+        formStatus.classList.add(
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      learnerButton.disabled = true;
+
+      learnerButton.textContent =
+        "Saving...";
+
+
+      try {
+
+        const {
+          data: userData,
+          error: userError
+        } =
+          await supabaseClient.auth
+            .getUser();
+
+
+        if (userError) {
+
+          throw userError;
+
+        }
+
+
+        if (!userData.user) {
+
+          throw new Error(
+            "Your session has expired. Please sign in again."
+          );
+
+        }
+
+
+        const { error } =
+          await supabaseClient
+            .from("learners")
+            .insert({
+
+              first_name: firstName,
+
+              last_name: lastName,
+
+              middle_name:
+                middleName || null,
+
+              suffix:
+                suffix || null,
+
+              grade_level: grade,
+
+              section: section,
+
+              created_by:
+                userData.user.id
+
+            });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        formStatus.textContent =
+          "✓ Learner successfully added.";
+
+        formStatus.classList.add(
+          "success"
+        );
+
+
+        document.getElementById(
+          "add-fname"
+        ).value = "";
+
+        document.getElementById(
+          "add-lname"
+        ).value = "";
+
+        document.getElementById(
+          "add-mname"
+        ).value = "";
+
+        document.getElementById(
+          "add-suffix"
+        ).value = "";
+
+        document.getElementById(
+          "add-grade"
+        ).value = "";
+
+        document.getElementById(
+          "add-section"
+        ).value = "";
+
+
+        await loadLearners();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        formStatus.textContent =
+          "Unable to save learner: " +
+          error.message;
+
+        formStatus.classList.add(
+          "error"
+        );
+
+      }
+
+
+      learnerButton.disabled = false;
+
+      learnerButton.textContent =
+        "Add Student Record";
+
+    }
+  );
+
+
+  /* ============================================================
+     LOAD LEARNERS
+  ============================================================ */
+
+  async function loadLearners() {
+
+    learnerContainer.innerHTML =
+      "<p class='info'>Loading learners...</p>";
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("learners")
+          .select("*")
+          .order(
+            "last_name",
+            {
+              ascending: true
+            }
+          );
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      learnerCount.textContent =
+        data.length;
+
+
+      if (data.length === 0) {
+
+        learnerContainer.innerHTML =
+          "<p class='info'>No learner records yet.</p>";
+
+        return;
+
+      }
+
+
+      learnerContainer.innerHTML = "";
+
+
+      data.forEach(function(student) {
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "student-item";
+
+
+        const name =
+          [
+            student.last_name,
+            student.first_name,
+            student.middle_name
+          ]
+          .filter(Boolean)
+          .join(", ");
+
+
+        const suffix =
+          student.suffix
+            ? " " + student.suffix
+            : "";
+
+
+        item.innerHTML = `
+
+          <div>
+
+            <div class="student-name">
+              ${escapeHTML(name)}
+              ${escapeHTML(suffix)}
+            </div>
+
+            <div class="student-details">
+              Grade ${escapeHTML(
+                student.grade_level || ""
+              )}
+              — ${escapeHTML(
+                student.section || ""
+              )}
+            </div>
+
+          </div>
+
+          <div class="active-label">
+            ACTIVE
+          </div>
+
+        `;
+
+
+        learnerContainer.appendChild(
+          item
+        );
+
+      });
+
+
+    } catch (error) {
+
+      console.error(
+        "Learner error:",
+        error
       );
 
-      portalDashboard.classList.remove(
-        "hidden"
+
+      learnerContainer.innerHTML = `
+
+        <p class="error">
+
+          Unable to load learners.
+
+          <br>
+
+          <small>
+            ${escapeHTML(error.message)}
+          </small>
+
+        </p>
+
+      `;
+
+    }
+
+  }
+
+
+  /* ============================================================
+     LOAD TODOS
+  ============================================================ */
+
+  async function loadTodos() {
+
+    todoContainer.innerHTML =
+      "<p class='info'>Loading tasks...</p>";
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("todos")
+          .select("*")
+          .order(
+            "id",
+            {
+              ascending: true
+            }
+          );
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      if (!data || data.length === 0) {
+
+        todoContainer.innerHTML =
+          "<p class='info'>No tasks found.</p>";
+
+        return;
+
+      }
+
+
+      todoContainer.innerHTML = "";
+
+
+      data.forEach(function(todo) {
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "todo-item";
+
+
+        item.textContent =
+          todo.task ||
+          "Untitled task";
+
+
+        todoContainer.appendChild(
+          item
+        );
+
+      });
+
+
+    } catch (error) {
+
+      console.log(
+        "Todo table is not ready yet:",
+        error.message
       );
+
+
+      todoContainer.innerHTML = `
+
+        <p class="info">
+
+          Tasks are not configured yet.
+
+        </p>
+
+      `;
+
+    }
+
+  }
+
+
+  /* ============================================================
+     LOAD STATISTICS
+  ============================================================ */
+
+  async function loadStatistics() {
+
+    /*
+      These are optional for now.
+
+      If attendance or offenses tables do not exist,
+      the dashboard simply keeps the number at 0.
+    */
+
+
+    try {
+
+      const attendance =
+        await supabaseClient
+          .from("attendance")
+          .select("*", {
+            count: "exact",
+            head: true
+          });
+
+
+      if (!attendance.error) {
+
+        attendanceCount.textContent =
+          attendance.count || 0;
+
+      }
+
+    } catch (error) {
+
+      attendanceCount.textContent =
+        "0";
 
     }
 
 
+    try {
 
-    // ============================================================
-    // CHECK EXISTING SESSION
-    // ============================================================
+      const offenses =
+        await supabaseClient
+          .from("offenses")
+          .select("*", {
+            count: "exact",
+            head: true
+          });
 
-    async function checkSession() {
 
-      const { data, error } =
+      if (!offenses.error) {
+
+        offenseCount.textContent =
+          offenses.count || 0;
+
+      }
+
+    } catch (error) {
+
+      offenseCount.textContent =
+        "0";
+
+    }
+
+  }
+
+
+  /* ============================================================
+     ESCAPE HTML
+  ============================================================ */
+
+  function escapeHTML(value) {
+
+    return String(value)
+
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+
+      .replace(
+        /</g,
+        "&lt;"
+      )
+
+      .replace(
+        />/g,
+        "&gt;"
+      )
+
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+  }
+
+
+  /* ============================================================
+     CHECK LOGIN SESSION
+  ============================================================ */
+
+  async function checkSession() {
+
+    try {
+
+      const {
+        data,
+        error
+      } =
         await supabaseClient.auth
           .getSession();
 
@@ -768,699 +1414,52 @@
 
         await loadLearners();
 
-        await fetchTodos();
+        await loadTodos();
+
+        await loadStatistics();
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Session error:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /* ============================================================
+     AUTH STATE CHANGES
+  ============================================================ */
+
+  supabaseClient.auth.onAuthStateChange(
+    function(event, session) {
+
+      if (session) {
+
+        showDashboard();
+
+      } else {
+
+        showLogin();
 
       }
 
     }
+  );
 
 
+  /* ============================================================
+     START
+  ============================================================ */
 
-    // ============================================================
-    // LOGOUT
-    // ============================================================
+  checkSession();
 
-    logoutBtn.addEventListener(
-      "click",
-      async () => {
-
-        await supabaseClient.auth
-          .signOut();
-
-
-        portalDashboard.classList.add(
-          "hidden"
-        );
-
-        loginGate.classList.remove(
-          "hidden"
-        );
-
-
-        emailField.value = "";
-
-        passField.value = "";
-
-        dataContainer.innerHTML = "";
-
-        document.getElementById(
-          "todo-container"
-        ).innerHTML = "";
-
-
-        countLearners.textContent =
-          "0";
-
-        countAttendance.textContent =
-          "0";
-
-        countOffenses.textContent =
-          "0";
-
-      }
-    );
-
-
-
-    // ============================================================
-    // ADD NEW LEARNER
-    // ============================================================
-
-    submitLearnerBtn.addEventListener(
-      "click",
-      async () => {
-
-        const fname =
-          document.getElementById(
-            "add-fname"
-          ).value.trim();
-
-
-        const lname =
-          document.getElementById(
-            "add-lname"
-          ).value.trim();
-
-
-        const mname =
-          document.getElementById(
-            "add-mname"
-          ).value.trim();
-
-
-        const suffix =
-          document.getElementById(
-            "add-suffix"
-          ).value.trim();
-
-
-        const grade =
-          document.getElementById(
-            "add-grade"
-          ).value.trim();
-
-
-        const section =
-          document.getElementById(
-            "add-section"
-          ).value.trim();
-
-
-        formStatus.textContent = "";
-
-        formStatus.style.color =
-          "#2c3e50";
-
-
-        if (
-          !fname ||
-          !lname ||
-          !grade ||
-          !section
-        ) {
-
-          formStatus.textContent =
-            "Please complete the required learner information.";
-
-          formStatus.style.color =
-            "#e74c3c";
-
-          return;
-
-        }
-
-
-        submitLearnerBtn.disabled =
-          true;
-
-        submitLearnerBtn.textContent =
-          "Saving Record...";
-
-
-        try {
-
-          const { data: userData } =
-            await supabaseClient.auth
-              .getUser();
-
-
-          const user =
-            userData.user;
-
-
-          if (!user) {
-
-            throw new Error(
-              "You are not authenticated."
-            );
-
-          }
-
-
-          const { error } =
-            await supabaseClient
-              .from("learners")
-              .insert([
-
-                {
-                  first_name: fname,
-                  last_name: lname,
-                  middle_name:
-                    mname || null,
-                  suffix:
-                    suffix || null,
-                  grade_level: grade,
-                  section: section,
-                  created_by: user.id
-                }
-
-              ]);
-
-
-          if (error) {
-
-            throw error;
-
-          }
-
-
-          formStatus.textContent =
-            "✓ Learner record successfully added.";
-
-          formStatus.style.color =
-            "#27ae60";
-
-
-          // Clear form
-
-          document.getElementById(
-            "add-fname"
-          ).value = "";
-
-          document.getElementById(
-            "add-lname"
-          ).value = "";
-
-          document.getElementById(
-            "add-mname"
-          ).value = "";
-
-          document.getElementById(
-            "add-suffix"
-          ).value = "";
-
-          document.getElementById(
-            "add-grade"
-          ).value = "";
-
-          document.getElementById(
-            "add-section"
-          ).value = "";
-
-
-          // Reload learner list
-
-          await loadLearners();
-
-
-        } catch (error) {
-
-          console.error(error);
-
-          formStatus.textContent =
-            "Unable to save learner record: " +
-            error.message;
-
-          formStatus.style.color =
-            "#e74c3c";
-
-        } finally {
-
-          submitLearnerBtn.disabled =
-            false;
-
-          submitLearnerBtn.textContent =
-            "Add Student Record";
-
-        }
-
-      }
-    );
-
-
-
-    // ============================================================
-    // LOAD LEARNERS
-    // ============================================================
-
-    async function loadLearners() {
-
-      dataContainer.innerHTML =
-        "<p style='text-align:center;color:#777;'>Loading student records...</p>";
-
-
-      try {
-
-        const { data, error } =
-          await supabaseClient
-            .from("learners")
-            .select("*")
-            .order(
-              "last_name",
-              {
-                ascending: true
-              }
-            );
-
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        countLearners.textContent =
-          data
-            ? data.length
-            : 0;
-
-
-        if (
-          !data ||
-          data.length === 0
-        ) {
-
-          dataContainer.innerHTML = `
-
-            <div style="
-              text-align:center;
-              padding:25px;
-              color:#777;
-            ">
-
-              <strong>
-                No learner records yet.
-              </strong>
-
-              <br>
-
-              Add your first learner above.
-
-            </div>
-
-          `;
-
-          await loadDashboardStats();
-
-          return;
-
-        }
-
-
-        dataContainer.innerHTML =
-          "";
-
-
-        data.forEach(
-          student => {
-
-            const fullName = [
-
-              student.last_name,
-
-              student.first_name,
-
-              student.middle_name
-
-            ]
-            .filter(Boolean)
-            .join(", ");
-
-
-            const suffix =
-              student.suffix
-                ? " " +
-                  student.suffix
-                : "";
-
-
-            const studentItem =
-              document.createElement(
-                "div"
-              );
-
-
-            studentItem.className =
-              "student-item";
-
-
-            studentItem.innerHTML = `
-
-              <div>
-
-                <div>
-                  ${escapeHTML(fullName)}
-                  ${escapeHTML(suffix)}
-                </div>
-
-                <small style="
-                  color:#777;
-                  font-weight:normal;
-                ">
-
-                  Grade
-                  ${escapeHTML(
-                    student.grade_level || ""
-                  )}
-
-                  —
-                  ${escapeHTML(
-                    student.section || ""
-                  )}
-
-                </small>
-
-              </div>
-
-
-              <div style="
-                color:#3ecf8e;
-                font-size:0.8em;
-                align-self:center;
-              ">
-
-                ACTIVE
-
-              </div>
-
-            `;
-
-
-            dataContainer.appendChild(
-              studentItem
-            );
-
-          }
-        );
-
-
-        await loadDashboardStats();
-
-
-      } catch (error) {
-
-        console.error(error);
-
-
-        dataContainer.innerHTML = `
-
-          <div style="
-            color:#e74c3c;
-            text-align:center;
-            padding:20px;
-          ">
-
-            Unable to load learner records.
-
-            <br>
-
-            <small>
-              ${escapeHTML(
-                error.message
-              )}
-            </small>
-
-          </div>
-
-        `;
-
-      }
-
-    }
-
-
-
-    // ============================================================
-    // DASHBOARD STATISTICS
-    // ============================================================
-
-    async function loadDashboardStats() {
-
-      try {
-
-        const {
-          count: attendanceCount
-        } =
-          await supabaseClient
-            .from("attendance")
-            .select("*", {
-              count: "exact",
-              head: true
-            });
-
-
-        countAttendance.textContent =
-          attendanceCount || 0;
-
-
-
-        const {
-          count: offenseCount
-        } =
-          await supabaseClient
-            .from("offenses")
-            .select("*", {
-              count: "exact",
-              head: true
-            });
-
-
-        countOffenses.textContent =
-          offenseCount || 0;
-
-
-      } catch (error) {
-
-        console.log(
-          "Attendance or offenses tables are not available yet."
-        );
-
-      }
-
-    }
-
-
-
-    // ============================================================
-    // LOAD TODO / TASKS
-    // ============================================================
-
-    async function fetchTodos() {
-
-      const container =
-        document.getElementById(
-          "todo-container"
-        );
-
-
-      if (!container) {
-
-        return;
-
-      }
-
-
-      container.innerHTML =
-        "<p style='color:#777;text-align:center;'>Loading tasks...</p>";
-
-
-      try {
-
-        const { data, error } =
-          await supabaseClient
-            .from("todos")
-            .select("*")
-            .order(
-              "id",
-              {
-                ascending: true
-              }
-            );
-
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        if (
-          !data ||
-          data.length === 0
-        ) {
-
-          container.innerHTML = `
-
-            <div style="
-              text-align:center;
-              padding:15px;
-              color:#777;
-            ">
-
-              No tasks found.
-
-            </div>
-
-          `;
-
-          return;
-
-        }
-
-
-        container.innerHTML =
-          "";
-
-
-        data.forEach(
-          todo => {
-
-            const item =
-              document.createElement(
-                "div"
-              );
-
-
-            item.className =
-              "todo-item";
-
-
-            item.textContent =
-              todo.task ||
-              "Untitled task";
-
-
-            container.appendChild(
-              item
-            );
-
-          }
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "Error fetching tasks:",
-          error
-        );
-
-
-        container.innerHTML = `
-
-          <div style="
-            color:#e74c3c;
-            text-align:center;
-            padding:15px;
-          ">
-
-            Failed to load tasks.
-
-            <br>
-
-            <small>
-              ${escapeHTML(
-                error.message
-              )}
-            </small>
-
-          </div>
-
-        `;
-
-      }
-
-    }
-
-
-
-    // ============================================================
-    // BASIC SECURITY — ESCAPE DISPLAYED TEXT
-    // ============================================================
-
-    function escapeHTML(value) {
-
-      return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
-
-
-
-    // ============================================================
-    // AUTH STATE LISTENER
-    // ============================================================
-
-    supabaseClient.auth.onAuthStateChange(
-      async (
-        event,
-        session
-      ) => {
-
-        if (session) {
-
-          showDashboard();
-
-        } else {
-
-          portalDashboard.classList.add(
-            "hidden"
-          );
-
-          loginGate.classList.remove(
-            "hidden"
-          );
-
-        }
-
-      }
-    );
-
-
-
-    // ============================================================
-    // START LENS
-    // ============================================================
-
-    checkSession();
-
-  </script>
+</script>
 
 </body>
 </html>
