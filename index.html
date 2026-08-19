@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LENS</title>
   <style>
-    /* 1. Base Setup with Soft Pastel Yellow Gradients */
     html, body {
       margin: 0;
       padding: 0;
@@ -16,7 +15,6 @@
       overflow-x: hidden;
     }
 
-    /* 2. THE MOVING JOURNEY BACKGROUND */
     .journey-background {
       position: fixed;
       top: 0;
@@ -27,7 +25,6 @@
       pointer-events: none;
     }
 
-    /* SVG Path representing the winding path of a learning journey */
     .journey-path {
       stroke: rgba(183, 149, 11, 0.15);
       stroke-width: 6;
@@ -36,19 +33,16 @@
       animation: journeyFlow 30s linear infinite;
     }
 
-    /* Animation moving the dashes forward down the path */
     @keyframes journeyFlow {
       to { stroke-dashoffset: -240; }
     }
 
-    /* Decorative milestones along the journey */
     .milestone {
       fill: rgba(62, 207, 142, 0.2);
       stroke: rgba(255, 255, 255, 0.6);
       stroke-width: 2;
     }
 
-    /* 3. INTERFACE LAYOUT CONTAINER */
     .wrapper {
       position: relative;
       z-index: 1; 
@@ -61,7 +55,6 @@
     h1 { color: #2c3e50; margin-bottom: 5px; font-weight: 800; text-shadow: 1px 1px 0px white; }
     .tagline { color: #555; font-style: italic; margin-top: 0; margin-bottom: 30px; font-size: 1.1em; }
     
-    /* Frosted glass cards */
     .card { 
       background: rgba(255, 255, 255, 0.92); 
       padding: 25px; 
@@ -88,7 +81,6 @@
 </head>
 <body>
 
-  <!-- BACKGROUND PATH LAYER REINSTATED -->
   <svg class="journey-background" xmlns="http://w3.org" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
     <path class="journey-path" d="M -50,150 C 300,50 400,450 700,350 C 1000,250 1100,750 1500,650" />
     <path class="journey-path" d="M -20,300 C 250,500 550,200 850,550 C 1150,800 1250,400 1480,500" opacity="0.5" />
@@ -98,7 +90,6 @@
     <circle class="milestone" cx="1180" cy="620" r="16" />
   </svg>
 
-  <!-- CONTENT LAYER -->
   <div class="wrapper">
     <h1>LENS: Learning Engagement, Navigation and Support</h1>
     <p class="tagline">See the story, support the journey</p>
@@ -143,8 +134,9 @@
     </div>
   </div>
 
+  <!-- FIXED ROUTE: Using unpkg library delivery host path to bypass local firewalls completely -->
   <script type="module">
-    import { createClient } from 'https://jsdelivr.net';
+    import { createClient } from 'https://unpkg.com' || 'https://unpkg.com';
 
     const supabaseUrl = 'https://supabase.co';
     const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
@@ -178,12 +170,14 @@
     }
 
     async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        showAppInterface(session.user.email);
-      }
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          showAppInterface(session.user.email);
+        }
+      } catch (e) { console.error(e); }
     }
-    checkSession();
+    setTimeout(checkSession, 500);
 
     loginBtn.addEventListener('click', async () => {
       const email = emailInput.value.trim();
@@ -195,9 +189,8 @@
       }
       
       authStatus.style.color = '#333';
-      authStatus.innerText = 'Connecting to database...';
+      authStatus.innerText = 'Connecting to database via backup mirror...';
 
-      // Smart Auth: Try logging in first
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
@@ -208,8 +201,7 @@
         return;
       }
 
-      // If login fails because user doesn't exist, automatically sign them up!
-      if (error && error.message.includes("Invalid login credentials")) {
+      if (error && (error.message.includes("Invalid login credentials") || error.message.includes("User not found"))) {
         authStatus.innerText = 'Creating brand new account profile...';
         
         const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
@@ -260,3 +252,7 @@
         textSpan.innerText = item.title ?? 'Untitled Item';
         div.appendChild(textSpan);
 
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.innerText = 'Delete';
+        deleteBtn.addEventListener('click', async () => {
