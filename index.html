@@ -134,9 +134,9 @@
     </div>
   </div>
 
-  <!-- FIXED ROUTE: Using unpkg library delivery host path to bypass local firewalls completely -->
+  <!-- FIXED UNIVERSAL ENGINE: Uses skypack's absolute build wrapper to secure cross-site tracking clearances -->
   <script type="module">
-    import { createClient } from 'https://unpkg.com' || 'https://unpkg.com';
+    import { createClient } from 'https://skypack.dev';
 
     const supabaseUrl = 'https://supabase.co';
     const supabaseKey = 'sb_publishable_yIu-5tM1mpSkkwrdCt2vDg_M2nJkEBr';
@@ -177,7 +177,7 @@
         }
       } catch (e) { console.error(e); }
     }
-    setTimeout(checkSession, 500);
+    checkSession();
 
     loginBtn.addEventListener('click', async () => {
       const email = emailInput.value.trim();
@@ -189,7 +189,7 @@
       }
       
       authStatus.style.color = '#333';
-      authStatus.innerText = 'Connecting to database via backup mirror...';
+      authStatus.innerText = 'Verifying with structural network...';
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
@@ -201,8 +201,8 @@
         return;
       }
 
-      if (error && (error.message.includes("Invalid login credentials") || error.message.includes("User not found"))) {
-        authStatus.innerText = 'Creating brand new account profile...';
+      if (error) {
+        authStatus.innerText = 'Routing registration profile...';
         
         const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
           email: email,
@@ -217,10 +217,6 @@
           alert('Welcome! Your account has been automatically created.');
           showAppInterface(signUpData.user.email);
         }
-      } else {
-        alert('Error: ' + error.message);
-        authStatus.style.color = '#c0392b';
-        authStatus.innerText = `Error: ${error.message}`;
       }
     });
 
@@ -256,3 +252,17 @@
         deleteBtn.className = 'delete-btn';
         deleteBtn.innerText = 'Delete';
         deleteBtn.addEventListener('click', async () => {
+          const { error: deleteError } = await supabase.from('Name').delete().eq('id', item.id);
+          if (deleteError) {
+            alert(`Error deleting item: ${deleteError.message}`);
+          } else {
+            fetchTodos(); 
+          }
+        });
+
+        div.appendChild(deleteBtn);
+        todoContainer.appendChild(div);
+      });
+    }
+
+    addBtn.addEventListener('click', async () => {
