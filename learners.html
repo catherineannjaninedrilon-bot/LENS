@@ -437,7 +437,105 @@
     }
 
   </style>
+/* =========================
+   SEARCH LEARNER
+========================= */
 
+.search-box {
+  background: white;
+  border: 1px solid #e5e0c8;
+  border-radius: 14px;
+  padding: 22px;
+  margin-top: 25px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+}
+
+.search-box h2 {
+  margin: 0 0 7px;
+  font-size: 20px;
+}
+
+.search-box p {
+  margin: 0 0 15px;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.search-row {
+  display: flex;
+  gap: 10px;
+}
+
+.search-row input {
+  flex: 1;
+}
+
+.search-btn {
+  width: auto;
+  padding: 12px 20px;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background: #34495e;
+}
+
+.search-results {
+  margin-top: 18px;
+}
+
+.search-result {
+  padding: 15px;
+  border: 1px solid #e5e0c8;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: #fffdf9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-result-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.search-result-info {
+  color: #7f8c8d;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px;
+  color: #7f8c8d;
+  background: #fffdf9;
+  border-radius: 8px;
+}
+
+@media (max-width: 700px) {
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-btn {
+    width: 100%;
+  }
+
+  .search-result {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
 </head>
 
 <body>
@@ -494,63 +592,43 @@
          FILTERS
     ========================= -->
 
-    <div class="filters">
+  <!-- =========================
+     SEARCH LEARNER
+========================= -->
 
-      <div>
+<div class="search-box">
 
-        <label for="gradeSelect">
-          Grade Level
-        </label>
+  <h2>🔎 Search Learner</h2>
 
-        <select
-          id="gradeSelect"
-          onchange="loadSections()">
+  <p>
+    Search by LRN or learner's full name.
+  </p>
 
-          <option value="">
-            Select Grade Level
-          </option>
+  <div class="search-row">
 
-          <option value="7">
-            Grade 7
-          </option>
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Enter LRN or learner name..."
+      onkeydown="handleSearchKey(event)"
+    >
 
-          <option value="8">
-            Grade 8
-          </option>
+    <button
+      class="search-btn"
+      onclick="searchLearner()">
 
-          <option value="9">
-            Grade 9
-          </option>
+      Search
 
-          <option value="10">
-            Grade 10
-          </option>
+    </button>
 
-        </select>
+  </div>
 
-      </div>
+  <div
+    id="searchResults"
+    class="search-results">
+  </div>
 
-
-      <div>
-
-        <label for="sectionSelect">
-          Section
-        </label>
-
-        <select
-          id="sectionSelect"
-          onchange="loadLearners()"
-          disabled>
-
-          <option value="">
-            Select Section
-          </option>
-
-        </select>
-
-      </div>
-
-    </div>
+</div>
 
 
     <!-- =========================
@@ -1480,11 +1558,13 @@
        VIEW PROFILE
     ========================= */
 
-    function viewLearner(lrn) {
+  function viewLearner(lrn) {
 
-      window.location.href =
-        "learner-profile.html?lrn=" +
-        lrn;
+  window.location.href =
+    "learner-profile.html?lrn=" +
+    encodeURIComponent(lrn);
+
+}
 
     }
 
@@ -1512,7 +1592,196 @@
         "dashboard.html";
 
     }
+/* =========================
+   SEARCH LEARNER
+========================= */
 
+function searchLearner() {
+
+  const searchInput =
+    document.getElementById("searchInput");
+
+  const searchResults =
+    document.getElementById("searchResults");
+
+  const searchTerm =
+    searchInput.value.trim().toLowerCase();
+
+
+  /* Clear previous results */
+
+  searchResults.innerHTML = "";
+
+
+  /* Check if search is empty */
+
+  if (!searchTerm) {
+
+    searchResults.innerHTML =
+      '<div class="no-results">' +
+      'Please enter an LRN or learner name.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  let results = [];
+
+
+  /* Search all grade levels and sections */
+
+  for (const sectionKey in learners) {
+
+    const sectionLearners =
+      learners[sectionKey] || [];
+
+
+    sectionLearners.forEach(
+      function(learner) {
+
+        const lrn =
+          String(learner.lrn || "")
+            .toLowerCase();
+
+        const name =
+          String(learner.name || "")
+            .toLowerCase();
+
+
+        if (
+          lrn.includes(searchTerm) ||
+          name.includes(searchTerm)
+        ) {
+
+          const parts =
+            sectionKey.split("-");
+
+          const grade =
+            parts[0];
+
+          const section =
+            parts.slice(1).join("-");
+
+
+          results.push({
+
+            learner: learner,
+
+            grade: grade,
+
+            section: section
+
+          });
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* No results */
+
+  if (results.length === 0) {
+
+    searchResults.innerHTML =
+      '<div class="no-results">' +
+      'No learner found matching "' +
+      escapeHTML(searchInput.value) +
+      '".' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  /* Display results */
+
+  results.forEach(
+    function(result) {
+
+      const learner =
+        result.learner;
+
+
+      const resultDiv =
+        document.createElement("div");
+
+      resultDiv.className =
+        "search-result";
+
+
+      resultDiv.innerHTML = `
+
+        <div>
+
+          <div class="search-result-name">
+            ${escapeHTML(learner.name)}
+          </div>
+
+          <div class="search-result-info">
+            LRN: ${escapeHTML(String(learner.lrn))}
+            &nbsp; • &nbsp;
+            Grade ${escapeHTML(result.grade)}
+            – ${escapeHTML(result.section)}
+          </div>
+
+        </div>
+
+        <button
+          class="view-btn"
+          onclick="viewLearner('${encodeURIComponent(learner.lrn)}')">
+
+          View Profile
+
+        </button>
+
+      `;
+
+
+      searchResults.appendChild(
+        resultDiv
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   SEARCH WITH ENTER
+========================= */
+
+function handleSearchKey(event) {
+
+  if (event.key === "Enter") {
+
+    searchLearner();
+
+  }
+
+}
+
+
+/* =========================
+   SAFE TEXT
+========================= */
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
   </script>
 
 </body>
