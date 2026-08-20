@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>LENS - Learners</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -17,11 +19,15 @@
       color: #2c3e50;
     }
 
-    /* TOP BAR */
+    /* =========================
+       TOP BAR
+    ========================= */
+
     .topbar {
       background: #2c3e50;
       color: white;
       padding: 18px 30px;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -43,15 +49,21 @@
       width: auto;
       margin: 0;
       padding: 9px 16px;
+
       background: white;
       color: #2c3e50;
+
       border: none;
       border-radius: 7px;
+
       font-weight: bold;
       cursor: pointer;
     }
 
-    /* PAGE */
+    /* =========================
+       MAIN PAGE
+    ========================= */
+
     .container {
       max-width: 1200px;
       margin: auto;
@@ -68,192 +80,466 @@
       color: #7f8c8d;
     }
 
-    /* FILTERS */
+    /* =========================
+       FILTERS
+    ========================= */
+
     .filters {
       background: white;
+
       border: 1px solid #e5e0c8;
       border-radius: 14px;
+
       padding: 22px;
       margin-top: 25px;
+
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 18px;
+
+      box-shadow: 0 5px 15px rgba(0,0,0,0.04);
     }
 
     label {
       display: block;
+
       font-size: 12px;
       font-weight: bold;
+
       margin-bottom: 7px;
+
       color: #5c6a79;
+
       text-transform: uppercase;
     }
 
-    select {
+    select,
+    input {
       width: 100%;
+
       padding: 12px;
+
       border: 1px solid #dcd7be;
       border-radius: 8px;
+
       background: #fffdf9;
+
       font-size: 15px;
     }
 
-    select:focus {
+    select:focus,
+    input:focus {
       outline: none;
+
       border-color: #2c3e50;
+
+      box-shadow:
+        0 0 0 3px rgba(44,62,80,0.08);
     }
 
-    /* LEARNER LIST */
+    /* =========================
+       LEARNER SECTION
+    ========================= */
+
     .learner-section {
+
       margin-top: 25px;
+
       background: white;
+
       border: 1px solid #e5e0c8;
+
       border-radius: 14px;
+
       overflow: hidden;
+
+      box-shadow: 0 5px 15px rgba(0,0,0,0.04);
     }
 
     .section-header {
+
       padding: 20px;
+
       border-bottom: 1px solid #eee8cf;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 15px;
     }
 
     .section-header h2 {
+
       margin: 0;
+
       font-size: 20px;
     }
 
     .section-header p {
+
       margin: 5px 0 0;
+
       color: #7f8c8d;
+
       font-size: 14px;
     }
 
-    /* TABLE */
+    /* =========================
+       ADD LEARNER BUTTON
+    ========================= */
+
+    .add-btn {
+
+      width: auto;
+
+      background: #2c3e50;
+
+      color: white;
+
+      border: none;
+
+      border-radius: 7px;
+
+      padding: 10px 16px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      white-space: nowrap;
+    }
+
+    .add-btn:hover {
+
+      background: #34495e;
+
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
     table {
+
       width: 100%;
+
       border-collapse: collapse;
     }
 
     th,
     td {
+
       padding: 14px 16px;
+
       text-align: left;
+
       border-bottom: 1px solid #eee8cf;
     }
 
     th {
+
       background: #faf8ed;
+
       font-size: 12px;
+
       text-transform: uppercase;
+
       color: #5c6a79;
     }
 
     td {
+
       font-size: 14px;
     }
 
     tr:hover td {
+
       background: #fffdf5;
     }
 
     .view-btn {
+
       background: #2c3e50;
+
       color: white;
+
       border: none;
+
       border-radius: 6px;
+
       padding: 7px 12px;
+
       cursor: pointer;
+
       font-size: 13px;
+
       font-weight: bold;
     }
 
     .view-btn:hover {
+
       background: #34495e;
     }
 
-    /* EMPTY MESSAGE */
+    /* =========================
+       EMPTY
+    ========================= */
+
     .empty {
+
       text-align: center;
+
       padding: 45px 20px;
+
       color: #7f8c8d;
     }
 
-    /* RESPONSIVE */
+    /* =========================
+       ADD LEARNER FORM
+    ========================= */
+
+    .add-form {
+
+      display: none;
+
+      background: #fffdf5;
+
+      border-bottom: 1px solid #eee8cf;
+
+      padding: 25px;
+    }
+
+    .add-form.active {
+
+      display: block;
+    }
+
+    .add-form h3 {
+
+      margin-top: 0;
+
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 15px;
+    }
+
+    .form-full {
+
+      grid-column: 1 / -1;
+    }
+
+    .form-actions {
+
+      margin-top: 20px;
+
+      display: flex;
+
+      gap: 10px;
+    }
+
+    .save-btn,
+    .cancel-btn {
+
+      width: auto;
+
+      border: none;
+
+      border-radius: 7px;
+
+      padding: 10px 18px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .save-btn {
+
+      background: #2c3e50;
+
+      color: white;
+    }
+
+    .cancel-btn {
+
+      background: #e8e5d7;
+
+      color: #2c3e50;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
     @media (max-width: 700px) {
+
       .filters {
+
         grid-template-columns: 1fr;
       }
 
+      .section-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+      }
+
+      .form-grid {
+
+        grid-template-columns: 1fr;
+      }
+
+      .form-full {
+
+        grid-column: auto;
+      }
+
       table {
+
         font-size: 13px;
       }
 
       th,
       td {
+
         padding: 10px;
       }
 
       .container {
+
         padding: 25px 15px;
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
-  <!-- TOP BAR -->
+
+  <!-- =========================
+       TOP BAR
+  ========================= -->
+
   <div class="topbar">
 
     <div class="logo">
+
       LENS
-      <span>Learning Engagement, Navigation and Support</span>
+
+      <span>
+        Learning Engagement, Navigation and Support
+      </span>
+
     </div>
 
-    <button class="back-btn" onclick="goDashboard()">
+    <button
+      class="back-btn"
+      onclick="goDashboard()">
+
       ← Dashboard
+
     </button>
 
   </div>
 
 
-  <!-- MAIN -->
+  <!-- =========================
+       MAIN
+  ========================= -->
+
   <main class="container">
 
+
     <div class="page-title">
-      <h1>Learners</h1>
-      <p>Navigate learners by grade level and section.</p>
+
+      <h1>
+        Learners
+      </h1>
+
+      <p>
+        Navigate learners by grade level and section.
+      </p>
+
     </div>
 
 
-    <!-- FILTERS -->
+    <!-- =========================
+         FILTERS
+    ========================= -->
+
     <div class="filters">
 
       <div>
-        <label for="gradeSelect">Grade Level</label>
 
-        <select id="gradeSelect" onchange="loadSections()">
+        <label for="gradeSelect">
+          Grade Level
+        </label>
 
-          <option value="">Select Grade Level</option>
+        <select
+          id="gradeSelect"
+          onchange="loadSections()">
 
-          <option value="7">Grade 7</option>
-          <option value="8">Grade 8</option>
-          <option value="9">Grade 9</option>
-          <option value="10">Grade 10</option>
-          <option value="11">Grade 11</option>
-          <option value="12">Grade 12</option>
+          <option value="">
+            Select Grade Level
+          </option>
+
+          <option value="7">
+            Grade 7
+          </option>
+
+          <option value="8">
+            Grade 8
+          </option>
+
+          <option value="9">
+            Grade 9
+          </option>
+
+          <option value="10">
+            Grade 10
+          </option>
+
+          <option value="11">
+            Grade 11
+          </option>
+
+          <option value="12">
+            Grade 12
+          </option>
 
         </select>
+
       </div>
 
 
       <div>
 
-        <label for="sectionSelect">Section</label>
+        <label for="sectionSelect">
+          Section
+        </label>
 
-        <select id="sectionSelect" onchange="loadLearners()" disabled>
+        <select
+          id="sectionSelect"
+          onchange="loadLearners()"
+          disabled>
 
-          <option value="">Select Section</option>
+          <option value="">
+            Select Section
+          </option>
 
         </select>
 
@@ -262,27 +548,191 @@
     </div>
 
 
-    <!-- LEARNER LIST -->
+    <!-- =========================
+         LEARNER LIST
+    ========================= -->
 
     <div class="learner-section">
 
+
       <div class="section-header">
 
-        <h2 id="sectionTitle">
-          Learner List
-        </h2>
+        <div>
 
-        <p id="sectionDescription">
-          Select a grade level and section to view learners.
-        </p>
+          <h2 id="sectionTitle">
+            Learner List
+          </h2>
+
+          <p id="sectionDescription">
+            Select a grade level and section to view learners.
+          </p>
+
+        </div>
+
+
+        <button
+          id="addLearnerButton"
+          class="add-btn"
+          onclick="showAddForm()"
+          style="display:none;">
+
+          + Add Learner
+
+        </button>
 
       </div>
 
+
+      <!-- =========================
+           ADD LEARNER FORM
+      ========================= -->
+
+      <div
+        id="addForm"
+        class="add-form">
+
+        <h3>
+          Add Learner to Advisory Class
+        </h3>
+
+
+        <div class="form-grid">
+
+
+          <div>
+
+            <label for="newLRN">
+              LRN
+            </label>
+
+            <input
+              id="newLRN"
+              type="text"
+              placeholder="Enter LRN">
+
+          </div>
+
+
+          <div>
+
+            <label for="newName">
+              Full Name
+            </label>
+
+            <input
+              id="newName"
+              type="text"
+              placeholder="Last Name, First Name">
+
+          </div>
+
+
+          <div>
+
+            <label for="newBirthday">
+              Birthday
+            </label>
+
+            <input
+              id="newBirthday"
+              type="date">
+
+          </div>
+
+
+          <div>
+
+            <label for="newAge">
+              Age
+            </label>
+
+            <input
+              id="newAge"
+              type="number"
+              placeholder="Age">
+
+          </div>
+
+
+          <div>
+
+            <label for="newGuardian">
+              Guardian
+            </label>
+
+            <input
+              id="newGuardian"
+              type="text"
+              placeholder="Guardian name">
+
+          </div>
+
+
+          <div>
+
+            <label for="newContact">
+              Guardian Contact Number
+            </label>
+
+            <input
+              id="newContact"
+              type="text"
+              placeholder="Contact number">
+
+          </div>
+
+
+          <div class="form-full">
+
+            <label for="newAddress">
+              Address
+            </label>
+
+            <input
+              id="newAddress"
+              type="text"
+              placeholder="Complete address">
+
+          </div>
+
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button
+            class="save-btn"
+            onclick="addLearner()">
+
+            Save Learner
+
+          </button>
+
+          <button
+            class="cancel-btn"
+            onclick="hideAddForm()">
+
+            Cancel
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           LIST
+      ========================= -->
 
       <div id="learnerList">
 
         <div class="empty">
-          <div style="font-size:40px;">👥</div>
+
+          <div style="font-size:40px;">
+            👥
+          </div>
 
           <p>
             No section selected yet.
@@ -292,83 +742,164 @@
 
       </div>
 
+
     </div>
+
 
   </main>
 
 
   <script>
 
-    /*
-      SAMPLE LEARNER DATA
 
-      These are ONLY sample learners for testing.
-      We will replace this with your real database later.
-    */
+    /* =========================
+       SAMPLE LEARNERS
+    ========================= */
 
-    const learners = {
+    let learners = JSON.parse(
+      localStorage.getItem("lensLearners")
+    ) || {
 
       "10-Einstein": [
+
         {
           lrn: "100000000001",
-          name: "Juan Dela Cruz"
+          name: "Juan Dela Cruz",
+          birthday: "2011-01-15",
+          age: 15,
+          guardian: "Maria Dela Cruz",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         },
+
         {
           lrn: "100000000002",
-          name: "Maria Santos"
+          name: "Maria Santos",
+          birthday: "2011-03-20",
+          age: 15,
+          guardian: "Ana Santos",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         },
+
         {
           lrn: "100000000003",
-          name: "Pedro Reyes"
+          name: "Pedro Reyes",
+          birthday: "2010-12-05",
+          age: 15,
+          guardian: "Jose Reyes",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         }
+
       ],
 
       "10-Newton": [
+
         {
           lrn: "100000000004",
-          name: "Ana Garcia"
+          name: "Ana Garcia",
+          birthday: "2011-05-10",
+          age: 15,
+          guardian: "Maria Garcia",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         },
+
         {
           lrn: "100000000005",
-          name: "Mark Ramos"
+          name: "Mark Ramos",
+          birthday: "2011-07-18",
+          age: 15,
+          guardian: "Rosa Ramos",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         }
+
       ],
 
       "10-Galileo": [
+
         {
           lrn: "100000000006",
-          name: "Sofia Cruz"
+          name: "Sofia Cruz",
+          birthday: "2011-02-10",
+          age: 15,
+          guardian: "Maria Cruz",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         },
+
         {
           lrn: "100000000007",
-          name: "Daniel Santos"
+          name: "Daniel Santos",
+          birthday: "2011-04-15",
+          age: 15,
+          guardian: "Pedro Santos",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         }
+
       ],
 
       "9-Einstein": [
+
         {
           lrn: "900000000001",
-          name: "Sample Learner 1"
+          name: "Sample Learner 1",
+          birthday: "2012-01-01",
+          age: 14,
+          guardian: "Sample Guardian",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         },
+
         {
           lrn: "900000000002",
-          name: "Sample Learner 2"
+          name: "Sample Learner 2",
+          birthday: "2012-02-02",
+          age: 14,
+          guardian: "Sample Guardian",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         }
+
       ],
 
       "8-Einstein": [
+
         {
           lrn: "800000000001",
-          name: "Sample Learner 3"
+          name: "Sample Learner 3",
+          birthday: "2013-01-01",
+          age: 13,
+          guardian: "Sample Guardian",
+          contact: "09XX XXX XXXX",
+          address: "Sample Address"
         }
+
       ]
 
     };
 
 
-    /*
-      SECTIONS PER GRADE
-    */
+    /* =========================
+       SAVE LOCAL DATA
+    ========================= */
+
+    function saveLearners() {
+
+      localStorage.setItem(
+        "lensLearners",
+        JSON.stringify(learners)
+      );
+
+    }
+
+
+    /* =========================
+       SECTIONS
+    ========================= */
 
     const sections = {
 
@@ -411,29 +942,50 @@
     };
 
 
-    /*
-      LOAD SECTIONS
-    */
+    /* =========================
+       LOAD SECTIONS
+    ========================= */
 
     function loadSections() {
 
       const grade =
-        document.getElementById("gradeSelect").value;
+        document.getElementById(
+          "gradeSelect"
+        ).value;
 
       const sectionSelect =
-        document.getElementById("sectionSelect");
+        document.getElementById(
+          "sectionSelect"
+        );
 
       sectionSelect.innerHTML =
         '<option value="">Select Section</option>';
 
-      document.getElementById("learnerList").innerHTML =
-        '<div class="empty"><div style="font-size:40px;">👥</div><p>Select a section to view learners.</p></div>';
+      document.getElementById(
+        "learnerList"
+      ).innerHTML =
+        '<div class="empty">' +
+        '<div style="font-size:40px;">👥</div>' +
+        '<p>Select a section to view learners.</p>' +
+        '</div>';
 
-      document.getElementById("sectionTitle").textContent =
+      document.getElementById(
+        "sectionTitle"
+      ).textContent =
         "Learner List";
 
-      document.getElementById("sectionDescription").textContent =
+      document.getElementById(
+        "sectionDescription"
+      ).textContent =
         "Select a section to view learners.";
+
+      document.getElementById(
+        "addLearnerButton"
+      ).style.display =
+        "none";
+
+      hideAddForm();
+
 
       if (!grade) {
 
@@ -444,44 +996,67 @@
       }
 
 
-      sections[grade].forEach(function(section) {
+      sections[grade].forEach(
+        function(section) {
 
-        const option =
-          document.createElement("option");
+          const option =
+            document.createElement(
+              "option"
+            );
 
-        option.value = section;
+          option.value = section;
 
-        option.textContent =
-          section;
+          option.textContent = section;
 
-        sectionSelect.appendChild(option);
+          sectionSelect.appendChild(
+            option
+          );
 
-      });
+        }
+      );
 
       sectionSelect.disabled = false;
 
     }
 
 
-    /*
-      LOAD LEARNERS
-    */
+    /* =========================
+       LOAD LEARNERS
+    ========================= */
 
     function loadLearners() {
 
       const grade =
-        document.getElementById("gradeSelect").value;
+        document.getElementById(
+          "gradeSelect"
+        ).value;
 
       const section =
-        document.getElementById("sectionSelect").value;
+        document.getElementById(
+          "sectionSelect"
+        ).value;
 
       const learnerList =
-        document.getElementById("learnerList");
+        document.getElementById(
+          "learnerList"
+        );
+
+
+      hideAddForm();
+
 
       if (!section) {
 
+        document.getElementById(
+          "addLearnerButton"
+        ).style.display =
+          "none";
+
         learnerList.innerHTML =
-          '<div class="empty"><div style="font-size:40px;">👥</div><p>Select a section to view learners.</p></div>';
+          '<div class="empty">' +
+          '<div style="font-size:40px;">👥</div>' +
+          '<p>Select a section to view learners.</p>' +
+          '</div>';
 
         return;
 
@@ -491,23 +1066,42 @@
       const key =
         grade + "-" + section;
 
+
       const selectedLearners =
         learners[key] || [];
 
 
-      document.getElementById("sectionTitle").textContent =
-        "Grade " + grade + " – " + section;
+      document.getElementById(
+        "sectionTitle"
+      ).textContent =
+        "Grade " +
+        grade +
+        " – " +
+        section;
 
 
-      document.getElementById("sectionDescription").textContent =
+      document.getElementById(
+        "sectionDescription"
+      ).textContent =
         selectedLearners.length +
         " learner(s) in this section";
 
 
-      if (selectedLearners.length === 0) {
+      document.getElementById(
+        "addLearnerButton"
+      ).style.display =
+        "block";
+
+
+      if (
+        selectedLearners.length === 0
+      ) {
 
         learnerList.innerHTML =
-          '<div class="empty"><div style="font-size:40px;">📂</div><p>No learners have been added to this section yet.</p></div>';
+          '<div class="empty">' +
+          '<div style="font-size:40px;">📂</div>' +
+          '<p>No learners have been added to this section yet.</p>' +
+          '</div>';
 
         return;
 
@@ -539,35 +1133,43 @@
       `;
 
 
-      selectedLearners.forEach(function(learner, index) {
+      selectedLearners.forEach(
+        function(learner, index) {
 
-        html += `
+          html += `
 
-          <tr>
+            <tr>
 
-            <td>${index + 1}</td>
+              <td>
+                ${index + 1}
+              </td>
 
-            <td>${learner.lrn}</td>
+              <td>
+                ${learner.lrn}
+              </td>
 
-            <td>${learner.name}</td>
+              <td>
+                ${learner.name}
+              </td>
 
-            <td>
+              <td>
 
-              <button
-                class="view-btn"
-                onclick="viewLearner('${learner.lrn}')">
+                <button
+                  class="view-btn"
+                  onclick="viewLearner('${learner.lrn}')">
 
-                View Profile
+                  View Profile
 
-              </button>
+                </button>
 
-            </td>
+              </td>
 
-          </tr>
+            </tr>
 
-        `;
+          `;
 
-      });
+        }
+      );
 
 
       html += `
@@ -584,19 +1186,234 @@
     }
 
 
-    /*
-      VIEW LEARNER
-    */
+    /* =========================
+       SHOW ADD FORM
+    ========================= */
 
-   function viewLearner(lrn) {
-    window.location.href = "learner-profile.html?lrn=" + encodeURIComponent(lrn);
-}
+    function showAddForm() {
+
+      const section =
+        document.getElementById(
+          "sectionSelect"
+        ).value;
+
+      if (!section) {
+
+        alert(
+          "Please select a section first."
+        );
+
+        return;
+
+      }
+
+      document
+        .getElementById("addForm")
+        .classList.add("active");
+
     }
 
 
-    /*
-      RETURN TO DASHBOARD
-    */
+    /* =========================
+       HIDE ADD FORM
+    ========================= */
+
+    function hideAddForm() {
+
+      document
+        .getElementById("addForm")
+        .classList.remove("active");
+
+    }
+
+
+    /* =========================
+       ADD LEARNER
+    ========================= */
+
+    function addLearner() {
+
+      const grade =
+        document.getElementById(
+          "gradeSelect"
+        ).value;
+
+      const section =
+        document.getElementById(
+          "sectionSelect"
+        ).value;
+
+
+      const lrn =
+        document.getElementById(
+          "newLRN"
+        ).value.trim();
+
+      const name =
+        document.getElementById(
+          "newName"
+        ).value.trim();
+
+      const birthday =
+        document.getElementById(
+          "newBirthday"
+        ).value;
+
+      const age =
+        document.getElementById(
+          "newAge"
+        ).value;
+
+      const guardian =
+        document.getElementById(
+          "newGuardian"
+        ).value.trim();
+
+      const contact =
+        document.getElementById(
+          "newContact"
+        ).value.trim();
+
+      const address =
+        document.getElementById(
+          "newAddress"
+        ).value.trim();
+
+
+      if (
+        !lrn ||
+        !name ||
+        !birthday ||
+        !age ||
+        !guardian ||
+        !contact ||
+        !address
+      ) {
+
+        alert(
+          "Please complete all learner information."
+        );
+
+        return;
+
+      }
+
+
+      const key =
+        grade + "-" + section;
+
+
+      if (!learners[key]) {
+
+        learners[key] = [];
+
+      }
+
+
+      /* Prevent duplicate LRN */
+
+      const duplicate =
+        Object.values(
+          learners
+        ).flat().some(
+          learner =>
+            learner.lrn === lrn
+        );
+
+
+      if (duplicate) {
+
+        alert(
+          "This LRN is already registered in LENS."
+        );
+
+        return;
+
+      }
+
+
+      learners[key].push({
+
+        lrn: lrn,
+
+        name: name,
+
+        birthday: birthday,
+
+        age: age,
+
+        guardian: guardian,
+
+        contact: contact,
+
+        address: address
+
+      });
+
+
+      saveLearners();
+
+
+      /* Clear form */
+
+      document.getElementById(
+        "newLRN"
+      ).value = "";
+
+      document.getElementById(
+        "newName"
+      ).value = "";
+
+      document.getElementById(
+        "newBirthday"
+      ).value = "";
+
+      document.getElementById(
+        "newAge"
+      ).value = "";
+
+      document.getElementById(
+        "newGuardian"
+      ).value = "";
+
+      document.getElementById(
+        "newContact"
+      ).value = "";
+
+      document.getElementById(
+        "newAddress"
+      ).value = "";
+
+
+      hideAddForm();
+
+
+      loadLearners();
+
+
+      alert(
+        "Learner successfully added to the section."
+      );
+
+    }
+
+
+    /* =========================
+       VIEW LEARNER PROFILE
+    ========================= */
+
+    function viewLearner(lrn) {
+
+      window.location.href =
+        "learner-profile.html?lrn=" +
+        encodeURIComponent(lrn);
+
+    }
+
+
+    /* =========================
+       DASHBOARD
+    ========================= */
 
     function goDashboard() {
 
