@@ -68,7 +68,7 @@
       max-width: 550px;
       padding: 30px 20px;
       position: relative;
-      z-index: 2; /* Keeps the cards above the background animation */
+      z-index: 2;
     }
 
     /* HEADER */
@@ -163,6 +163,15 @@
       gap: 12px;
     }
 
+    /* ERROR MESSAGE */
+    .error-msg {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 5px;
+      display: none;
+      font-weight: 600;
+    }
+
     /* BUTTON */
     button {
       width: 100%;
@@ -211,9 +220,7 @@
 
   <!-- BACKGROUND JOURNEY GRAPHICS -->
   <svg class="journey-bg" preserveAspectRatio="none" viewBox="0 0 1920 1080">
-    <!-- Journey Path Line -->
     <path class="journey-path" d="M -50,150 Q 200,50 400,250 T 900,100 T 1400,300 T 1950,150" />
-    <!-- Paper Airplane Traveler Icon -->
     <g class="traveler">
       <path d="M 0,-10 L 20,5 L 5,5 L 0,15 L -5,5 L -20,5 Z" transform="rotate(90)" />
     </g>
@@ -229,32 +236,34 @@
 
     <!-- LOGIN CARD -->
     <div class="card" id="loginCard">
-      <h2>Log In</h2>
-      <div class="card-description">Please enter your credentials to access the dashboard.</div>
+      <h2>Teacher Log In</h2>
+      <div class="card-description">Please enter your official DepEd account and portal access key.</div>
       
-      <form id="loginForm">
+      <form id="loginForm" onsubmit="handleLogin(event)">
         <div class="form-group">
-          <label for="loginEmail">Email Address</label>
-          <input type="email" id="loginEmail" placeholder="name@school.edu" required>
+          <label for="loginEmail">DepEd Email Address</label>
+          <input type="email" id="loginEmail" placeholder="your.name@deped.gov.ph" required>
+          <div id="loginEmailError" class="error-msg">Please use a valid @deped.gov.ph email address.</div>
         </div>
         <div class="form-group">
-          <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" placeholder="••••••••" required>
+          <label for="loginAccessKey">Portal Access Key</label>
+          <input type="password" id="loginAccessKey" placeholder="Enter portal access key" required>
+          <div id="loginKeyError" class="error-msg">Invalid Portal Access Key. Hint: LENS2026</div>
         </div>
-        <button type="submit">Log In</button>
+        <button type="submit">Access Dashboard</button>
       </form>
 
       <div class="toggle-form">
-        Don't have an account? <a href="#" onclick="toggleForm('register')">Register here</a>
+        New to the platform? <a href="#" onclick="toggleForm('register')">Register your key here</a>
       </div>
     </div>
 
     <!-- REGISTER CARD (HIDDEN BY DEFAULT) -->
     <div class="card hidden" id="registerCard">
-      <h2>Create an Account</h2>
-      <div class="card-description">Fill out the form below to register your dashboard account.</div>
+      <h2>Account Registration</h2>
+      <div class="card-description">Register your official DepEd profile using your portal access key.</div>
       
-      <form id="registerForm">
+      <form id="registerForm" onsubmit="handleRegister(event)">
         <div class="form-row">
           <div class="form-group">
             <label for="regFirst">First Name</label>
@@ -266,26 +275,32 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="regEmail">Email Address</label>
-          <input type="email" id="regEmail" placeholder="jane.doe@school.edu" required>
+          <label for="regEmail">DepEd Email Address</label>
+          <input type="email" id="regEmail" placeholder="jane.doe@deped.gov.ph" required>
+          <div id="regEmailError" class="error-msg">Please use an official @deped.gov.ph email address.</div>
         </div>
         <div class="form-group">
-          <label for="regPassword">Password</label>
-          <input type="password" id="regPassword" placeholder="Minimum 8 characters" required>
+          <label for="regAccessKey">Portal Access Key</label>
+          <input type="password" id="regAccessKey" placeholder="Enter LENS portal access key" required>
+          <div id="regKeyError" class="error-msg">Invalid Portal Access Key. Registration requires the correct key.</div>
         </div>
-        <button type="submit">Register Account</button>
+        <button type="submit">Register & Launch Dashboard</button>
       </form>
 
       <div class="toggle-form">
-        Already have an account? <a href="#" onclick="toggleForm('login')">Log In here</a>
+        Already registered? <a href="#" onclick="toggleForm('login')">Log In here</a>
       </div>
     </div>
   </div>
 
   <script>
+    const ACCESS_KEY = "LENS2026";
+
     function toggleForm(formType) {
       const loginCard = document.getElementById('loginCard');
       const registerCard = document.getElementById('registerCard');
+      
+      document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
 
       if (formType === 'register') {
         loginCard.classList.add('hidden');
@@ -293,6 +308,66 @@
       } else {
         registerCard.classList.add('hidden');
         loginCard.classList.remove('hidden');
+      }
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      const key = document.getElementById('loginAccessKey').value.trim();
+      
+      const emailError = document.getElementById('loginEmailError');
+      const keyError = document.getElementById('loginKeyError');
+      
+      emailError.style.display = 'none';
+      keyError.style.display = 'none';
+
+      let isValid = true;
+
+      if (!email.toLowerCase().endsWith('@deped.gov.ph')) {
+        emailError.style.display = 'block';
+        isValid = false;
+      }
+
+      if (key !== ACCESS_KEY) {
+        keyError.style.display = 'block';
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert("Access Granted! Redirecting to the LENS Dashboard...");
+        window.location.href = "dashboard.html";
+      }
+    }
+
+    function handleRegister(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('regEmail').value.trim();
+      const key = document.getElementById('regAccessKey').value.trim();
+      
+      const emailError = document.getElementById('regEmailError');
+      const keyError = document.getElementById('regKeyError');
+      
+      emailError.style.display = 'none';
+      keyError.style.display = 'none';
+
+      let isValid = true;
+
+      if (!email.toLowerCase().endsWith('@deped.gov.ph')) {
+        emailError.style.display = 'block';
+        isValid = false;
+      }
+
+      if (key !== ACCESS_KEY) {
+        keyError.style.display = 'block';
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert("Registration Successful! Redirecting to your LENS Dashboard...");
+        window.location.href = "dashboard.html";
       }
     }
   </script>
