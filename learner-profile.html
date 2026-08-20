@@ -574,16 +574,72 @@
   </main>
 
 
-  <script>
+ <script>
 
-    function goBack() {
+  // Get the LRN from the URL
+  const params = new URLSearchParams(window.location.search);
+  const learnerLRN = params.get("lrn");
 
-      window.location.href =
-        "learners.html";
+  // Sample learner information
+  const learners = {
 
+    "100000000001": {
+      name: "Juan Dela Cruz",
+      section: "Grade 10 – Einstein",
+      lrn: "100000000001"
+    },
+
+    "100000000002": {
+      name: "Maria Santos",
+      section: "Grade 10 – Einstein",
+      lrn: "100000000002"
+    },
+
+    "100000000003": {
+      name: "Pedro Reyes",
+      section: "Grade 10 – Einstein",
+      lrn: "100000000003"
     }
 
-  </script>
+  };
+
+
+  // Display learner
+  const learner = learners[learnerLRN];
+
+  if (learner) {
+
+    document.getElementById("learnerName").textContent =
+      learner.name;
+
+    document.getElementById("learnerSection").textContent =
+      learner.section;
+
+    document.getElementById("learnerLRN").textContent =
+      "LRN: " + learner.lrn;
+
+  } else {
+
+    document.getElementById("learnerName").textContent =
+      "Learner Not Found";
+
+    document.getElementById("learnerSection").textContent =
+      "No learner record was found.";
+
+    document.getElementById("learnerLRN").textContent =
+      "LRN: —";
+
+  }
+
+
+  function goBack() {
+
+    window.location.href =
+      "learners.html";
+
+  }
+
+</script>
 
 </body>
 </html>
