@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LENS - Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f8f7ef;
+      color: #2c3e50;
+    }
+
+    /* HEADER */
+    .topbar {
+      background: #2c3e50;
+      color: white;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 12px;
+      font-weight: normal;
+      opacity: 0.8;
+      margin-top: 3px;
+    }
+
+    .logout-btn {
+      width: auto;
+      margin: 0;
+      padding: 9px 16px;
+      background: #ffffff;
+      color: #2c3e50;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .logout-btn:hover {
+      background: #f1f1f1;
+    }
+
+    /* MAIN */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 35px 25px;
+    }
+
+    .welcome {
+      margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #7f8c8d;
+    }
+
+    /* STATISTICS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid #e5e0c8;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .stat-title {
+      font-size: 13px;
+      color: #7f8c8d;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .stat-number {
+      font-size: 30px;
+      font-weight: 800;
+      color: #2c3e50;
+    }
+
+    /* SECTION */
+    .section-title {
+      margin: 30px 0 15px;
+      font-size: 20px;
+    }
+
+    /* NAVIGATION CARDS */
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .module {
+      background: white;
+      border: 1px solid #e5e0c8;
+      border-radius: 14px;
+      padding: 24px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .module:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .module-icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .module h3 {
+      margin: 0 0 7px;
+    }
+
+    .module p {
+      margin: 0;
+      color: #7f8c8d;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* NOTICE */
+    .notice {
+      margin-top: 30px;
+      background: white;
+      border-left: 5px solid #d8c98a;
+      padding: 18px;
+      border-radius: 8px;
+      color: #5c6a79;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 850px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .modules {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .modules {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        padding: 15px;
+      }
+
+      .container {
+        padding: 25px 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+
+    <div class="logo">
+      LENS
+      <span>Learning Engagement, Navigation and Support</span>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+      Log Out
+    </button>
+
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+
+    <div class="welcome">
+      <h1>Welcome to LENS</h1>
+      <p>School Guidance and Learner Support Dashboard</p>
+    </div>
+
+
+    <!-- STATISTICS -->
+    <div class="stats">
+
+      <div class="stat-card">
+        <div class="stat-title">TOTAL LEARNERS</div>
+        <div class="stat-number">0</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">SECTIONS</div>
+        <div class="stat-number">0</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">ABSENCES</div>
+        <div class="stat-number">0</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title">OFFENSES</div>
+        <div class="stat-number">0</div>
+      </div>
+
+    </div>
+
+
+    <!-- LEARNER MANAGEMENT -->
+    <h2 class="section-title">Learner Management</h2>
+
+    <div class="modules">
+
+      <div class="module" onclick="comingSoon('Learners')">
+        <div class="module-icon">👥</div>
+        <h3>Learners</h3>
+        <p>
+          View learners by grade level and section.
+        </p>
+      </div>
+
+      <div class="module" onclick="comingSoon('Grades')">
+        <div class="module-icon">📚</div>
+        <h3>Grades</h3>
+        <p>
+          Encode and monitor learner grades per term.
+        </p>
+      </div>
+
+      <div class="module" onclick="comingSoon('Attendance')">
+        <div class="module-icon">📅</div>
+        <h3>Attendance</h3>
+        <p>
+          Record and monitor monthly absences.
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- GUIDANCE & LRP -->
+    <h2 class="section-title">Guidance & LRP</h2>
+
+    <div class="modules">
+
+      <div class="module" onclick="comingSoon('Guidance Records')">
+        <div class="module-icon">💬</div>
+        <h3>Guidance Records</h3>
+        <p>
+          Record incidents, interventions, and follow-ups.
+        </p>
+      </div>
+
+      <div class="module" onclick="comingSoon('LRP Records')">
+        <div class="module-icon">⚖️</div>
+        <h3>LRP Records</h3>
+        <p>
+          Record offenses, sanctions, and case status.
+        </p>
+      </div>
+
+      <div class="module" onclick="comingSoon('Reports')">
+        <div class="module-icon">📊</div>
+        <h3>Reports & Statistics</h3>
+        <p>
+          View school-wide learner and offense statistics.
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- NOTICE -->
+    <div class="notice">
+      <strong>LENS Development Version</strong><br>
+      The dashboard is currently being developed. Learner information,
+      grades, attendance, guidance records, and LRP records will be
+      connected in the next stages.
+    </div>
+
+  </main>
+
+
+  <script>
+
+    function comingSoon(moduleName) {
+      alert(moduleName + " module will be available in the next stage of LENS development.");
+    }
+
+    function logout() {
+      window.location.href = "index.html";
+    }
+
+  </script>
+
+</body>
+</html>
