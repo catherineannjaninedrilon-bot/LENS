@@ -60,6 +60,10 @@
       cursor: pointer;
     }
 
+    .back-btn:hover {
+      background: #f1f1f1;
+    }
+
     /* =========================
        MAIN PAGE
     ========================= */
@@ -78,6 +82,103 @@
     .page-title p {
       margin: 0;
       color: #7f8c8d;
+    }
+
+    /* =========================
+       SEARCH LEARNER
+    ========================= */
+
+    .search-box {
+      background: white;
+      border: 1px solid #e5e0c8;
+      border-radius: 14px;
+
+      padding: 22px;
+      margin-top: 25px;
+
+      box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+    }
+
+    .search-box h2 {
+      margin: 0 0 7px;
+      font-size: 20px;
+    }
+
+    .search-box p {
+      margin: 0 0 15px;
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-row input {
+      flex: 1;
+    }
+
+    .search-btn {
+      width: auto;
+
+      padding: 12px 20px;
+
+      background: #2c3e50;
+      color: white;
+
+      border: none;
+      border-radius: 8px;
+
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background: #34495e;
+    }
+
+    .search-results {
+      margin-top: 18px;
+    }
+
+    .search-result {
+      padding: 15px;
+
+      border: 1px solid #e5e0c8;
+      border-radius: 10px;
+
+      margin-bottom: 10px;
+
+      background: #fffdf9;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 15px;
+    }
+
+    .search-result-name {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .search-result-info {
+      color: #7f8c8d;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 20px;
+
+      color: #7f8c8d;
+
+      background: #fffdf9;
+
+      border-radius: 8px;
     }
 
     /* =========================
@@ -125,6 +226,8 @@
       background: #fffdf9;
 
       font-size: 15px;
+
+      color: #2c3e50;
     }
 
     select:focus,
@@ -380,11 +483,19 @@
       color: white;
     }
 
+    .save-btn:hover {
+      background: #34495e;
+    }
+
     .cancel-btn {
 
       background: #e8e5d7;
 
       color: #2c3e50;
+    }
+
+    .cancel-btn:hover {
+      background: #ddd9c8;
     }
 
     /* =========================
@@ -395,6 +506,19 @@
 
       .filters {
         grid-template-columns: 1fr;
+      }
+
+      .search-row {
+        flex-direction: column;
+      }
+
+      .search-btn {
+        width: 100%;
+      }
+
+      .search-result {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .section-header {
@@ -437,109 +561,10 @@
     }
 
   </style>
-/* =========================
-   SEARCH LEARNER
-========================= */
 
-.search-box {
-  background: white;
-  border: 1px solid #e5e0c8;
-  border-radius: 14px;
-  padding: 22px;
-  margin-top: 25px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.04);
-}
-
-.search-box h2 {
-  margin: 0 0 7px;
-  font-size: 20px;
-}
-
-.search-box p {
-  margin: 0 0 15px;
-  color: #7f8c8d;
-  font-size: 14px;
-}
-
-.search-row {
-  display: flex;
-  gap: 10px;
-}
-
-.search-row input {
-  flex: 1;
-}
-
-.search-btn {
-  width: auto;
-  padding: 12px 20px;
-  background: #2c3e50;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.search-btn:hover {
-  background: #34495e;
-}
-
-.search-results {
-  margin-top: 18px;
-}
-
-.search-result {
-  padding: 15px;
-  border: 1px solid #e5e0c8;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  background: #fffdf9;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
-
-.search-result-name {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.search-result-info {
-  color: #7f8c8d;
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-.no-results {
-  text-align: center;
-  padding: 20px;
-  color: #7f8c8d;
-  background: #fffdf9;
-  border-radius: 8px;
-}
-
-@media (max-width: 700px) {
-
-  .search-row {
-    flex-direction: column;
-  }
-
-  .search-btn {
-    width: 100%;
-  }
-
-  .search-result {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-}
 </head>
 
 <body>
-
 
   <!-- =========================
        TOP BAR
@@ -574,7 +599,6 @@
 
   <main class="container">
 
-
     <div class="page-title">
 
       <h1>
@@ -582,8 +606,48 @@
       </h1>
 
       <p>
-        Navigate learners by grade level and section.
+        Search, view, and manage learners by grade level and section.
       </p>
+
+    </div>
+
+
+    <!-- =========================
+         SEARCH LEARNER
+    ========================= -->
+
+    <div class="search-box">
+
+      <h2>🔎 Search Learner</h2>
+
+      <p>
+        Search by LRN or learner's full name.
+      </p>
+
+      <div class="search-row">
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Enter LRN or learner name..."
+          autocomplete="off"
+        >
+
+        <button
+          type="button"
+          class="search-btn"
+          onclick="searchLearner()">
+
+          Search
+
+        </button>
+
+      </div>
+
+      <div
+        id="searchResults"
+        class="search-results">
+      </div>
 
     </div>
 
@@ -592,43 +656,63 @@
          FILTERS
     ========================= -->
 
-  <!-- =========================
-     SEARCH LEARNER
-========================= -->
+    <div class="filters">
 
-<div class="search-box">
+      <div>
 
-  <h2>🔎 Search Learner</h2>
+        <label for="gradeSelect">
+          Grade Level
+        </label>
 
-  <p>
-    Search by LRN or learner's full name.
-  </p>
+        <select
+          id="gradeSelect"
+          onchange="loadSections()">
 
-  <div class="search-row">
+          <option value="">
+            Select Grade Level
+          </option>
 
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Enter LRN or learner name..."
-      onkeydown="handleSearchKey(event)"
-    >
+          <option value="7">
+            Grade 7
+          </option>
 
-    <button
-      class="search-btn"
-      onclick="searchLearner()">
+          <option value="8">
+            Grade 8
+          </option>
 
-      Search
+          <option value="9">
+            Grade 9
+          </option>
 
-    </button>
+          <option value="10">
+            Grade 10
+          </option>
 
-  </div>
+        </select>
 
-  <div
-    id="searchResults"
-    class="search-results">
-  </div>
+      </div>
 
-</div>
+
+      <div>
+
+        <label for="sectionSelect">
+          Section
+        </label>
+
+        <select
+          id="sectionSelect"
+          onchange="loadLearners()"
+          disabled>
+
+          <option value="">
+            Select Section
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
 
 
     <!-- =========================
@@ -636,7 +720,6 @@
     ========================= -->
 
     <div class="learner-section">
-
 
       <div class="section-header">
 
@@ -680,7 +763,6 @@
 
 
         <div class="form-grid">
-
 
           <div>
 
@@ -780,13 +862,13 @@
 
           </div>
 
-
         </div>
 
 
         <div class="form-actions">
 
           <button
+            type="button"
             class="save-btn"
             onclick="addLearner()">
 
@@ -795,6 +877,7 @@
           </button>
 
           <button
+            type="button"
             class="cancel-btn"
             onclick="hideAddForm()">
 
@@ -808,7 +891,7 @@
 
 
       <!-- =========================
-           LIST
+           LEARNER LIST
       ========================= -->
 
       <div id="learnerList">
@@ -827,149 +910,179 @@
 
       </div>
 
-
     </div>
-
 
   </main>
 
 
   <script>
 
-    /* =========================
+    /* =========================================================
        LOAD SAVED LEARNERS
-    ========================= */
+    ========================================================= */
 
-    let learners = JSON.parse(
-      localStorage.getItem("lensLearners")
-    ) || {
+    let learners = {};
 
-      "10-Einstein": [
+    try {
 
-        {
-          lrn: "100000000001",
-          name: "Juan Dela Cruz",
-          birthday: "2011-01-15",
-          age: 15,
-          guardian: "Maria Dela Cruz",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        },
+      learners =
+        JSON.parse(
+          localStorage.getItem("lensLearners")
+        ) || {};
 
-        {
-          lrn: "100000000002",
-          name: "Maria Santos",
-          birthday: "2011-03-20",
-          age: 15,
-          guardian: "Ana Santos",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        },
+    } catch (error) {
 
-        {
-          lrn: "100000000003",
-          name: "Pedro Reyes",
-          birthday: "2010-12-05",
-          age: 15,
-          guardian: "Jose Reyes",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        }
+      console.error(
+        "Could not load learner data:",
+        error
+      );
 
-      ],
+      learners = {};
 
-      "10-Newton": [
-
-        {
-          lrn: "100000000004",
-          name: "Ana Garcia",
-          birthday: "2011-05-10",
-          age: 15,
-          guardian: "Maria Garcia",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        },
-
-        {
-          lrn: "100000000005",
-          name: "Mark Ramos",
-          birthday: "2011-07-18",
-          age: 15,
-          guardian: "Rosa Ramos",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        }
-
-      ],
-
-      "10-Galileo": [
-
-        {
-          lrn: "100000000006",
-          name: "Sofia Cruz",
-          birthday: "2011-02-10",
-          age: 15,
-          guardian: "Maria Cruz",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        },
-
-        {
-          lrn: "100000000007",
-          name: "Daniel Santos",
-          birthday: "2011-04-15",
-          age: 15,
-          guardian: "Pedro Santos",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        }
-
-      ],
-
-      "9-Einstein": [
-
-        {
-          lrn: "900000000001",
-          name: "Sample Learner 1",
-          birthday: "2012-01-01",
-          age: 14,
-          guardian: "Sample Guardian",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        },
-
-        {
-          lrn: "900000000002",
-          name: "Sample Learner 2",
-          birthday: "2012-02-02",
-          age: 14,
-          guardian: "Sample Guardian",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        }
-
-      ],
-
-      "8-Einstein": [
-
-        {
-          lrn: "800000000001",
-          name: "Sample Learner 3",
-          birthday: "2013-01-01",
-          age: 13,
-          guardian: "Sample Guardian",
-          contact: "09XX XXX XXXX",
-          address: "Sample Address"
-        }
-
-      ]
-
-    };
+    }
 
 
-    /* =========================
-       SAVE DATA
-    ========================= */
+    /* =========================================================
+       SAMPLE DATA
+       Only used when no learner data exists yet.
+    ========================================================= */
+
+    if (
+      Object.keys(learners).length === 0
+    ) {
+
+      learners = {
+
+        "10-Einstein": [
+
+          {
+            lrn: "100000000001",
+            name: "Juan Dela Cruz",
+            birthday: "2011-01-15",
+            age: 15,
+            guardian: "Maria Dela Cruz",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          },
+
+          {
+            lrn: "100000000002",
+            name: "Maria Santos",
+            birthday: "2011-03-20",
+            age: 15,
+            guardian: "Ana Santos",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          },
+
+          {
+            lrn: "100000000003",
+            name: "Pedro Reyes",
+            birthday: "2010-12-05",
+            age: 15,
+            guardian: "Jose Reyes",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          }
+
+        ],
+
+        "10-Newton": [
+
+          {
+            lrn: "100000000004",
+            name: "Ana Garcia",
+            birthday: "2011-05-10",
+            age: 15,
+            guardian: "Maria Garcia",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          },
+
+          {
+            lrn: "100000000005",
+            name: "Mark Ramos",
+            birthday: "2011-07-18",
+            age: 15,
+            guardian: "Rosa Ramos",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          }
+
+        ],
+
+        "10-Galileo": [
+
+          {
+            lrn: "100000000006",
+            name: "Sofia Cruz",
+            birthday: "2011-02-10",
+            age: 15,
+            guardian: "Maria Cruz",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          },
+
+          {
+            lrn: "100000000007",
+            name: "Daniel Santos",
+            birthday: "2011-04-15",
+            age: 15,
+            guardian: "Pedro Santos",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          }
+
+        ],
+
+        "9-Einstein": [
+
+          {
+            lrn: "900000000001",
+            name: "Sample Learner 1",
+            birthday: "2012-01-01",
+            age: 14,
+            guardian: "Sample Guardian",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          },
+
+          {
+            lrn: "900000000002",
+            name: "Sample Learner 2",
+            birthday: "2012-02-02",
+            age: 14,
+            guardian: "Sample Guardian",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          }
+
+        ],
+
+        "8-Einstein": [
+
+          {
+            lrn: "800000000001",
+            name: "Sample Learner 3",
+            birthday: "2013-01-01",
+            age: 13,
+            guardian: "Sample Guardian",
+            contact: "09XX XXX XXXX",
+            address: "Sample Address"
+          }
+
+        ]
+
+      };
+
+      saveLearners();
+
+    }
+
+
+    /* =========================================================
+       SAVE LEARNERS
+    ========================================================= */
 
     function saveLearners() {
 
@@ -981,9 +1094,9 @@
     }
 
 
-    /* =========================
-       SECTION LIST
-    ========================= */
+    /* =========================================================
+       SECTIONS
+    ========================================================= */
 
     const sections = {
 
@@ -1053,9 +1166,9 @@
     };
 
 
-    /* =========================
+    /* =========================================================
        LOAD SECTIONS
-    ========================= */
+    ========================================================= */
 
     function loadSections() {
 
@@ -1115,9 +1228,11 @@
               "option"
             );
 
-          option.value = section;
+          option.value =
+            section;
 
-          option.textContent = section;
+          option.textContent =
+            section;
 
           sectionSelect.appendChild(
             option
@@ -1126,14 +1241,15 @@
         }
       );
 
+
       sectionSelect.disabled = false;
 
     }
 
 
-    /* =========================
+    /* =========================================================
        LOAD LEARNERS
-    ========================= */
+    ========================================================= */
 
     function loadLearners() {
 
@@ -1247,14 +1363,9 @@
       selectedLearners.forEach(
         function(learner, index) {
 
-          const safeLRN =
+          const encodedLRN =
             encodeURIComponent(
-              learner.lrn
-            );
-
-          const safeName =
-            escapeHTML(
-              learner.name
+              String(learner.lrn || "")
             );
 
 
@@ -1267,11 +1378,15 @@
               </td>
 
               <td>
-                ${escapeHTML(learner.lrn)}
+                ${escapeHTML(
+                  learner.lrn
+                )}
               </td>
 
               <td>
-                ${safeName}
+                ${escapeHTML(
+                  learner.name
+                )}
               </td>
 
               <td>
@@ -1279,16 +1394,18 @@
                 <div class="action-buttons">
 
                   <button
+                    type="button"
                     class="view-btn"
-                    onclick="viewLearner('${safeLRN}')">
+                    onclick="viewLearner('${encodedLRN}')">
 
                     View Profile
 
                   </button>
 
                   <button
+                    type="button"
                     class="edit-btn"
-                    onclick="editLearner('${safeLRN}')">
+                    onclick="editLearner('${encodedLRN}')">
 
                     Edit
 
@@ -1315,30 +1432,15 @@
       `;
 
 
-      learnerList.innerHTML = html;
+      learnerList.innerHTML =
+        html;
 
     }
 
 
-    /* =========================
-       ESCAPE HTML
-    ========================= */
-
-    function escapeHTML(value) {
-
-      return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    /* =========================
-       SHOW ADD FORM
-    ========================= */
+    /* =========================================================
+       ADD LEARNER FORM
+    ========================================================= */
 
     function showAddForm() {
 
@@ -1357,16 +1459,13 @@
 
       }
 
+
       document
         .getElementById("addForm")
         .classList.add("active");
 
     }
 
-
-    /* =========================
-       HIDE ADD FORM
-    ========================= */
 
     function hideAddForm() {
 
@@ -1377,9 +1476,9 @@
     }
 
 
-    /* =========================
+    /* =========================================================
        ADD LEARNER
-    ========================= */
+    ========================================================= */
 
     function addLearner() {
 
@@ -1392,6 +1491,17 @@
         document.getElementById(
           "sectionSelect"
         ).value;
+
+
+      if (!grade || !section) {
+
+        alert(
+          "Please select a grade level and section first."
+        );
+
+        return;
+
+      }
 
 
       const lrn =
@@ -1460,20 +1570,16 @@
       }
 
 
-      /* =========================
-         DUPLICATE LRN CHECK
-      ========================= */
+      /* Duplicate LRN check */
 
       const duplicate =
-        Object.values(
-          learners
-        )
-        .flat()
-        .some(
-          learner =>
-            String(learner.lrn) ===
-            String(lrn)
-        );
+        Object.values(learners)
+          .flat()
+          .some(
+            learner =>
+              String(learner.lrn) ===
+              String(lrn)
+          );
 
 
       if (duplicate) {
@@ -1509,9 +1615,7 @@
       saveLearners();
 
 
-      /* =========================
-         CLEAR FORM
-      ========================= */
+      /* Clear form */
 
       document.getElementById(
         "newLRN"
@@ -1554,37 +1658,326 @@
     }
 
 
-    /* =========================
-       VIEW PROFILE
-    ========================= */
+    /* =========================================================
+       VIEW LEARNER PROFILE
+    ========================================================= */
 
-  function viewLearner(lrn) {
+    function viewLearner(lrn) {
 
-  window.location.href =
-    "learner-profile.html?lrn=" +
-    encodeURIComponent(lrn);
-
-}
+      window.location.href =
+        "learner-profile.html?lrn=" +
+        encodeURIComponent(lrn);
 
     }
 
 
-    /* =========================
+    /* =========================================================
        EDIT LEARNER
-    ========================= */
+    ========================================================= */
 
     function editLearner(lrn) {
 
       window.location.href =
         "edit-learner.html?lrn=" +
-        lrn;
+        encodeURIComponent(lrn);
 
     }
 
 
-    /* =========================
+    /* =========================================================
+       SEARCH LEARNER
+    ========================================================= */
+
+    function searchLearner() {
+
+      const searchInput =
+        document.getElementById(
+          "searchInput"
+        );
+
+      const searchResults =
+        document.getElementById(
+          "searchResults"
+        );
+
+
+      const originalTerm =
+        searchInput.value.trim();
+
+      const searchTerm =
+        originalTerm.toLowerCase();
+
+
+      /* Clear previous results */
+
+      searchResults.innerHTML = "";
+
+
+      /* Empty search */
+
+      if (!searchTerm) {
+
+        searchResults.innerHTML =
+          '<div class="no-results">' +
+          'Please enter an LRN or learner name.' +
+          '</div>';
+
+        return;
+
+      }
+
+
+      let results = [];
+
+
+      /* =====================================================
+         SEARCH EVERY SECTION
+      ===================================================== */
+
+      Object.keys(learners).forEach(
+        function(sectionKey) {
+
+          const sectionLearners =
+            Array.isArray(
+              learners[sectionKey]
+            )
+              ? learners[sectionKey]
+              : [];
+
+
+          sectionLearners.forEach(
+            function(learner) {
+
+              const lrn =
+                String(
+                  learner.lrn || ""
+                ).toLowerCase();
+
+              const name =
+                String(
+                  learner.name || ""
+                ).toLowerCase();
+
+
+              if (
+                lrn.includes(searchTerm) ||
+                name.includes(searchTerm)
+              ) {
+
+                const parts =
+                  sectionKey.split("-");
+
+
+                const grade =
+                  parts.shift();
+
+
+                const section =
+                  parts.join("-");
+
+
+                results.push({
+
+                  learner: learner,
+
+                  grade: grade,
+
+                  section: section
+
+                });
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+
+      /* =====================================================
+         NO RESULTS
+      ===================================================== */
+
+      if (
+        results.length === 0
+      ) {
+
+        searchResults.innerHTML =
+          '<div class="no-results">' +
+          'No learner found matching "' +
+          escapeHTML(originalTerm) +
+          '".' +
+          '</div>';
+
+        return;
+
+      }
+
+
+      /* =====================================================
+         DISPLAY RESULTS
+      ===================================================== */
+
+      results.forEach(
+        function(result) {
+
+          const learner =
+            result.learner;
+
+
+          const resultDiv =
+            document.createElement(
+              "div"
+            );
+
+
+          resultDiv.className =
+            "search-result";
+
+
+          const encodedLRN =
+            encodeURIComponent(
+              String(learner.lrn || "")
+            );
+
+
+          resultDiv.innerHTML = `
+
+            <div>
+
+              <div class="search-result-name">
+
+                ${escapeHTML(
+                  learner.name
+                )}
+
+              </div>
+
+              <div class="search-result-info">
+
+                LRN:
+                ${escapeHTML(
+                  learner.lrn
+                )}
+
+                &nbsp; • &nbsp;
+
+                Grade
+                ${escapeHTML(
+                  result.grade
+                )}
+
+                –
+                ${escapeHTML(
+                  result.section
+                )}
+
+              </div>
+
+            </div>
+
+
+            <div class="action-buttons">
+
+              <button
+                type="button"
+                class="view-btn"
+                onclick="viewLearner('${encodedLRN}')">
+
+                View Profile
+
+              </button>
+
+              <button
+                type="button"
+                class="edit-btn"
+                onclick="editLearner('${encodedLRN}')">
+
+                Edit
+
+              </button>
+
+            </div>
+
+          `;
+
+
+          searchResults.appendChild(
+            resultDiv
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       SEARCH WITH ENTER KEY
+    ========================================================= */
+
+    document
+      .getElementById("searchInput")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            event.preventDefault();
+
+            searchLearner();
+
+          }
+
+        }
+      );
+
+
+    /* =========================================================
+       ESCAPE HTML
+    ========================================================= */
+
+    function escapeHTML(value) {
+
+      return String(
+        value ?? ""
+      )
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    /* =========================================================
        DASHBOARD
-    ========================= */
+    ========================================================= */
 
     function goDashboard() {
 
@@ -1592,196 +1985,7 @@
         "dashboard.html";
 
     }
-/* =========================
-   SEARCH LEARNER
-========================= */
 
-function searchLearner() {
-
-  const searchInput =
-    document.getElementById("searchInput");
-
-  const searchResults =
-    document.getElementById("searchResults");
-
-  const searchTerm =
-    searchInput.value.trim().toLowerCase();
-
-
-  /* Clear previous results */
-
-  searchResults.innerHTML = "";
-
-
-  /* Check if search is empty */
-
-  if (!searchTerm) {
-
-    searchResults.innerHTML =
-      '<div class="no-results">' +
-      'Please enter an LRN or learner name.' +
-      '</div>';
-
-    return;
-
-  }
-
-
-  let results = [];
-
-
-  /* Search all grade levels and sections */
-
-  for (const sectionKey in learners) {
-
-    const sectionLearners =
-      learners[sectionKey] || [];
-
-
-    sectionLearners.forEach(
-      function(learner) {
-
-        const lrn =
-          String(learner.lrn || "")
-            .toLowerCase();
-
-        const name =
-          String(learner.name || "")
-            .toLowerCase();
-
-
-        if (
-          lrn.includes(searchTerm) ||
-          name.includes(searchTerm)
-        ) {
-
-          const parts =
-            sectionKey.split("-");
-
-          const grade =
-            parts[0];
-
-          const section =
-            parts.slice(1).join("-");
-
-
-          results.push({
-
-            learner: learner,
-
-            grade: grade,
-
-            section: section
-
-          });
-
-        }
-
-      }
-    );
-
-  }
-
-
-  /* No results */
-
-  if (results.length === 0) {
-
-    searchResults.innerHTML =
-      '<div class="no-results">' +
-      'No learner found matching "' +
-      escapeHTML(searchInput.value) +
-      '".' +
-      '</div>';
-
-    return;
-
-  }
-
-
-  /* Display results */
-
-  results.forEach(
-    function(result) {
-
-      const learner =
-        result.learner;
-
-
-      const resultDiv =
-        document.createElement("div");
-
-      resultDiv.className =
-        "search-result";
-
-
-      resultDiv.innerHTML = `
-
-        <div>
-
-          <div class="search-result-name">
-            ${escapeHTML(learner.name)}
-          </div>
-
-          <div class="search-result-info">
-            LRN: ${escapeHTML(String(learner.lrn))}
-            &nbsp; • &nbsp;
-            Grade ${escapeHTML(result.grade)}
-            – ${escapeHTML(result.section)}
-          </div>
-
-        </div>
-
-        <button
-          class="view-btn"
-          onclick="viewLearner('${encodeURIComponent(learner.lrn)}')">
-
-          View Profile
-
-        </button>
-
-      `;
-
-
-      searchResults.appendChild(
-        resultDiv
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================
-   SEARCH WITH ENTER
-========================= */
-
-function handleSearchKey(event) {
-
-  if (event.key === "Enter") {
-
-    searchLearner();
-
-  }
-
-}
-
-
-/* =========================
-   SAFE TEXT
-========================= */
-
-function escapeHTML(value) {
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
   </script>
 
 </body>
