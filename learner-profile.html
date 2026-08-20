@@ -573,307 +573,62 @@
 
   </main>
 
-
- <script>
-
 <script>
 
-  /* ============================
-     GET LRN FROM URL
-  ============================ */
-
-  const params =
-    new URLSearchParams(window.location.search);
-
-  const learnerLRN =
-    params.get("lrn");
-
-
-  /* ============================
-     GET LEARNERS SAVED BY
-     THE LEARNERS PAGE
-  ============================ */
+  const params = new URLSearchParams(window.location.search);
+  const learnerLRN = params.get("lrn");
 
   const savedLearners =
-    JSON.parse(
-      localStorage.getItem("lensLearners")
-    ) || {};
-
-
-  /* ============================
-     FIND LEARNER USING LRN
-  ============================ */
+    JSON.parse(localStorage.getItem("lensLearners")) || {};
 
   let learner = null;
-
-  for (
-    const sectionKey in savedLearners
-  ) {
-
-    const sectionLearners =
-      savedLearners[sectionKey];
-
-    const found =
-      sectionLearners.find(
-        student =>
-          student.lrn === learnerLRN
-      );
-
-    if (found) {
-
-      learner = found;
-
-      learner.sectionKey =
-        sectionKey;
-
-      break;
-
-    }
-
-  }
-
-
-  /* ============================
-     DISPLAY LEARNER
-  ============================ */
-
-  if (learner) {
-
-    const parts =
-      learner.sectionKey.split("-");
-
-    const grade =
-      parts[0];
-
-    const section =
-      parts.slice(1).join("-");
-
-
-    document.getElementById(
-      "learnerName"
-    ).textContent =
-      learner.name;
-
-
-    document.getElementById(
-      "learnerSection"
-    ).textContent =
-      "Grade " +
-      grade +
-      " – " +
-      section;
-
-
-    document.getElementById(
-      "learnerLRN"
-    ).textContent =
-      "LRN: " +
-      learner.lrn;
-
-
-    /* PERSONAL INFORMATION */
-
-    const infoValues =
-      document.querySelectorAll(
-        ".info-value"
-      );
-
-
-    if (infoValues.length >= 8) {
-
-      infoValues[0].textContent =
-        learner.lrn;
-
-      infoValues[1].textContent =
-        learner.name;
-
-      infoValues[2].textContent =
-        learner.age;
-
-      infoValues[3].textContent =
-        formatBirthday(
-          learner.birthday
-        );
-
-      infoValues[4].textContent =
-        learner.guardian;
-
-      infoValues[5].textContent =
-        learner.contact;
-
-      infoValues[6].textContent =
-        learner.address;
-
-      infoValues[7].textContent =
-        "Grade " +
-        grade +
-        " – " +
-        section;
-
-    }
-
-  }
-
-  else {
-
-    document.getElementById(
-      "learnerName"
-    ).textContent =
-      "Learner Not Found";
-
-
-    document.getElementById(
-      "learnerSection"
-    ).textContent =
-      "No learner record was found.";
-
-
-    document.getElementById(
-      "learnerLRN"
-    ).textContent =
-      "LRN: —";
-
-  }
-
-
-  /* ============================
-     FORMAT BIRTHDAY
-  ============================ */
-
-  function formatBirthday(date) {
-
-    if (!date) {
-
-      return "—";
-
-    }
-
-    const d =
-      new Date(date);
-
-    return d.toLocaleDateString(
-      "en-US",
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      }
-    );
-
-  }
-
-
-  /* ============================
-     BACK BUTTON
-  ============================ */
-
-  function goBack() {
-
-    window.location.href =
-      "learners.html";
-
-  }
-
-<script>
-
-  /* ============================
-     GET LRN FROM URL
-  ============================ */
-
-  const params =
-    new URLSearchParams(window.location.search);
-
-  const learnerLRN =
-    params.get("lrn");
-
-
-  /* ============================
-     GET SAVED LEARNERS
-  ============================ */
-
-  const savedLearners =
-    JSON.parse(
-      localStorage.getItem("lensLearners")
-    ) || {};
-
-
-  /* ============================
-     FIND LEARNER
-  ============================ */
-
-  let learner = null;
-
-  let learnerSection = "";
   let learnerGrade = "";
+  let learnerSection = "";
 
+  /* FIND LEARNER */
 
   for (const sectionKey in savedLearners) {
 
-    const sectionLearners =
-      savedLearners[sectionKey];
+    const sectionLearners = savedLearners[sectionKey];
 
-    const found =
-      sectionLearners.find(
-        student =>
-          String(student.lrn) === String(learnerLRN)
-      );
+    if (!Array.isArray(sectionLearners)) {
+      continue;
+    }
+
+    const found = sectionLearners.find(
+      student => String(student.lrn) === String(learnerLRN)
+    );
 
     if (found) {
 
       learner = found;
 
-      const parts =
-        sectionKey.split("-");
+      const parts = sectionKey.split("-");
 
-      learnerGrade =
-        parts[0];
-
-      learnerSection =
-        parts.slice(1).join("-");
+      learnerGrade = parts[0];
+      learnerSection = parts.slice(1).join("-");
 
       break;
-
     }
-
   }
 
 
-  /* ============================
-     DISPLAY LEARNER
-  ============================ */
+  /* DISPLAY LEARNER */
 
   if (learner) {
 
-    document.getElementById(
-      "learnerName"
-    ).textContent =
+    document.getElementById("learnerName").textContent =
       learner.name || "—";
 
+    document.getElementById("learnerSection").textContent =
+      "Grade " + learnerGrade + " – " + learnerSection;
 
-    document.getElementById(
-      "learnerSection"
-    ).textContent =
-      "Grade " +
-      learnerGrade +
-      " – " +
-      learnerSection;
+    document.getElementById("learnerLRN").textContent =
+      "LRN: " + (learner.lrn || "—");
 
-
-    document.getElementById(
-      "learnerLRN"
-    ).textContent =
-      "LRN: " +
-      learner.lrn;
-
-
-    /* ============================
-       PERSONAL INFORMATION
-    ============================ */
 
     const infoValues =
-      document.querySelectorAll(
-        ".info-value"
-      );
+      document.querySelectorAll(".info-value");
 
 
     if (infoValues.length >= 8) {
@@ -888,9 +643,7 @@
         learner.age || "—";
 
       infoValues[3].textContent =
-        formatBirthday(
-          learner.birthday
-        );
+        formatBirthday(learner.birthday);
 
       infoValues[4].textContent =
         learner.guardian || "—";
@@ -906,37 +659,22 @@
         learnerGrade +
         " – " +
         learnerSection;
-
     }
 
-  }
+  } else {
 
-  else {
-
-    document.getElementById(
-      "learnerName"
-    ).textContent =
+    document.getElementById("learnerName").textContent =
       "Learner Not Found";
 
-
-    document.getElementById(
-      "learnerSection"
-    ).textContent =
+    document.getElementById("learnerSection").textContent =
       "No learner record was found.";
 
-
-    document.getElementById(
-      "learnerLRN"
-    ).textContent =
-      "LRN: " +
-      (learnerLRN || "—");
-
+    document.getElementById("learnerLRN").textContent =
+      "LRN: " + (learnerLRN || "—");
   }
 
 
-  /* ============================
-     FORMAT BIRTHDAY
-  ============================ */
+  /* FORMAT BIRTHDAY */
 
   function formatBirthday(date) {
 
@@ -944,36 +682,32 @@
       return "—";
     }
 
-    const d =
-      new Date(date);
+    const d = new Date(date);
 
     if (isNaN(d.getTime())) {
       return date;
     }
 
-    return d.toLocaleDateString(
-      "en-US",
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      }
-    );
-
+    return d.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
   }
 
 
-  /* ============================
-     BACK TO LEARNERS
-  ============================ */
+  /* BACK BUTTON */
 
   function goBack() {
 
-    window.location.href =
-      "learners.html";
+    window.location.href = "learners.html";
 
   }
 
+</script>
+
+</body>
+</html>
 </script>
 
 </body>
