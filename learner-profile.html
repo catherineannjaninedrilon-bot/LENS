@@ -576,32 +576,205 @@
 
  <script>
 
-  // Get the LRN from the URL
-  const params = new URLSearchParams(window.location.search);
-  const learnerLRN = params.get("lrn");
+<script>
 
-  // Sample learner information
-  const learners = {
+  /* ============================
+     GET LRN FROM URL
+  ============================ */
 
-    "100000000001": {
-      name: "Juan Dela Cruz",
-      section: "Grade 10 – Einstein",
-      lrn: "100000000001"
-    },
+  const params =
+    new URLSearchParams(window.location.search);
 
-    "100000000002": {
-      name: "Maria Santos",
-      section: "Grade 10 – Einstein",
-      lrn: "100000000002"
-    },
+  const learnerLRN =
+    params.get("lrn");
 
-    "100000000003": {
-      name: "Pedro Reyes",
-      section: "Grade 10 – Einstein",
-      lrn: "100000000003"
+
+  /* ============================
+     GET LEARNERS SAVED BY
+     THE LEARNERS PAGE
+  ============================ */
+
+  const savedLearners =
+    JSON.parse(
+      localStorage.getItem("lensLearners")
+    ) || {};
+
+
+  /* ============================
+     FIND LEARNER USING LRN
+  ============================ */
+
+  let learner = null;
+
+  for (
+    const sectionKey in savedLearners
+  ) {
+
+    const sectionLearners =
+      savedLearners[sectionKey];
+
+    const found =
+      sectionLearners.find(
+        student =>
+          student.lrn === learnerLRN
+      );
+
+    if (found) {
+
+      learner = found;
+
+      learner.sectionKey =
+        sectionKey;
+
+      break;
+
     }
 
-  };
+  }
+
+
+  /* ============================
+     DISPLAY LEARNER
+  ============================ */
+
+  if (learner) {
+
+    const parts =
+      learner.sectionKey.split("-");
+
+    const grade =
+      parts[0];
+
+    const section =
+      parts.slice(1).join("-");
+
+
+    document.getElementById(
+      "learnerName"
+    ).textContent =
+      learner.name;
+
+
+    document.getElementById(
+      "learnerSection"
+    ).textContent =
+      "Grade " +
+      grade +
+      " – " +
+      section;
+
+
+    document.getElementById(
+      "learnerLRN"
+    ).textContent =
+      "LRN: " +
+      learner.lrn;
+
+
+    /* PERSONAL INFORMATION */
+
+    const infoValues =
+      document.querySelectorAll(
+        ".info-value"
+      );
+
+
+    if (infoValues.length >= 8) {
+
+      infoValues[0].textContent =
+        learner.lrn;
+
+      infoValues[1].textContent =
+        learner.name;
+
+      infoValues[2].textContent =
+        learner.age;
+
+      infoValues[3].textContent =
+        formatBirthday(
+          learner.birthday
+        );
+
+      infoValues[4].textContent =
+        learner.guardian;
+
+      infoValues[5].textContent =
+        learner.contact;
+
+      infoValues[6].textContent =
+        learner.address;
+
+      infoValues[7].textContent =
+        "Grade " +
+        grade +
+        " – " +
+        section;
+
+    }
+
+  }
+
+  else {
+
+    document.getElementById(
+      "learnerName"
+    ).textContent =
+      "Learner Not Found";
+
+
+    document.getElementById(
+      "learnerSection"
+    ).textContent =
+      "No learner record was found.";
+
+
+    document.getElementById(
+      "learnerLRN"
+    ).textContent =
+      "LRN: —";
+
+  }
+
+
+  /* ============================
+     FORMAT BIRTHDAY
+  ============================ */
+
+  function formatBirthday(date) {
+
+    if (!date) {
+
+      return "—";
+
+    }
+
+    const d =
+      new Date(date);
+
+    return d.toLocaleDateString(
+      "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }
+    );
+
+  }
+
+
+  /* ============================
+     BACK BUTTON
+  ============================ */
+
+  function goBack() {
+
+    window.location.href =
+      "learners.html";
+
+  }
+
+</script>
 
 
   // Display learner
