@@ -213,9 +213,7 @@
     }
 
     .add-btn:hover {
-
       background: #34495e;
-
     }
 
     /* =========================
@@ -223,15 +221,12 @@
     ========================= */
 
     table {
-
       width: 100%;
-
       border-collapse: collapse;
     }
 
     th,
     td {
-
       padding: 14px 16px;
 
       text-align: left;
@@ -240,7 +235,6 @@
     }
 
     th {
-
       background: #faf8ed;
 
       font-size: 12px;
@@ -251,18 +245,25 @@
     }
 
     td {
-
       font-size: 14px;
     }
 
     tr:hover td {
-
       background: #fffdf5;
     }
 
-    .view-btn {
+    /* =========================
+       ACTION BUTTONS
+    ========================= */
 
-      background: #2c3e50;
+    .action-buttons {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .view-btn,
+    .edit-btn {
 
       color: white;
 
@@ -279,9 +280,20 @@
       font-weight: bold;
     }
 
-    .view-btn:hover {
+    .view-btn {
+      background: #2c3e50;
+    }
 
+    .view-btn:hover {
       background: #34495e;
+    }
+
+    .edit-btn {
+      background: #7f8c8d;
+    }
+
+    .edit-btn:hover {
+      background: #687577;
     }
 
     /* =========================
@@ -313,7 +325,6 @@
     }
 
     .add-form.active {
-
       display: block;
     }
 
@@ -334,7 +345,6 @@
     }
 
     .form-full {
-
       grid-column: 1 / -1;
     }
 
@@ -384,7 +394,6 @@
     @media (max-width: 700px) {
 
       .filters {
-
         grid-template-columns: 1fr;
       }
 
@@ -396,28 +405,32 @@
       }
 
       .form-grid {
-
         grid-template-columns: 1fr;
       }
 
       .form-full {
-
         grid-column: auto;
       }
 
-      table {
+      .action-buttons {
+        flex-direction: column;
+      }
 
+      .view-btn,
+      .edit-btn {
+        width: 100%;
+      }
+
+      table {
         font-size: 13px;
       }
 
       th,
       td {
-
         padding: 10px;
       }
 
       .container {
-
         padding: 25px 15px;
       }
 
@@ -497,10 +510,21 @@
             Select Grade Level
           </option>
 
-         <option value="7">Grade 7</option>
-<option value="8">Grade 8</option>
-<option value="9">Grade 9</option>
-<option value="10">Grade 10</option>
+          <option value="7">
+            Grade 7
+          </option>
+
+          <option value="8">
+            Grade 8
+          </option>
+
+          <option value="9">
+            Grade 9
+          </option>
+
+          <option value="10">
+            Grade 10
+          </option>
 
         </select>
 
@@ -630,7 +654,9 @@
             <input
               id="newAge"
               type="number"
-              placeholder="Age">
+              placeholder="Age"
+              min="1"
+              max="100">
 
           </div>
 
@@ -732,9 +758,8 @@
 
   <script>
 
-
     /* =========================
-       SAMPLE LEARNERS
+       LOAD SAVED LEARNERS
     ========================= */
 
     let learners = JSON.parse(
@@ -865,7 +890,7 @@
 
 
     /* =========================
-       SAVE LOCAL DATA
+       SAVE DATA
     ========================= */
 
     function saveLearners() {
@@ -879,75 +904,76 @@
 
 
     /* =========================
-       SECTIONS
+       SECTION LIST
     ========================= */
 
-   const sections = {
+    const sections = {
 
-  "7": [
-    "Mercury",
-    "Venus",
-    "Earth",
-    "Mars",
-    "Jupiter",
-    "Saturn",
-    "Uranus",
-    "Neptune",
-    "Pluto",
-    "Ceres",
-    "Eris",
-    "Orion",
-    "Rigel"
-  ],
+      "7": [
+        "Mercury",
+        "Venus",
+        "Earth",
+        "Mars",
+        "Jupiter",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "Pluto",
+        "Ceres",
+        "Eris",
+        "Orion",
+        "Rigel"
+      ],
 
-  "8": [
-    "Diamond",
-    "Emerald",
-    "Pearl",
-    "Jade",
-    "Ruby",
-    "Citrine",
-    "Amethyst",
-    "Sapphire",
-    "Garnet",
-    "Topaz",
-    "Peridot",
-    "Aquamarine",
-    "Moonstone"
-  ],
+      "8": [
+        "Diamond",
+        "Emerald",
+        "Pearl",
+        "Jade",
+        "Ruby",
+        "Citrine",
+        "Amethyst",
+        "Sapphire",
+        "Garnet",
+        "Topaz",
+        "Peridot",
+        "Aquamarine",
+        "Moonstone"
+      ],
 
-  "9": [
-    "Gold",
-    "Silver",
-    "Nickel",
-    "Cobalt",
-    "Helium",
-    "Iron",
-    "Copper",
-    "Neon",
-    "Carbon",
-    "Boron",
-    "Argon",
-    "Sulfur",
-    "Bromine"
-  ],
+      "9": [
+        "Gold",
+        "Silver",
+        "Nickel",
+        "Cobalt",
+        "Helium",
+        "Iron",
+        "Copper",
+        "Neon",
+        "Carbon",
+        "Boron",
+        "Argon",
+        "Sulfur",
+        "Bromine"
+      ],
 
-  "10": [
-    "Einstein",
-    "Newton",
-    "Galileo",
-    "Pasteur",
-    "Darwin",
-    "Curie",
-    "Tesla",
-    "Kepler",
-    "Dalton",
-    "Aristotle",
-    "Edison",
-    "Mendel"
-  ]
+      "10": [
+        "Einstein",
+        "Newton",
+        "Galileo",
+        "Pasteur",
+        "Darwin",
+        "Curie",
+        "Tesla",
+        "Kepler",
+        "Dalton",
+        "Aristotle",
+        "Edison",
+        "Mendel"
+      ]
 
-};
+    };
+
 
     /* =========================
        LOAD SECTIONS
@@ -1143,6 +1169,17 @@
       selectedLearners.forEach(
         function(learner, index) {
 
+          const safeLRN =
+            encodeURIComponent(
+              learner.lrn
+            );
+
+          const safeName =
+            escapeHTML(
+              learner.name
+            );
+
+
           html += `
 
             <tr>
@@ -1152,22 +1189,34 @@
               </td>
 
               <td>
-                ${learner.lrn}
+                ${escapeHTML(learner.lrn)}
               </td>
 
               <td>
-                ${learner.name}
+                ${safeName}
               </td>
 
               <td>
 
-                <button
-                  class="view-btn"
-                  onclick="viewLearner('${learner.lrn}')">
+                <div class="action-buttons">
 
-                  View Profile
+                  <button
+                    class="view-btn"
+                    onclick="viewLearner('${safeLRN}')">
 
-                </button>
+                    View Profile
+
+                  </button>
+
+                  <button
+                    class="edit-btn"
+                    onclick="editLearner('${safeLRN}')">
+
+                    Edit
+
+                  </button>
+
+                </div>
 
               </td>
 
@@ -1189,6 +1238,22 @@
 
 
       learnerList.innerHTML = html;
+
+    }
+
+
+    /* =========================
+       ESCAPE HTML
+    ========================= */
+
+    function escapeHTML(value) {
+
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
     }
 
@@ -1317,14 +1382,19 @@
       }
 
 
-      /* Prevent duplicate LRN */
+      /* =========================
+         DUPLICATE LRN CHECK
+      ========================= */
 
       const duplicate =
         Object.values(
           learners
-        ).flat().some(
+        )
+        .flat()
+        .some(
           learner =>
-            learner.lrn === lrn
+            String(learner.lrn) ===
+            String(lrn)
         );
 
 
@@ -1361,7 +1431,9 @@
       saveLearners();
 
 
-      /* Clear form */
+      /* =========================
+         CLEAR FORM
+      ========================= */
 
       document.getElementById(
         "newLRN"
@@ -1394,7 +1466,6 @@
 
       hideAddForm();
 
-
       loadLearners();
 
 
@@ -1406,14 +1477,27 @@
 
 
     /* =========================
-       VIEW LEARNER PROFILE
+       VIEW PROFILE
     ========================= */
 
     function viewLearner(lrn) {
 
       window.location.href =
         "learner-profile.html?lrn=" +
-        encodeURIComponent(lrn);
+        lrn;
+
+    }
+
+
+    /* =========================
+       EDIT LEARNER
+    ========================= */
+
+    function editLearner(lrn) {
+
+      window.location.href =
+        "edit-learner.html?lrn=" +
+        lrn;
 
     }
 
