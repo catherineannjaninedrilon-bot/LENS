@@ -1,60 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LENS - Learning Engagement, Navigation and Support</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 40px auto;
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      /* Soft Pastel Yellow Gradient */
+      background: linear-gradient(135deg, #fffdf2, #fdf6cd);
+      color: #2c3e50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* BACKGROUND JOURNEY ANIMATION */
+    .journey-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Animated Dotted Journey Path */
+    .journey-path {
+      stroke: #e3d7a3;
+      stroke-width: 3;
+      stroke-dasharray: 8 6;
+      fill: none;
+      stroke-dashoffset: 0;
+      animation: travel-path 30s linear infinite;
+    }
+
+    /* Moving Paper Airplane Icon */
+    .traveler {
+      fill: #aba074;
+      motion-path: path("M -50,150 Q 200,50 400,250 T 900,100 T 1400,300 T 1950,150");
+      animation: follow-path 12s linear infinite;
+    }
+
+    @keyframes travel-path {
+      to {
+        stroke-dashoffset: -100;
+      }
+    }
+
+    @keyframes follow-path {
+      0% { motion-offset: 0%; }
+      100% { motion-offset: 100%; }
+    }
+
+    /* MAIN CONTAINER */
+    .page {
+      width: 100%;
+      max-width: 550px;
+      padding: 30px 20px;
+      position: relative;
+      z-index: 2; /* Keeps the cards above the background animation */
+    }
+
+    /* HEADER */
+    .header {
       text-align: center;
+      margin-bottom: 30px;
     }
-    h1 {
-      color: #333;
+
+    .header h1 {
+      margin: 0;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #2c3e50;
+      letter-spacing: 0.5px;
     }
-    .todo-item {
-      background: #f4f4f4;
-      border-left: 4px solid #4CAF50;
-      padding: 10px;
-      margin: 8px 0;
-      text-align: left;
+
+    .header .subtitle {
+      font-size: 0.95rem;
+      color: #7f8c8d;
+      margin-top: 6px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .tagline {
+      margin-top: 12px;
+      color: #95a5a6;
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+
+    /* CARD */
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid #ebdfae;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(184, 172, 122, 0.12);
+      backdrop-filter: blur(5px);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #2c3e50;
+      font-size: 1.6rem;
+    }
+
+    .card-description {
+      color: #7f8c8d;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    /* FORM */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
       font-weight: bold;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #5c6a79;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dcd7be;
+      border-radius: 8px;
+      background: #fffdf9;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2c3e50;
+      box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+      background: #ffffff;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* BUTTON */
+    button {
+      width: 100%;
+      padding: 13px 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2c3e50;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #34495e;
+      transform: translateY(-1px);
+    }
+
+    /* TOGGLE LINK */
+    .toggle-form {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #7f8c8d;
+    }
+
+    .toggle-form a {
+      color: #2c3e50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .toggle-form a:hover {
+      text-decoration: underline;
+    }
+
+    /* UTILITY */
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>Todo List</h1>
-  <div id="todo-container">Loading items...</div>
 
-  <!-- ✅ Supabase client library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- BACKGROUND JOURNEY GRAPHICS -->
+  <svg class="journey-bg" preserveAspectRatio="none" viewBox="0 0 1920 1080">
+    <!-- Journey Path Line -->
+    <path class="journey-path" d="M -50,150 Q 200,50 400,250 T 900,100 T 1400,300 T 1950,150" />
+    <!-- Paper Airplane Traveler Icon -->
+    <g class="traveler">
+      <path d="M 0,-10 L 20,5 L 5,5 L 0,15 L -5,5 L -20,5 Z" transform="rotate(90)" />
+    </g>
+  </svg>
+
+  <div class="page">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>LENS</h1>
+      <div class="subtitle">Learning Engagement, Navigation and Support</div>
+      <div class="tagline">See the story, support the journey.</div>
+    </div>
+
+    <!-- LOGIN CARD -->
+    <div class="card" id="loginCard">
+      <h2>Log In</h2>
+      <div class="card-description">Please enter your credentials to access the dashboard.</div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="name@school.edu" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <button type="submit">Log In</button>
+      </form>
+
+      <div class="toggle-form">
+        Don't have an account? <a href="#" onclick="toggleForm('register')">Register here</a>
+      </div>
+    </div>
+
+    <!-- REGISTER CARD (HIDDEN BY DEFAULT) -->
+    <div class="card hidden" id="registerCard">
+      <h2>Create an Account</h2>
+      <div class="card-description">Fill out the form below to register your dashboard account.</div>
+      
+      <form id="registerForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="regFirst">First Name</label>
+            <input type="text" id="regFirst" placeholder="Jane" required>
+          </div>
+          <div class="form-group">
+            <label for="regLast">Last Name</label>
+            <input type="text" id="regLast" placeholder="Doe" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regEmail">Email Address</label>
+          <input type="email" id="regEmail" placeholder="jane.doe@school.edu" required>
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" placeholder="Minimum 8 characters" required>
+        </div>
+        <button type="submit">Register Account</button>
+      </form>
+
+      <div class="toggle-form">
+        Already have an account? <a href="#" onclick="toggleForm('login')">Log In here</a>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // Correct Supabase project details
-    const supabaseUrl = "https://ovjzuzjvgpzzsugasubn.supabase.co"; 
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92anp1emp2Z3B6enN1Z2FzdWJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxMTk3MDksImV4cCI6MjEwMjY5NTcwOX0.Uft5TwnJ7S6V1S47GMfoWujXLN49E6bqsx9b_GTYqUk";
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    function toggleForm(formType) {
+      const loginCard = document.getElementById('loginCard');
+      const registerCard = document.getElementById('registerCard');
 
-    async function fetchTodos() {
-      const { data, error } = await supabase.from("todos").select();
-      if (error) {
-        console.error("Error fetching todos:", error);
-        document.getElementById("todo-container").innerHTML = "Failed to load items.";
-        return;
-      }
-      const container = document.getElementById("todo-container");
-      if (!data || data.length === 0) {
-        container.innerHTML = "No items found.";
+      if (formType === 'register') {
+        loginCard.classList.add('hidden');
+        registerCard.classList.remove('hidden');
       } else {
-        container.innerHTML = data
-          .map(todo => `<div class="todo-item">${todo.task}</div>`)
-          .join("");
+        registerCard.classList.add('hidden');
+        loginCard.classList.remove('hidden');
       }
     }
-
-    // Load todos on page load
-    fetchTodos();
   </script>
+
 </body>
 </html>
