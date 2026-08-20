@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LENS - Edit Learner</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f8f7ef;
+      color: #2c3e50;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: #2c3e50;
+      color: white;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 12px;
+      font-weight: normal;
+      opacity: 0.8;
+    }
+
+    .back-btn {
+      width: auto;
+      margin: 0;
+      padding: 9px 16px;
+      background: white;
+      color: #2c3e50;
+      border: none;
+      border-radius: 7px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* MAIN */
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 35px 25px;
+    }
+
+    .page-header {
+      margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+      margin: 0 0 7px;
+      font-size: 30px;
+    }
+
+    .page-header p {
+      margin: 0;
+      color: #7f8c8d;
+    }
+
+    /* CARD */
+    .card {
+      background: white;
+      border: 1px solid #e5e0c8;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+    }
+
+    /* FORM */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 5px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      color: #5c6a79;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dcd7be;
+      border-radius: 8px;
+      background: #fffdf9;
+      font-size: 15px;
+      color: #2c3e50;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #2c3e50;
+    }
+
+    input[readonly] {
+      background: #f3f1e7;
+      color: #7f8c8d;
+    }
+
+    /* BUTTONS */
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #eee8cf;
+    }
+
+    .cancel-btn,
+    .save-btn {
+      padding: 11px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .cancel-btn {
+      background: #eee8cf;
+      color: #2c3e50;
+    }
+
+    .save-btn {
+      background: #2c3e50;
+      color: white;
+    }
+
+    .save-btn:hover {
+      background: #34495e;
+    }
+
+    /* MESSAGE */
+    .message {
+      display: none;
+      margin-bottom: 20px;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .error {
+      background: #fdecea;
+      color: #b71c1c;
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .container {
+        padding: 25px 15px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .cancel-btn,
+      .save-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+
+  <div class="topbar">
+
+    <div class="logo">
+      LENS
+      <span>Learning Engagement, Navigation and Support</span>
+    </div>
+
+    <button class="back-btn" onclick="goBack()">
+      ← Learners
+    </button>
+
+  </div>
+
+
+  <!-- MAIN -->
+
+  <main class="container">
+
+    <div class="page-header">
+
+      <h1>Edit Learner</h1>
+
+      <p>
+        Update the learner's personal information.
+      </p>
+
+    </div>
+
+
+    <div id="errorMessage" class="message error"></div>
+
+
+    <div class="card">
+
+      <form id="editForm">
+
+        <div class="form-grid">
+
+          <!-- LRN -->
+
+          <div class="form-group">
+
+            <label for="lrn">
+              LRN
+            </label>
+
+            <input
+              type="text"
+              id="lrn"
+              readonly
+            >
+
+          </div>
+
+
+          <!-- FULL NAME -->
+
+          <div class="form-group">
+
+            <label for="name">
+              Full Name
+            </label>
+
+            <input
+              type="text"
+              id="name"
+              required
+            >
+
+          </div>
+
+
+          <!-- BIRTHDAY -->
+
+          <div class="form-group">
+
+            <label for="birthday">
+              Birthday
+            </label>
+
+            <input
+              type="date"
+              id="birthday"
+              required
+            >
+
+          </div>
+
+
+          <!-- AGE -->
+
+          <div class="form-group">
+
+            <label for="age">
+              Age
+            </label>
+
+            <input
+              type="number"
+              id="age"
+              min="1"
+              max="100"
+              required
+            >
+
+          </div>
+
+
+          <!-- GUARDIAN -->
+
+          <div class="form-group">
+
+            <label for="guardian">
+              Guardian
+            </label>
+
+            <input
+              type="text"
+              id="guardian"
+              required
+            >
+
+          </div>
+
+
+          <!-- CONTACT -->
+
+          <div class="form-group">
+
+            <label for="contact">
+              Contact Number
+            </label>
+
+            <input
+              type="text"
+              id="contact"
+              required
+            >
+
+          </div>
+
+
+          <!-- ADDRESS -->
+
+          <div class="form-group full">
+
+            <label for="address">
+              Address
+            </label>
+
+            <input
+              type="text"
+              id="address"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            onclick="goBack()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="save-btn"
+          >
+            Save Changes
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    /* ================================
+       GET LRN FROM URL
+    ================================= */
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const learnerLRN =
+      params.get("lrn");
+
+
+    /* ================================
+       GET SAVED LEARNERS
+    ================================= */
+
+    const savedLearners =
+      JSON.parse(
+        localStorage.getItem("lensLearners")
+      ) || {};
+
+
+    let learner = null;
+    let learnerSectionKey = null;
+
+
+    /* ================================
+       FIND LEARNER
+    ================================= */
+
+    for (const sectionKey in savedLearners) {
+
+      const sectionLearners =
+        savedLearners[sectionKey];
+
+      const found =
+        sectionLearners.find(
+          student =>
+            String(student.lrn) ===
+            String(learnerLRN)
+        );
+
+      if (found) {
+
+        learner = found;
+
+        learnerSectionKey =
+          sectionKey;
+
+        break;
+
+      }
+
+    }
+
+
+    /* ================================
+       IF LEARNER NOT FOUND
+    ================================= */
+
+    if (!learner) {
+
+      showError(
+        "Learner record could not be found."
+      );
+
+    }
+
+    else {
+
+      /* Fill the form */
+
+      document.getElementById("lrn").value =
+        learner.lrn || "";
+
+      document.getElementById("name").value =
+        learner.name || "";
+
+      document.getElementById("birthday").value =
+        learner.birthday || "";
+
+      document.getElementById("age").value =
+        learner.age || "";
+
+      document.getElementById("guardian").value =
+        learner.guardian || "";
+
+      document.getElementById("contact").value =
+        learner.contact || "";
+
+      document.getElementById("address").value =
+        learner.address || "";
+
+    }
+
+
+    /* ================================
+       SAVE CHANGES
+    ================================= */
+
+    document
+      .getElementById("editForm")
+      .addEventListener(
+        "submit",
+        function(event) {
+
+          event.preventDefault();
+
+
+          if (!learner) {
+
+            showError(
+              "Learner record could not be found."
+            );
+
+            return;
+
+          }
+
+
+          /* Update learner information */
+
+          learner.name =
+            document.getElementById("name").value.trim();
+
+          learner.birthday =
+            document.getElementById("birthday").value;
+
+          learner.age =
+            document.getElementById("age").value;
+
+          learner.guardian =
+            document.getElementById("guardian").value.trim();
+
+          learner.contact =
+            document.getElementById("contact").value.trim();
+
+          learner.address =
+            document.getElementById("address").value.trim();
+
+
+          /* Save back to localStorage */
+
+          savedLearners[
+            learnerSectionKey
+          ] = savedLearners[
+            learnerSectionKey
+          ];
+
+
+          localStorage.setItem(
+            "lensLearners",
+            JSON.stringify(savedLearners)
+          );
+
+
+          /* Return to learner list */
+
+          window.location.href =
+            "learners.html";
+
+        }
+      );
+
+
+    /* ================================
+       ERROR MESSAGE
+    ================================= */
+
+    function showError(message) {
+
+      const error =
+        document.getElementById("errorMessage");
+
+      error.textContent =
+        message;
+
+      error.style.display =
+        "block";
+
+    }
+
+
+    /* ================================
+       BACK
+    ================================= */
+
+    function goBack() {
+
+      window.location.href =
+        "learners.html";
+
+    }
+
+  </script>
+
+</body>
+</html>
