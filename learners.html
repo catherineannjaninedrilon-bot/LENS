@@ -588,14 +588,9 @@
       VIEW LEARNER
     */
 
-    function viewLearner(lrn) {
-
-      alert(
-        "Learner Profile\n\nLRN: " +
-        lrn +
-        "\n\nThe complete learner profile will be added in the next stage."
-      );
-
+   function viewLearner(lrn) {
+    window.location.href = "learner-profile.html?lrn=" + encodeURIComponent(lrn);
+}
     }
 
 
